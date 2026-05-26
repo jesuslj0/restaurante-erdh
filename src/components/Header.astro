@@ -1,5 +1,7 @@
 ---
 
+import { Icon } from 'astro-icon/components'
+
 interface Link {
 	link: string
 	name: string
@@ -14,13 +16,13 @@ const { elements } = Astro.props
 ---
 
 
-<header class="w-full flex justify-end">
-	<nav class="flex justify-center py-5 px-6">
+<header class="w-full flex items-center justify-start bg-stone-200">
+	<nav class="flex justify-center py-5 px-7">
 		<ul class="flex flex-col gap-2 md:flex-row md:gap-5">
 			{elements.map((element: Link) => (
 				<li>
-					<a href={element.link}>
-						{element.name}
+					<a href={element.link} class="text-black inline-flex gap-1 items-center">
+						<Icon name={element.icon} class="size-4" /> {element.name}
 					</a>
 				</li>
 			))}
