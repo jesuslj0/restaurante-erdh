@@ -1,11 +1,98 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Footer from '../components/Footer.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
+const HeaderProps = {
+	elements: [
+		{
+			link: '/',
+			name: 'Inicio',
+			icon: 'lucide:home',
+		},
+		{
+			link: '/carta',
+			name: 'Carta',
+			icon: 'lucide:menu',
+		},
+		{
+			link: '/menu',
+			name: 'Menu',
+			icon: 'lucide:menu',
+		},
+		{
+			link: '/reservas',
+			name: 'Reservas',
+			icon: 'lucide:calendar',
+		},
+		{
+			link: '/contacto',
+			name: 'Contacto',
+			icon: 'lucide:phone-call',
+		},
+	],
+}
+
+const FooterProps = {
+	elements: [
+		{
+			link: '/terminos-y-condiciones',
+			name: 'Términos y condiciones',
+		},
+		{
+			link: '/politica-de-privacidad',
+			name: 'Política de privacidad',
+		},
+		{
+			link: '/politica-de-cookies',
+			name: 'Política de cookies',
+		},
+	],
+	socialElements: [
+		{
+			link: 'https://www.facebook.com',
+			name: 'Facebook',
+			icon: 'simple-icons:facebook',
+			username: 'elrincondehector',
+		},
+		{
+			link: 'https://www.instagram.com',
+			name: 'Instagram',
+			icon: 'simple-icons:instagram',
+			username: 'elrincondehector',
+		},
+		{
+			link: 'https://www.x.com',
+			name: 'X',
+			icon: 'simple-icons:x',
+			username: 'elrincondehector',
+		},
+	]
+}
+
 ---
 
-<Layout>
-	<Welcome />
+<Layout restaurantName="El Rincón de Héctor">
+	<Header slot="header" elements={HeaderProps.elements}/>
+	<Hero slot="hero" 
+		title="El Rincón de Héctor" 
+		subtitle="Tu lugar para desconectar y comer como en casa."
+		cta={{
+			label: 'Reservar mesa',
+			link: '/reservas',
+			icon: 'lucide:calendar',
+		}}
+		secondaryCta={{
+			label: 'Ver la carta',
+			link: '/carta',
+			icon: 'lucide:utensils',
+		}}
+	/>
+	<Footer slot="footer" 
+		socialElements={FooterProps.socialElements} 
+		elements={FooterProps.elements} 
+		restaurantName="El Rincón de Héctor"
+	/>
 </Layout>

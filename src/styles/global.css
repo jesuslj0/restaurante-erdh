@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+body, html {
+    @apply min-h-screen bg-neutral-900 text-neutral-300;
+}
