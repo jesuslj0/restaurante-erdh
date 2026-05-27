@@ -1,0 +1,9 @@
+@layer components {
+    .btn-primary {
+        @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-colors cursor-pointer bg-accent/50 text-primary hover:text-bg hover:bg-accent;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-colors cursor-pointer bg-primary/30 text-primary hover:bg-primary hover:text-bg;
+    }
+}

@@ -1,5 +1,7 @@
 @import "tailwindcss";
+@import "./variables.css";
+@import "./buttons.css";
 
 body, html {
-    @apply min-h-screen bg-neutral-900 text-neutral-300;
+    @apply min-h-screen bg-bg text-secondary;
 }

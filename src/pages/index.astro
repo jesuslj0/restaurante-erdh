@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Footer from '../components/Footer.astro';
+import About from '../components/About.astro';
+import Reservations from '../components/Reservations.astro';
 
 
 const HeaderProps = {
@@ -15,12 +17,12 @@ const HeaderProps = {
 		{
 			link: '/carta',
 			name: 'Carta',
-			icon: 'lucide:utensils',
+			icon: 'lucide:book-open',
 		},
 		{
 			link: '/menu',
 			name: 'Menús',
-			icon: 'lucide:menu',
+			icon: 'lucide:utensils',
 		},
 		{
 			link: '/reservas',
@@ -87,10 +89,48 @@ const FooterProps = {
 		secondaryCta={{
 			label: 'Ver la carta',
 			link: '/carta',
-			icon: 'lucide:utensils',
+			icon: 'lucide:book-open',
 		}}
 	/>
-	<Footer slot="footer" 
+	<About slot="about"
+		eyebrow="Nuestra casa"
+		title="Un rincón con sabor a hogar"
+		description="El Rincón de Héctor nació del deseo de ofrecer cocina tradicional hecha con producto fresco de temporada y mucho cariño. Ven a desconectar y a disfrutar con los tuyos."
+		kpis={[
+			{
+				icon: 'lucide:map-pin',
+				label: 'Ubicación',
+				value: 'Calle Calderas, 4 - El Bonillo (AB)',
+			},
+			{
+				icon: 'lucide:clock',
+				label: 'Horario',
+				value: 'Lun–Dom · 13:00–16:30 y 20:00–23:30',
+			},
+			{
+				icon: 'lucide:pizza',
+				label: 'Platos Destacados',
+				value: 'Pizzas caseras y Hamburguesas especiales'
+			}, 
+			{
+				icon: 'lucide:handbag',
+				label: 'Para llevar',
+				value: 'Gran variedad de platos para compartir en casa',
+			}
+		]}
+	/>
+	<Reservations slot="reservations"
+		eyebrow="Reservas"
+		title="¿Quieres reservar una mesa?"
+		description="Puedes llamarnos o escribirnos por WhatsApp y te confirmamos disponibilidad enseguida. También puedes pasarte directamente por el local."
+		phone="967 37 05 82"
+		whatsapp="967 37 05 82"
+		callSchedule="Lun–Dom · 10:00–23:00"
+		address="Calle Calderas, 4"
+		city="El Bonillo (Albacete)"
+		mapsUrl="https://maps.app.goo.gl/FhWj4s6dDa92pkKx5"
+	/>
+	<Footer slot="footer"
 		socialElements={FooterProps.socialElements} 
 		elements={FooterProps.elements} 
 		restaurantName="El Rincón de Héctor"

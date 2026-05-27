@@ -1,0 +1,60 @@
+---
+import { Icon } from 'astro-icon/components'
+
+interface Kpi {
+	icon: string
+	label: string
+	value: string
+}
+
+type Props = {
+	eyebrow?: string
+	title: string
+	description: string
+	kpis?: Kpi[]
+}
+
+const { eyebrow, title, description, kpis = [] } = Astro.props
+---
+
+<section class="bg-bg px-6 py-20">
+	<div class="max-w-3xl mx-auto flex flex-col gap-10">
+
+		<!-- Texto -->
+		<div class="flex flex-col gap-4">
+			{eyebrow && (
+				<span class="text-xs font-semibold uppercase tracking-widest text-accent">
+					{eyebrow}
+				</span>
+			)}
+			<h2 class="text-3xl font-bold text-primary sm:text-4xl">
+				{title}
+			</h2>
+			<p class="text-secondary leading-relaxed max-w-prose">
+				{description}
+			</p>
+		</div>
+
+		<!-- KPIs -->
+		{kpis.length > 0 && (
+			<ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+				{kpis.map((kpi: Kpi) => (
+					<li class="flex items-start gap-4 bg-primary/5 border border-primary/10 rounded-2xl px-6 py-5">
+						<span class="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
+							<Icon name={kpi.icon} class="size-5" />
+						</span>
+						<div class="flex flex-col gap-0.5">
+							<span class="text-xs font-semibold uppercase tracking-widest text-secondary/60">
+								{kpi.label}
+							</span>
+							<span class="text-sm font-medium text-primary leading-snug">
+								{kpi.value}
+							</span>
+						</div>
+					</li>
+				))}
+			</ul>
+		)}
+
+	</div>
+</section>

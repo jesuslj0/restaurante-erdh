@@ -1,0 +1,125 @@
+---
+import { Icon } from 'astro-icon/components'
+
+type Props = {
+	eyebrow?: string
+	title: string
+	description?: string
+	phone: string
+	whatsapp: string
+	callSchedule: string
+	address: string
+	city: string
+	mapsUrl: string
+	note?: string
+}
+
+const {
+	eyebrow,
+	title,
+	description,
+	phone,
+	whatsapp,
+	callSchedule,
+	address,
+	city,
+	mapsUrl,
+	note = 'Confirmamos tu reserva en menos de 24 horas. Para grupos de más de 8 personas, contacta directamente con nosotros.',
+} = Astro.props
+---
+
+<section class="bg-bg px-6 py-20">
+	<div class="max-w-3xl mx-auto flex flex-col gap-10">
+
+		<!-- Cabecera -->
+		<div class="flex flex-col gap-4">
+			{eyebrow && (
+				<span class="text-xs font-semibold uppercase tracking-widest text-accent">
+					{eyebrow}
+				</span>
+			)}
+			<h2 class="text-3xl font-bold text-primary sm:text-4xl">
+				{title}
+			</h2>
+			{description && (
+				<p class="text-secondary leading-relaxed max-w-prose">
+					{description}
+				</p>
+			)}
+		</div>
+
+		<!-- Cards -->
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+			<!-- Card: Llámanos -->
+			<div class="flex flex-col gap-6 bg-primary/5 border border-primary/10 rounded-2xl px-6 py-7">
+				<div class="flex items-center gap-3">
+					<span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
+						<Icon name="lucide:phone" class="size-5" />
+					</span>
+					<h3 class="text-base font-semibold text-primary">Llámanos</h3>
+				</div>
+
+				<div class="flex flex-col gap-1">
+					<a
+						href={`tel:${phone.replace(/\s/g, '')}`}
+						class="text-3xl font-bold text-primary tracking-tight hover:text-accent transition-colors"
+					>
+						{phone}
+					</a>
+					<span class="text-xs text-secondary/60 flex items-center gap-1.5">
+						<Icon name="lucide:clock" class="size-3.5 shrink-0" />
+						{callSchedule}
+					</span>
+				</div>
+
+				<a
+					href={`https://wa.me/${whatsapp}`}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366]/15 text-[#25D366] border border-[#25D366]/30 px-5 py-2.5 text-sm font-medium hover:bg-[#25D366] hover:text-bg transition-colors"
+				>
+					<Icon name="simple-icons:whatsapp" class="size-4" />
+					Escribir por WhatsApp
+				</a>
+			</div>
+
+			<!-- Card: Ven a vernos -->
+			<div class="flex flex-col gap-6 bg-primary/5 border border-primary/10 rounded-2xl px-6 py-7">
+				<div class="flex items-center gap-3">
+					<span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
+						<Icon name="lucide:map-pin" class="size-5" />
+					</span>
+					<h3 class="text-base font-semibold text-primary">Ven a vernos</h3>
+				</div>
+
+				<div class="flex flex-col gap-1">
+					<p class="text-2xl font-bold text-primary leading-snug">
+						{address}
+					</p>
+					<p class="text-secondary text-sm">{city}</p>
+				</div>
+
+				<a
+					href={mapsUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center justify-center gap-2 rounded-full bg-primary/10 text-primary border border-primary/20 px-5 py-2.5 text-sm font-medium hover:bg-primary hover:text-bg transition-colors"
+				>
+					<Icon name="lucide:map" class="size-4" />
+					Ver en Google Maps
+					<Icon name="lucide:external-link" class="size-3.5" />
+				</a>
+			</div>
+
+		</div>
+
+		<!-- Nota -->
+		{note && (
+			<p class="text-xs text-secondary/50 text-center leading-relaxed max-w-prose mx-auto">
+				{note}
+			</p>
+		)}
+
+	</div>
+</section>

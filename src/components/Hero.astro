@@ -18,13 +18,14 @@ type Props = {
 const { title, subtitle, cta, secondaryCta } = Astro.props
 ---
 
-<section class="bg-stone-200 min-h-[80vh] flex items-center justify-center px-6 py-20">
-	<div class="text-center max-w-2xl mx-auto flex flex-col items-center gap-6">
-		<h1 class="text-5xl font-bold tracking-tight text-neutral-900 sm:text-6xl">
+<section class="hero-section bg-stone-200 min-h-[80vh] h-screen flex items-center justify-center px-6 py-20">
+	<div class="background-overlay"></div>
+	<div class="text-center max-w-2xl mx-auto flex flex-col items-center gap-6 z-10">
+		<h1 class="text-5xl font-bold tracking-tight text-primary sm:text-6xl">
 			{title}
 		</h1>
 		{subtitle && (
-			<p class="text-lg text-neutral-500 max-w-prose">
+			<p class="text-lg text-accent max-w-prose">
 				{subtitle}
 			</p>
 		)}
@@ -32,13 +33,13 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 			<div class="flex flex-wrap gap-3 justify-center mt-2">
 				{cta && (
 					<a href={cta.link}
-						class="inline-flex items-center gap-1 bg-neutral-900 text-white text-sm font-medium px-6 py-3 rounded-full hover:bg-neutral-700 transition-colors">
+						class="btn-primary">
 						{cta.label} <Icon name={cta.icon} />
 					</a>
 				)}
 				{secondaryCta && (
 					<a href={secondaryCta.link}
-						class="inline-flex items-center gap-1 border border-neutral-900 text-neutral-900 text-sm font-medium px-6 py-3 rounded-full hover:bg-neutral-900 hover:text-white transition-colors">
+						class="btn-secondary">
 						{secondaryCta.label} <Icon name={secondaryCta.icon} />
 					</a>
 				)}
@@ -46,3 +47,27 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 		)}
 	</div>
 </section>
+
+
+<style>
+	.hero-section {
+		background-image: url('../assets/img/salon-superior.jpeg');
+		background-size: cover;
+		background-position: 50% 40%;
+		background-repeat: no-repeat;
+		position: relative;
+	}
+
+	.background-overlay {
+		background: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0.60) 0%,
+		rgba(0, 0, 0, 0.60) 55%,
+		rgba(0, 0, 0, 1) 100%
+		);
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+	}
+</style>
