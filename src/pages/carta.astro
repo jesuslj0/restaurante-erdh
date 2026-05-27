@@ -1,0 +1,884 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { Icon } from 'astro-icon/components';
+import { headerElements, footerElements, footerSocial } from '../data/nav';
+
+interface Dish {
+  name: string;
+  description: string;
+  price: string;
+  badge?: 'popular' | 'new';
+}
+
+interface WineCard {
+  name: string;
+  region?: string;
+  grapes?: string;
+  copa?: string;
+  botella: string;
+}
+
+interface Beer {
+  name: string;
+  description: string;
+  price: string;
+}
+
+interface Drink {
+  name: string;
+  price: string;
+}
+
+interface MenuCourse {
+  label: string;
+  options: string[];
+}
+
+interface WeekendMenu {
+  name: string;
+  courses: MenuCourse[];
+  price: string;
+  note: string;
+}
+
+interface Tab {
+  id: string;
+  label: string;
+  icon: string;
+}
+
+const tabs: Tab[] = [
+  { id: 'tapas', label: 'Tapas', icon: 'lucide:cooking-pot' },
+  { id: 'pizzas', label: 'Pizzas', icon: 'lucide:pizza' },
+  { id: 'hamburguesas', label: 'Hamburguesas', icon: 'lucide:hamburger' },
+  { id: 'menu-fds', label: 'Menús', icon: 'lucide:utensils' },
+  { id: 'bodega', label: 'Bodega', icon: 'lucide:wine' },
+];
+
+const tapasFrias: Dish[] = [
+    { name: 'Ensalada césar', description: '', price: '10,50 €', badge: 'popular' },
+  { name: 'Ensalada de queso de cabra', description: '', price: '12,80 €' },
+];
+
+const tapasCalientes: Dish[] = [
+  { name: 'Solomillo en salsa a la pimienta', description: 'Solomillo de cerdo a la plancha con salsa a la pimienta', price: '7,80 €', badge: 'popular' },
+  { name: 'Secreto en salsa española', description: 'Secreto ibérico a la brasa con salsa española', price: '7,80 €' },
+  { name: 'Lomo de orza con alioli', description: 'Lomo de orza casero a la plancha con alioli', price: '7,50 €' },
+  { name: 'Oreja a la plancha', description: 'Oreja de cerdo a la plancha con salsa de la casa', price: '8,80 €' },
+  { name: 'Rabo de cerdo frito', description: 'Rabo de cerdo a la plancha con salsa de la casa', price: '8,80 €', badge: 'popular' },
+  { name: 'Landres de cerdo', description: 'Landres fritas con ajos', price: '10,80 €' },
+  { name: 'Pollo frito', description: 'Pollo frito rebozado con salsa de tomate', price: '10,00 €' },
+  { name: 'Patatas americanas', description: 'Patatas fritas con salsa ranchera, bacon y queso.', price: '10,00 €', badge: 'popular' },
+  { name: 'Patatas bravas', description: 'Patatas fritas con salsa brava casera', price: '5,90 €' },
+  { name: 'Nachos mexicanos', description: 'Nachos con queso, jalapeño, pico de gallo y carne picada', price: '8,10 €', badge: 'popular' },
+  { name: 'Queso frito', description: 'Queso frito rebozado con mermelada de frambuesas', price: '8,50 €'},
+  { name: 'Croquetas de jamón ibérico', description: 'Croqueta casera de jamón ibérico (unidad)', price: '1.70 €', badge: 'popular' },
+  { name: 'Croquetas de gamba', description: 'Croqueta casera de gamba (unidad)', price: '1.70 €' },
+  { name: 'Croquetas de boletus', description: 'Croqueta casera de boletus (unidad)', price: '1.70 €' },
+  { name: 'Croquetas de morcilla', description: 'Croqueta casera de morcilla (unidad)', price: '1.70 €' },
+  { name: 'Croquetas de chipirones', description: 'Croqueta casera de chipirones en su tinta (unidad)', price: '1.70 €' },
+  { name: 'Bacalao rebozado', description: 'Bacalao rebozado con salsa especial', price: '8,50 €' },
+  { name: 'Bacalao al ajo confitado', description: 'Bacalao al ajo confitado', price: '8,50 €', badge: 'popular' },
+  { name: 'Chipirones a la plancha', description: 'Chipirones a la plancha', price: '15,00 €' },
+  { name: 'Sepia a la plancha', description: 'Sepia a la plancha', price: '15,00 €' },
+  { name: 'Gambón al ajillo o rebozado', description: 'Gambón al ajillo o rebozado a elegir.', price: '10,50 €' },
+  { name: 'Brocheta de marisco o carne', description: 'Brocheta de marisco o carne a elegir.', price: '10,00 €', badge: 'popular' },
+  { name: 'Pincho de pulpo con patata', description: 'Pincho de pulpo a la gallega con patata y pimentos', price: '5,50 €' },
+  { name: 'Cigalitas salteadas', description: 'Cigalitas salteadas con salsa de la casa', price: '12,50 €' },
+  { name: 'Almejas a la marinera', description: 'Almejas a la marinera', price: '12,00 €' },
+  { name: 'Tortillita de camarones', description: 'Tortillita de camarones (unidad)', price: '3,50 €' },
+];
+
+const pizzas: Dish[] = [
+  { name: 'Barbacoa', description: 'Carne picada, bacón, salsa BBQ', price: '12,00 €', badge: 'popular' },
+  { name: 'Carbonara', description: 'Nata, bacón, champiñón', price: '12,00 €' },
+  { name: 'Tropical', description: 'York, piña, salsa de tomate', price: '12,00 €' },
+  { name: 'Vegetal', description: 'Calabacín, berenjena, pimiento, salsa de tomate', price: '12,00 €' },
+  { name: 'Serrana', description: 'Jamón serrano, salsa de tomate', price: '12,00 €' },
+  { name: '4 Quesos', description: 'Edam, emmental, roquefort, mozzarella, salsa de tomate', price: '12,00 €', badge: 'popular' },
+  { name: 'Margarita', description: 'Salsa de tomate, mozzarella', price: '12,00 €' },
+  { name: 'Manchega', description: 'Morcilla, chorizo, lomo de orza, salsa de tomate', price: '12,00 €' },
+  { name: 'Kebab', description: 'Carne kebab, york, salsa especial, salsa de tomate', price: '12,00 €', badge: 'popular' },
+  { name: 'Tejana', description: 'Carne picada, jamón serrano, bacón, cebolla, salsa de tomate', price: '12,00 €' },
+  { name: 'Mejicana', description: 'Carne picada, bacón, jalapeños, salsa de tomate', price: '12,00 €' },
+  { name: 'Atún', description: 'Bacón, atún, cebolla, salsa de tomate', price: '12,00 €' },
+  { name: 'Marinera', description: 'Salmón ahumado, atún, gambas, salsa de tomate', price: '12,00 €' },
+  { name: '4 Estaciones', description: 'Champiñón, atún, york, pimiento, salsa de tomate', price: '12,00 €' },
+  { name: 'Mediterránea', description: 'Atún, anchoas, alcaparras, salsa de tomate', price: '12,00 €' },
+  { name: 'Alemana', description: 'Salchicha Frankfurt, york, salsa de tomate', price: '12,00 €' },
+  { name: 'Jamón y Huevos', description: 'Jamón serrano, huevo, salsa de tomate', price: '12,00 €' },
+  { name: 'Boloñesa', description: 'Carne picada, cebolla, hierbas aromáticas, salsa de tomate', price: '12,00 €', badge: 'popular' },
+  { name: 'Campesina', description: 'Espárragos verdes, bacón, alcachofa, salsa de tomate', price: '12,00 €' },
+  { name: 'Calzone', description: 'Bacón, salsa de tomate', price: '12,00 €' },
+  { name: 'Ibérica', description: 'Jamón ibérico, queso manchego, salsa de tomate', price: '12,00 €' },
+  { name: 'Gourmet', description: 'Jamón, queso manchego, tomate natural', price: '12,00 €' },
+  { name: 'Napoli', description: 'Aceitunas, york, champiñón, pepperoni, salsa de tomate', price: '12,00 €' },
+];
+
+const hamburguesas: Dish[] = [
+  { name: 'Rincón de Héctor', description: 'Carne de vaca madurada, virutas de torreznos, queso de cabra, alioli, tomate natural', price: '11,50 €', badge: 'popular' },
+  { name: 'Chicken', description: 'Pechuga de pollo empanada, salsa especial, lechuga, tomate natural', price: '7,50 €', },
+  { name: 'Smashburger Doble Carne', description: 'Carne de cerdo y ternera, queso, salsa especial, bacon, tomate natural', price: '10,20 €'},
+  { name: 'César 2.0', description: 'Pechuga de pollo crujiente, pan brioche, bacon, salsa especial, lechuga', price: '8,20 €', badge: 'popular' },
+  { name: 'Hamburguesa del Mes', description: 'Carne de ternera, queso curado, lomo de orza, picadillo de chorizo, alioli, pan rústico', price: '15,50 €', badge: 'new' },
+];
+
+const bocadillos: Dish[] = [
+  { name: 'Tosta de lomo gratinada', description: 'Lomo de cerdo a la plancha con queso gratinado', price: '4,80 €' },
+  { name: 'Tosta vegetal', description: 'Lechuga, atún, cebolla, tomate', price: '4,80 €'},
+];
+
+const weekendMenus: WeekendMenu[] = [
+  {
+    name: 'Menú Fin de Semana',
+    courses: [
+      {
+        label: '3 Entrantes a elegir',
+        options: [
+          'Elige entre nuestra variedad de tapas',
+        ],
+      },
+      {
+        label: 'Segundo (a elegir)',
+        options: [
+          'Secreto ibérico a la brasa con patatas a lo pobre',
+          'Merluza en salsa verde con almejas y espárragos',
+          'Arroz caldoso de mariscos con alioli de azafrán',
+        ],
+      },
+    ],
+    price: '22,50 €',
+    note: 'Incluye pan artesano, postre del día o café y bebida (agua, vino de la casa o refresco)',
+  },
+//   {
+//     name: 'Menú B · De la casa',
+//     courses: [
+//       {
+//         label: 'Primero (a elegir)',
+//         options: [
+//           'Gazpacho andaluz con guarnición de pepino y cebolla',
+//           'Revuelto de setas silvestres y trufa con pan de cristal',
+//           'Tabla de jamón serrano y queso manchego curado',
+//         ],
+//       },
+//       {
+//         label: 'Segundo (a elegir)',
+//         options: [
+//           'Solomillo de ternera con patatas asadas al tomillo',
+//           'Lubina a la sal con limón, aceite de oliva y patatas vapor',
+//           'Cocido manchego de temporada con sus vuelcos',
+//         ],
+//       },
+//     ],
+//     price: '22,00 €',
+//     note: 'Incluye pan artesano, postre casero y bebida (agua, vino reserva o refresco)',
+//   },
+];
+
+const vinosBlancos: WineCard[] = [
+  { name: 'La Doncella de las Viñas', region: 'La Mancha', grapes: 'Chardonnay', copa: '3,50 €', botella: '12,50 €' },
+  { name: 'Pato Mareao', region: 'Rias Baixas', grapes: 'Albariño', copa: '3,00 €', botella: '18,50 €' },
+  { name: 'Finca Elez', region: 'La Mancha', grapes: 'Chardonnay', copa: '2,00 €', botella: '17,80 €' },
+  { name: 'El Beso', region: 'La Mancha', grapes: 'Chardonnay', copa: '2,00 €', botella: '18,00 €' },
+  { name: 'Carrascas Viognier', region: 'La Mancha', grapes: 'Viognier', copa: '2,00 €', botella: '15,80 €' },
+  { name: 'Palomo Cojo Rueda', region: 'La Mancha', grapes: 'Verdejo', copa: '2,00 €', botella: '16,50 €' },
+  { name: 'Vino La Nación', region: 'La Mancha', grapes: 'Cencibel (Tempranillo) y Garnacha Fina', copa: '2,00 €', botella: '15,00 €' },
+  { name: '912 Altitud Rueda', region: 'Rivera del Duero', grapes: 'Verdejo', copa: '2,00 €', botella: '12,00 €' },
+  { name: 'Añil Fresh', region: 'La Mancha', grapes: 'Macabeo y Chardonnay', copa: '2,00 €', botella: '12,50 €' },
+];
+
+const vinosTintosElBonillo: WineCard[] = [
+  { name: 'La Doncella de las Viñas', botella: '13,50 €' },
+  { name: 'El Beso de las Uvas', region: 'Vino de Autor', botella: '19,80 €' },
+  { name: 'Exp Guijoso Maceración Carbónica', botella: '14,50 €' },
+  { name: 'La Sabina Merlot Crianza', botella: '15,20 €' },
+  { name: 'La Sabina Syrah', botella: '15,20 €' },
+  { name: 'La Sabina Cabernet', botella: '15,20 €' },
+  { name: 'Laguna Blanca', botella: '10,80 €' },
+  { name: 'Carrascas Syrah-Tempranillo', botella: '15,50 €' },
+  { name: 'Pago Finca Elez', botella: '19,80 €' },
+  { name: 'La Nación', botella: '15,00 €' },
+];
+
+const vinosTintosRibera: WineCard[] = [
+  { name: '912 de Altitud', botella: '14,50 €' },
+  { name: 'Viejo Mundo', botella: '13,50 €' },
+  { name: '912 Altitud 2', botella: '48,50 €' },
+  { name: 'Vilano 57', botella: '22,80 €' },
+];
+
+const vinosRosadosEspumosos: WineCard[] = [
+  { name: 'La Ravera Rosado', region: 'La Mancha', grapes: 'Garnacha', copa: '2,00 €', botella: '16,50 €' },
+  { name: 'Cava Rose Brut', region: 'Cava D.O.', copa: '3,00 €', botella: '18,50 €' },
+];
+
+const cervezas: Beer[] = [
+  { name: 'Cerveza de barril', description: 'Caña o jarra de cerveza lager nacional', price: '2,20 €' },
+  { name: 'Mahou Cinco Estrellas', description: 'Botellín 330 ml', price: '2,50 €' },
+  { name: 'Estrella Damm', description: 'Botellín 330 ml', price: '2,50 €' },
+  { name: 'Moritz sin gluten', description: 'Botellín 330 ml, apta para celíacos', price: '2,80 €' },
+];
+
+const refrescos: Drink[] = [
+  { name: 'Agua mineral (50 cl)', price: '1,50 €' },
+  { name: 'Agua con gas (50 cl)', price: '1,80 €' },
+  { name: 'Coca-Cola / Zero / Sin azúcar', price: '2,50 €' },
+  { name: 'Fanta naranja / limón', price: '2,50 €' },
+  { name: 'Zumo de naranja natural', price: '3,50 €' },
+  { name: 'Nestea melocotón', price: '2,50 €' },
+];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>La Carta — El Rincón de Héctor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body>
+    <Header elements={headerElements} />
+
+    <main>
+      <!-- Encabezado de página -->
+      <section class="pt-32 pb-10 px-6">
+        <div class="max-w-4xl mx-auto">
+          <p class="eyebrow">Nuestra oferta</p>
+          <h1 class="page-title">La Carta</h1>
+          <p class="page-subtitle">Producto fresco, cocina con cariño y sabores de siempre</p>
+        </div>
+      </section>
+
+      <!-- Navegación por pestañas -->
+      <div class="sticky top-16 z-40 px-6 tab-nav-bar">
+        <div class="max-w-4xl mx-auto overflow-x-auto">
+          <nav class="flex whitespace-nowrap" id="tab-nav" role="tablist">
+            {tabs.map((tab, i) => (
+              <button
+                class:list={['tab-btn', i === 0 ? 'tab-active' : '']}
+                data-tab={tab.id}
+                role="tab"
+                aria-selected={i === 0 ? 'true' : 'false'}
+                aria-controls={tab.id}
+              >
+                <Icon name={tab.icon} class="tab-icon" />
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      <!-- Contenido de las pestañas -->
+      <div class="max-w-4xl mx-auto px-6 py-12">
+
+        <!-- TAPAS -->
+        <section id="tapas" class="tab-section" role="tabpanel">
+          <div class="mb-12">
+                <p class="category-label">Calientes</p>
+                <div class="dish-list">
+                {tapasCalientes.map(dish => (
+                    <div class="dish-row">
+                    <div class="dish-info">
+                        <div class="flex items-center gap-2 flex-wrap">
+                        <span class="dish-name">{dish.name}</span>
+                        {dish.badge === 'popular' && <span class="badge badge-popular">Popular</span>}
+                        {dish.badge === 'new' && <span class="badge badge-new">Nuevo</span>}
+                        </div>
+                        <p class="dish-desc">{dish.description}</p>
+                    </div>
+                    <span class="dish-price">{dish.price}</span>
+                    </div>
+                ))}
+                </div>
+          </div>
+          <div>
+            <p class="category-label">Frías</p>
+            <div class="dish-list">
+              {tapasFrias.map(dish => (
+                <div class="dish-row">
+                  <div class="dish-info">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="dish-name">{dish.name}</span>
+                      {dish.badge === 'popular' && <span class="badge badge-popular">Popular</span>}
+                      {dish.badge === 'new' && <span class="badge badge-new">Nuevo</span>}
+                    </div>
+                    <p class="dish-desc">{dish.description}</p>
+                  </div>
+                  <span class="dish-price">{dish.price}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </section>
+
+        <!-- PIZZAS -->
+        <section id="pizzas" class="tab-section hidden" role="tabpanel">
+          <div class="chef-note mb-10">
+            <p>
+             Todas nuestras pizzas se elaboran con masa madre de fermentación lenta (72 h)
+              y se hornean en horno de leña a 450 °C.
+            </p>
+            <p>
+              Precio único: <strong>12,00 €</strong>. 
+            </p>
+          </div>
+
+          <div class="dish-list">
+            {pizzas.map(dish => (
+              <div class="dish-row">
+                <div class="dish-info">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="dish-name">{dish.name}</span>
+                    {dish.badge === 'popular' && <span class="badge badge-popular">Popular</span>}
+                    {dish.badge === 'new' && <span class="badge badge-new">Nuevo</span>}
+                  </div>
+                  <p class="dish-desc">{dish.description}</p>
+                </div>
+                <span class="dish-price">{dish.price}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- HAMBURGUESAS & BOCADILLOS -->
+        <section id="hamburguesas" class="tab-section hidden" role="tabpanel">
+          <div class="mb-12">
+            <p class="category-label">Hamburguesas</p>
+            <div class="dish-list">
+              {hamburguesas.map(dish => (
+                <div class="dish-row">
+                  <div class="dish-info">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="dish-name">{dish.name}</span>
+                      {dish.badge === 'popular' && <span class="badge badge-popular">Popular</span>}
+                      {dish.badge === 'new' && <span class="badge badge-new">Nuevo</span>}
+                    </div>
+                    <p class="dish-desc">{dish.description}</p>
+                  </div>
+                  <span class="dish-price">{dish.price}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p class="category-label">Tostas</p>
+            <div class="dish-list">
+              {bocadillos.map(dish => (
+                <div class="dish-row">
+                  <div class="dish-info">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="dish-name">{dish.name}</span>
+                      {dish.badge === 'popular' && <span class="badge badge-popular">Popular</span>}
+                      {dish.badge === 'new' && <span class="badge badge-new">Nuevo</span>}
+                    </div>
+                    <p class="dish-desc">{dish.description}</p>
+                  </div>
+                  <span class="dish-price">{dish.price}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- MENÚ FIN DE SEMANA -->
+        <section id="menu-fds" class="tab-section hidden" role="tabpanel">
+          <div class="mb-10">
+            <p class="eyebrow">Solo sábados y domingos · disponible de 13:00 a 16:30</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {weekendMenus.map(menu => (
+              <div class="menu-card">
+                <h3 class="menu-card-title">{menu.name}</h3>
+                <div class="flex-1">
+                  {menu.courses.map(course => (
+                    <div class="mb-5">
+                      <p class="category-label">{course.label}</p>
+                      <ul class="menu-options">
+                        {course.options.map(opt => (
+                          <li class="menu-option">{opt}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <div class="menu-card-footer">
+                  <p class="menu-note">{menu.note}</p>
+                  <p class="menu-price">{menu.price} <span class="menu-price-label">por persona</span></p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div class="chef-note">
+            <p>El menú cambia cada fin de semana según el mercado.</p>
+          </div>
+        </section>
+
+        <!-- BODEGA -->
+        <section id="bodega" class="tab-section hidden" role="tabpanel">
+          <div class="mb-12">
+            <p class="category-label">Vinos blancos</p>
+            <div class="wine-grid">
+              {vinosBlancos.map(wine => (
+                <div class="wine-card">
+                  <div>
+                    <p class="wine-name">{wine.name}</p>
+                    {wine.region && <p class="wine-region">{wine.region}{wine.grapes ? ` · ${wine.grapes}` : ''}</p>}
+                  </div>
+                  <div class="wine-prices">
+                    {wine.copa && <span>Copa <strong>{wine.copa}</strong></span>}
+                    <span>Botella <strong>{wine.botella}</strong></span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <p class="category-label">Vinos tintos · El Bonillo</p>
+            <div class="wine-grid">
+              {vinosTintosElBonillo.map(wine => (
+                <div class="wine-card">
+                  <div>
+                    <p class="wine-name">{wine.name}</p>
+                    {wine.region && <p class="wine-region">{wine.region}{wine.grapes ? ` · ${wine.grapes}` : ''}</p>}
+                  </div>
+                  <div class="wine-prices">
+                    {wine.copa && <span>Copa <strong>{wine.copa}</strong></span>}
+                    <span>Botella <strong>{wine.botella}</strong></span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="mb-12">
+            <p class="category-label">Vinos tintos · D.O. Ribera del Duero</p>
+            <div class="wine-grid">
+              {vinosTintosRibera.map(wine => (
+                <div class="wine-card">
+                  <div>
+                    <p class="wine-name">{wine.name}</p>
+                    {wine.region && <p class="wine-region">{wine.region}{wine.grapes ? ` · ${wine.grapes}` : ''}</p>}
+                  </div>
+                  <div class="wine-prices">
+                    {wine.copa && <span>Copa <strong>{wine.copa}</strong></span>}
+                    <span>Botella <strong>{wine.botella}</strong></span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="mb-12">
+            <p class="category-label">Rosados y espumosos</p>
+            <div class="wine-grid">
+              {vinosRosadosEspumosos.map(wine => (
+                <div class="wine-card">
+                  <div>
+                    <p class="wine-name">{wine.name}</p>
+                    {wine.region && <p class="wine-region">{wine.region}{wine.grapes ? ` · ${wine.grapes}` : ''}</p>}
+                  </div>
+                  <div class="wine-prices">
+                    {wine.copa && <span>Copa <strong>{wine.copa}</strong></span>}
+                    <span>Botella <strong>{wine.botella}</strong></span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="mb-12">
+            <p class="category-label">Cervezas</p>
+            <div class="dish-list">
+              {cervezas.map(beer => (
+                <div class="dish-row">
+                  <div class="dish-info">
+                    <span class="dish-name">{beer.name}</span>
+                    <p class="dish-desc">{beer.description}</p>
+                  </div>
+                  <span class="dish-price">{beer.price}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p class="category-label">Refrescos y agua</p>
+            <div class="dish-list">
+              {refrescos.map(drink => (
+                <div class="dish-row">
+                  <div class="dish-info">
+                    <span class="dish-name">{drink.name}</span>
+                  </div>
+                  <span class="dish-price">{drink.price}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <Footer
+      elements={footerElements}
+      socialElements={footerSocial}
+      restaurantName="El Rincón de Héctor"
+    />
+  </body>
+</html>
+
+<style>
+  :root {
+    --color-border: rgba(255, 255, 255, 0.1);
+  }
+
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: var(--color-bg);
+    color: var(--color-primary);
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex-grow: 1;
+  }
+
+  /* ── Tipografía ── */
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.1;
+    margin: 0 0 0.6rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+    color: var(--color-secondary);
+    margin: 0;
+  }
+
+  /* ── Barra de pestañas ── */
+  .tab-nav-bar {
+    background-color: var(--color-bg);
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.9rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-secondary);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    margin-bottom: -0.5px;
+  }
+
+  .tab-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  .tab-btn:hover {
+    color: var(--color-primary);
+  }
+
+  .tab-btn.tab-active {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+  }
+
+  /* ── Secciones con animación ── */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .tab-section {
+    animation: fadeInUp 0.22s ease-out both;
+  }
+
+  .tab-section.hidden {
+    display: none;
+  }
+
+  /* ── Etiquetas de categoría ── */
+  .category-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  /* ── Filas de platos ── */
+  .dish-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dish-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 0.875rem 0;
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .dish-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .dish-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    line-height: 1.4;
+  }
+
+  .dish-desc {
+    font-size: 0.8rem;
+    color: var(--color-secondary);
+    margin: 0.2rem 0 0;
+    line-height: 1.55;
+    opacity: 0.85;
+  }
+
+  .dish-price {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-top: 0.15rem;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 2px;
+    vertical-align: middle;
+    line-height: 1.6;
+    flex-shrink: 0;
+  }
+
+  .badge-popular {
+    background-color: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    color: var(--color-accent);
+    border: 0.5px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
+  }
+
+  .badge-new {
+    background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
+    color: var(--color-secondary);
+    border: 0.5px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+  }
+
+  /* ── Nota del chef ── */
+  .chef-note {
+    border-left: 2px solid var(--color-accent);
+    padding: 0.75rem 1rem;
+    background-color: color-mix(in srgb, var(--color-accent) 5%, transparent);
+  }
+
+  .chef-note p {
+    margin: 0;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--color-secondary);
+    line-height: 1.65;
+  }
+
+  .chef-note strong {
+    font-style: normal;
+    color: var(--color-accent);
+  }
+
+  /* ── Menús de fin de semana ── */
+  .menu-card {
+    background-color: color-mix(in srgb, var(--color-primary) 4%, transparent);
+    border: 0.5px solid var(--color-border);
+    border-radius: 6px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 0 0 1.25rem;
+  }
+
+  .menu-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu-option {
+    font-size: 0.83rem;
+    color: var(--color-secondary);
+    padding: 0.35rem 0;
+    border-bottom: 0.5px solid var(--color-border);
+    line-height: 1.5;
+  }
+
+  .menu-option::before {
+    content: '→ ';
+    color: var(--color-accent);
+    opacity: 0.65;
+  }
+
+  .menu-card-footer {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .menu-note {
+    font-size: 0.75rem;
+    color: var(--color-secondary);
+    opacity: 0.65;
+    margin: 0 0 0.75rem;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .menu-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .menu-price-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--color-secondary);
+    opacity: 0.7;
+  }
+
+  /* ── Cuadrícula de vinos ── */
+  .wine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.875rem;
+  }
+
+  .wine-card {
+    border: 0.5px solid var(--color-border);
+    border-radius: 4px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .wine-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    margin: 0;
+    line-height: 1.35;
+  }
+
+  .wine-region {
+    font-size: 0.75rem;
+    color: var(--color-secondary);
+    opacity: 0.75;
+    margin: 0.2rem 0 0;
+  }
+
+  .wine-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.78rem;
+    color: var(--color-secondary);
+    margin-top: auto;
+  }
+
+  .wine-prices strong {
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  const tabBtns = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const tabSections = document.querySelectorAll<HTMLElement>('.tab-section');
+
+  function activateTab(tabId: string): void {
+    tabBtns.forEach(btn => {
+      const isActive = btn.dataset.tab === tabId;
+      btn.classList.toggle('tab-active', isActive);
+      btn.setAttribute('aria-selected', String(isActive));
+    });
+    tabSections.forEach(section => {
+      section.classList.toggle('hidden', section.id !== tabId);
+    });
+  }
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.dataset.tab;
+      if (tabId) activateTab(tabId);
+    });
+  });
+</script>

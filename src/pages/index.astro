@@ -5,85 +5,17 @@ import Hero from '../components/Hero.astro';
 import Footer from '../components/Footer.astro';
 import About from '../components/About.astro';
 import Reservations from '../components/Reservations.astro';
-
-
-const HeaderProps = {
-	elements: [
-		{
-			link: '/',
-			name: 'Inicio',
-			icon: 'lucide:home',
-		},
-		{
-			link: '/carta',
-			name: 'Carta',
-			icon: 'lucide:book-open',
-		},
-		{
-			link: '/menu',
-			name: 'Menús',
-			icon: 'lucide:utensils',
-		},
-		{
-			link: '/reservas',
-			name: 'Reservas',
-			icon: 'lucide:calendar',
-		},
-		{
-			link: '/contacto',
-			name: 'Contacto',
-			icon: 'lucide:phone-call',
-		},
-	],
-}
-
-const FooterProps = {
-	elements: [
-		{
-			link: '/terminos-y-condiciones',
-			name: 'Términos y condiciones',
-		},
-		{
-			link: '/politica-de-privacidad',
-			name: 'Política de privacidad',
-		},
-		{
-			link: '/politica-de-cookies',
-			name: 'Política de cookies',
-		},
-	],
-	socialElements: [
-		{
-			link: 'https://www.facebook.com',
-			name: 'Facebook',
-			icon: 'simple-icons:facebook',
-			username: 'elrincondehector',
-		},
-		{
-			link: 'https://www.instagram.com',
-			name: 'Instagram',
-			icon: 'simple-icons:instagram',
-			username: 'elrincondehector',
-		},
-		{
-			link: 'https://www.x.com',
-			name: 'X',
-			icon: 'simple-icons:x',
-			username: 'elrincondehector',
-		},
-	]
-}
-
+import { headerElements, footerElements, footerSocial } from '../data/nav';
 ---
 
 <Layout restaurantName="El Rincón de Héctor">
-	<Header slot="header" elements={HeaderProps.elements}/>
-	<Hero slot="hero" 
-		title="El Rincón de Héctor" 
+	<Header slot="header" elements={headerElements}/>
+	<Hero slot="hero"
+		title="El Rincón de Héctor"
 		subtitle="Tu lugar para desconectar y comer como en casa."
 		cta={{
 			label: 'Reservar mesa',
-			link: '/reservas',
+			link: '/#reservas',
 			icon: 'lucide:calendar',
 		}}
 		secondaryCta={{
@@ -111,7 +43,7 @@ const FooterProps = {
 				icon: 'lucide:pizza',
 				label: 'Platos Destacados',
 				value: 'Pizzas caseras y Hamburguesas especiales'
-			}, 
+			},
 			{
 				icon: 'lucide:handbag',
 				label: 'Para llevar',
@@ -131,8 +63,8 @@ const FooterProps = {
 		mapsUrl="https://maps.app.goo.gl/FhWj4s6dDa92pkKx5"
 	/>
 	<Footer slot="footer"
-		socialElements={FooterProps.socialElements} 
-		elements={FooterProps.elements} 
+		socialElements={footerSocial}
+		elements={footerElements}
 		restaurantName="El Rincón de Héctor"
 	/>
 </Layout>
