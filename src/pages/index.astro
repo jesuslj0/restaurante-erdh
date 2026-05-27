@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
+import BurgerScroll from '../components/BurgerScroll.astro';
 import Footer from '../components/Footer.astro';
 import About from '../components/About.astro';
 import Reservations from '../components/Reservations.astro';
@@ -24,6 +25,7 @@ import { headerElements, footerElements, footerSocial } from '../data/nav';
 			icon: 'lucide:book-open',
 		}}
 	/>
+	<BurgerScroll slot="showcase" />
 	<About slot="about"
 		eyebrow="Nuestra casa"
 		title="Un rincón con sabor a hogar"
