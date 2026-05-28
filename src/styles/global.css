@@ -4,4 +4,5 @@
 
 body, html {
     @apply min-h-screen bg-bg text-secondary font-body;
+    overflow-x: clip;
 }

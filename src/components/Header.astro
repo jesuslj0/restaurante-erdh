@@ -15,8 +15,8 @@ type Props = {
 const { elements } = Astro.props
 ---
 
-<header class="w-full bg-neutral-900/30 backdrop-blur-sm fixed top-0 z-100">
-	<div class="flex items-center justify-between px-7 py-4">
+<header class="w-full bg-bg/30 backdrop-blur-sm fixed top-0 z-[100]">
+	<div id="header-inner" class="flex items-center justify-between py-4">
 
 		<span class="text-lg font-semibold font-display text-secondary md:hidden">RDH</span>
 
@@ -26,7 +26,7 @@ const { elements } = Astro.props
 			aria-label="Abrir menú"
 			aria-expanded="false"
 			aria-controls="nav-menu"
-			class="md:hidden text-secondary p-1 cursor-pointer"
+			class="md:hidden text-secondary p-2 cursor-pointer"
 		>
 			<Icon name="lucide:menu" class="size-6" />
 		</button>
@@ -53,29 +53,29 @@ const { elements } = Astro.props
 
 <nav
 	id="nav-menu"
-	class="flex fixed inset-0 z-110 flex-col bg-black px-7 py-6 gap-8 md:hidden translate-x-full transition-transform duration-300 ease-in-out pointer-events-none"
+	class="flex fixed inset-0 z-[110] flex-col bg-black gap-8 md:hidden translate-x-full transition-transform duration-300 ease-in-out pointer-events-none"
 	aria-hidden="true"
 >
 	<!-- Cabecera del panel -->
-	<div class="flex items-center justify-between">
+	<div id="nav-header" class="flex items-center justify-between">
 		<span class="text-base font-display text-primary">El Rincón de Héctor</span>
 		<button
 			id="menu-close"
 			aria-label="Cerrar menú"
-			class="text-neutral-400 hover:text-white transition-colors p-1 cursor-pointer"
+			class="text-secondary hover:text-primary transition-colors p-2 cursor-pointer"
 		>
 			<Icon name="lucide:x" class="size-6" />
 		</button>
 	</div>
 
-	<hr class="border-neutral-800 -mx-7" />
+	<hr class="border-secondary/20" />
 
 	<ul class="flex flex-col gap-6">
 		{elements.map((element: Link) => (
 			<li>
 				<a
 					href={element.link}
-					class="text-primary text-lg inline-flex gap-3 items-center hover:text-neutral-400 transition-colors"
+					class="text-primary text-lg inline-flex gap-3 items-center hover:text-secondary transition-colors"
 				>
 					<Icon name={element.icon} class="size-5" />
 					{element.name}
@@ -84,6 +84,26 @@ const { elements } = Astro.props
 		))}
 	</ul>
 </nav>
+
+<style>
+	header {
+		/* Empuja el contenido bajo la status bar en pantallas edge-to-edge */
+		padding-top: env(safe-area-inset-top);
+	}
+
+	#header-inner {
+		padding-left: max(1.75rem, env(safe-area-inset-left));
+		padding-right: max(1.75rem, env(safe-area-inset-right));
+	}
+
+	#nav-menu {
+		/* El panel fullscreen también respeta las zonas de sistema */
+		padding-top: max(1.5rem, env(safe-area-inset-top));
+		padding-right: max(1.75rem, env(safe-area-inset-right));
+		padding-left: max(1.75rem, env(safe-area-inset-left));
+		padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+	}
+</style>
 
 <script>
 	const openBtn  = document.getElementById('menu-open')!
@@ -109,7 +129,12 @@ const { elements } = Astro.props
 	openBtn.addEventListener('click', openMenu)
 	closeBtn.addEventListener('click', closeMenu)
 
-	document.addEventListener('keydown', (e) => {
+	// Cierra el panel al pulsar cualquier link del menú móvil
+	nav.querySelectorAll('a').forEach(link => {
+		link.addEventListener('click', closeMenu)
+	})
+
+	document.addEventListener('keydown', (e: KeyboardEvent) => {
 		if (e.key === 'Escape') closeMenu()
 	})
 </script>

@@ -47,7 +47,7 @@ const ingredients = [
 
 			<video
 				id="burger-video"
-				class="h-auto max-h-[68vh] lg:max-h-[92vh] w-auto"
+				class="h-auto max-h-[68vh] lg:max-h-[92vh] w-auto max-w-full"
 				muted
 				playsinline
 				preload="auto"
@@ -194,6 +194,14 @@ const ingredients = [
 
 		if (video.readyState >= 1) init();
 		else video.addEventListener("loadedmetadata", init, { once: true });
+
+		// Red de seguridad inofensiva: cuando todos los recursos hayan cargado,
+		// refresca posiciones por si Lenis o el layout aún no estaban listos.
+		if (document.readyState === "complete") {
+			ScrollTrigger.refresh();
+		} else {
+			window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
+		}
 	}
 </script>
 
