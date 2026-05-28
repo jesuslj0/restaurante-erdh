@@ -13,7 +13,6 @@ export const footerElements = [
 ];
 
 export const footerSocial = [
-  { link: 'https://www.facebook.com', name: 'Facebook', icon: 'simple-icons:facebook', username: 'elrincondehector' },
-  { link: 'https://www.instagram.com', name: 'Instagram', icon: 'simple-icons:instagram', username: 'elrincondehector' },
-  { link: 'https://www.x.com', name: 'X', icon: 'simple-icons:x', username: 'elrincondehector' },
+  { link: 'https://www.facebook.com/profile.php?id=100063703561876', name: 'Facebook', icon: 'simple-icons:facebook', username: 'elrincondehector' },
+  { link: 'https://www.instagram.com/rest.rinconde_hector/', name: 'Instagram', icon: 'simple-icons:instagram', username: 'rest.rinconde_hector' },
 ];
