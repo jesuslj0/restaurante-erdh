@@ -16,9 +16,9 @@ const { elements } = Astro.props
 ---
 
 <header class="w-full bg-neutral-900/30 backdrop-blur-sm fixed top-0 z-100">
-	<div class="flex items-center justify-between px-7 py-4">
+	<div class="flex items-center justify-between px-7 py-4 md:justify-start md:gap-8">
 
-		<span class="text-lg font-semibold font-display text-secondary md:hidden">RDH</span>
+		<span class="text-lg font-semibold text-secondary md:hidden">El Rincón de Héctor</span>
 
 		<!-- Botón hamburguesa (solo móvil) -->
 		<button
@@ -31,7 +31,7 @@ const { elements } = Astro.props
 			<Icon name="lucide:menu" class="size-6" />
 		</button>
 
-		<!-- Links de navegación en desktop -->
+		<!-- Links de navegación en desktop (siempre visibles, sin fixed) -->
 		<ul class="hidden md:flex md:flex-row md:gap-6">
 			{elements.map((element: Link) => (
 				<li>
@@ -45,9 +45,6 @@ const { elements } = Astro.props
 				</li>
 			))}
 		</ul>
-
-		<!-- Logo desktop -->
-		<span class="hidden md:block text-lg font-semibold font-display text-secondary">RDH</span>
 	</div>
 </header>
 
@@ -58,7 +55,7 @@ const { elements } = Astro.props
 >
 	<!-- Cabecera del panel -->
 	<div class="flex items-center justify-between">
-		<span class="text-base font-display text-primary">El Rincón de Héctor</span>
+		<span class="text-base font-semibold text-primary">El Rincón de Héctor</span>
 		<button
 			id="menu-close"
 			aria-label="Cerrar menú"
