@@ -21,7 +21,7 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 <section class="hero-section bg-stone-200 min-h-[80vh] h-screen flex items-center justify-center px-6 py-20">
 	<div class="background-overlay"></div>
 	<div class="text-center max-w-2xl mx-auto flex flex-col items-center gap-6 z-10">
-		<h1 class="text-5xl font-display font-bold tracking-tight text-primary sm:text-7xl">
+		<h1 class="text-5xl font-bold tracking-tight text-primary sm:text-6xl">
 			{title}
 		</h1>
 		{subtitle && (
@@ -51,7 +51,7 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 
 <style>
 	.hero-section {
-		background-image: url('../assets/img/puerta-ia.png');
+		background-image: url('../assets/img/salon-superior.jpeg');
 		background-size: cover;
 		background-position: 50% 40%;
 		background-repeat: no-repeat;
@@ -60,14 +60,23 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 
 	.background-overlay {
 		background: linear-gradient(
+<<<<<<< HEAD
+			to bottom,
+			rgba(0, 0, 0, 0.55) 0%,
+			rgba(0, 0, 0, 0.60) 55%,
+			rgba(23, 23, 23, 0.92) 88%,
+			var(--color-bg) 100%
+=======
 		to bottom,
 		rgba(0, 0, 0, 0.60) 0%,
-		rgba(0, 0, 0, 0.60) 75%,
+		rgba(0, 0, 0, 0.60) 55%,
 		rgba(0, 0, 0, 1) 100%
+>>>>>>> parent of 564a35c (Añadiendo scroll ralentizado, probando nuevas fuentes y nuevo bg)
 		);
 		height: 100%;
 		width: 100%;
 		position: absolute;
 		top: 0;
+		pointer-events: none;
 	}
 </style>

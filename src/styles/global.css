@@ -3,5 +3,5 @@
 @import "./buttons.css";
 
 body, html {
-    @apply min-h-screen bg-bg text-secondary font-body;
+    @apply min-h-screen bg-bg text-secondary;
 }
