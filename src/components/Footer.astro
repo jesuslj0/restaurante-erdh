@@ -1,12 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components'
 
-
-interface Link {
-	link: string
-	name: string
-}
-
 interface SocialLink {
 	link: string
 	name: string
@@ -15,20 +9,27 @@ interface SocialLink {
 }
 
 interface FooterProps {
-	elements: Link[]
 	socialElements: SocialLink[]
 	restaurantName: string
 	year?: number
 }
 
-const { elements, socialElements, restaurantName, year = new Date().getFullYear() } = Astro.props
+const { socialElements, restaurantName, year = new Date().getFullYear() } = Astro.props
 ---
 
-<footer class="bg-bg text-secondary px-6 py-10 mt-auto">
-	<div class="max-w-4xl mx-auto flex flex-col items-center gap-6 lg:flex-row lg:justify-between lg:items-start">
+<footer class="bg-bg text-secondary px-6 py-10 mt-auto border-t border-primary/5">
+	<div class="max-w-5xl mx-auto flex flex-col items-center gap-8 lg:flex-row lg:justify-between lg:items-center">
+
+		<!-- Izquierda: marca -->
+		<div class="flex flex-col items-center gap-1 lg:items-start">
+			<span class="text-2xl font-display font-semibold text-primary tracking-wide">{restaurantName}</span>
+			<p class="text-xs text-secondary/50 tracking-widest uppercase">Cocina de siempre, con alma propia</p>
+		</div>
+
+		<!-- Derecha: redes -->
 		<div class="flex flex-col items-center gap-3 lg:items-end">
-			<p class="text-xs font-semibold uppercase tracking-widest text-secondary/60">Síguenos en redes</p>
-			<ul class="flex flex-col gap-5 md:flex-row">
+			<p class="text-xs font-semibold uppercase tracking-widest text-secondary/40">Síguenos</p>
+			<ul class="flex gap-5">
 				{socialElements.map((social: SocialLink) => (
 					<li>
 						<a href={social.link} target="_blank" rel="noopener noreferrer" aria-label={social.name}
@@ -40,17 +41,7 @@ const { elements, socialElements, restaurantName, year = new Date().getFullYear(
 				))}
 			</ul>
 		</div>
-		<nav>
-			<ul class="flex gap-6 flex-wrap justify-center lg:justify-start">
-				{elements.map((element: Link) => (
-					<li>
-						<a href={element.link} class="hover:text-primary transition-colors text-sm">
-							{element.name}
-						</a>
-					</li>
-				))}
-			</ul>
-		</nav>
+
 	</div>
-	<p class="text-xs text-secondary/60 text-center mt-6 max-w-4xl mx-auto">&copy; {year} {restaurantName}. Todos los derechos reservados.</p>
+	<p class="text-xs text-secondary/30 text-center mt-8 max-w-5xl mx-auto">&copy; {year} {restaurantName}. Todos los derechos reservados.</p>
 </footer>

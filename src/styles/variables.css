@@ -3,4 +3,7 @@
   --color-secondary: #d4d4d4;
   --color-bg: #171717;
   --color-accent: #d98e43;
+
+  --font-body: 'Jost', sans-serif;
+  --font-display: 'Cormorant Garamond', serif;
 }

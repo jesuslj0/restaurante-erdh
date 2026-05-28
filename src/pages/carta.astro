@@ -1,5 +1,5 @@
 ---
-import '../styles/global.css';
+import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Icon } from 'astro-icon/components';
@@ -231,26 +231,15 @@ const refrescos: Drink[] = [
 ];
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <title>La Carta — El Rincón de Héctor</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  </head>
-  <body>
-    <Header elements={headerElements} />
+<Layout restaurantName="El Rincón de Héctor" pageTitle="La Carta — El Rincón de Héctor">
+  <Header slot="header" elements={headerElements} />
 
-    <main>
+  <Fragment>
       <!-- Encabezado de página -->
       <section class="pt-32 pb-10 px-6">
         <div class="max-w-4xl mx-auto">
-          <p class="eyebrow">Nuestra oferta</p>
-          <h1 class="page-title">La Carta</h1>
+          <p class="eyebrow">El Rincón de Héctor</p>
+          <h1 class="page-title">Nuestra Carta</h1>
           <p class="page-subtitle">Producto fresco, cocina con cariño y sabores de siempre</p>
         </div>
       </section>
@@ -527,15 +516,14 @@ const refrescos: Drink[] = [
         </section>
 
       </div>
-    </main>
+  </Fragment>
 
-    <Footer
-      elements={footerElements}
-      socialElements={footerSocial}
-      restaurantName="El Rincón de Héctor"
-    />
-  </body>
-</html>
+  <Footer
+    slot="footer"
+    socialElements={footerSocial}
+    restaurantName="El Rincón de Héctor"
+  />
+</Layout>
 
 <style>
   :root {
@@ -549,7 +537,7 @@ const refrescos: Drink[] = [
     min-height: 100%;
     background-color: var(--color-bg);
     color: var(--color-primary);
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-body);
     display: flex;
     flex-direction: column;
   }
@@ -569,7 +557,7 @@ const refrescos: Drink[] = [
   }
 
   .page-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 700;
     color: var(--color-primary);
@@ -594,7 +582,7 @@ const refrescos: Drink[] = [
     align-items: center;
     gap: 0.4rem;
     padding: 0.9rem 1.2rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-secondary);
@@ -755,7 +743,7 @@ const refrescos: Drink[] = [
   }
 
   .menu-card-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-display);
     font-size: 1.15rem;
     font-weight: 600;
     color: var(--color-primary);
@@ -798,7 +786,7 @@ const refrescos: Drink[] = [
   }
 
   .menu-price {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-display);
     font-size: 1.6rem;
     font-weight: 700;
     color: var(--color-accent);
@@ -807,7 +795,7 @@ const refrescos: Drink[] = [
   }
 
   .menu-price-label {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 400;
     color: var(--color-secondary);
