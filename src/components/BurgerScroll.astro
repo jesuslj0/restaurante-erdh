@@ -19,7 +19,7 @@ const ingredients = [
 	<div class="sticky top-0 h-screen overflow-hidden flex flex-col lg:grid lg:grid-cols-[1fr_auto_1fr]">
 
 		<!-- ── COLUMNA IZQUIERDA: concepto (solo desktop) ── -->
-		<div class="hidden lg:flex flex-col justify-center gap-6 px-12 xl:px-16">
+		<div class="hidden lg:flex flex-col items-end text-right justify-center gap-6 px-12 xl:px-16">
 			<span class="text-xs font-semibold uppercase tracking-widest text-accent">
 				Burguer del mes
 			</span>
@@ -82,12 +82,12 @@ const ingredients = [
 					¿La has probado ya?
 				</p>
 				<p class="text-sm text-secondary/70 leading-snug">
-					Pídela en el local o llámanos y te la tenemos lista.
+					¡No dudes en hacerlo! Llámanos y pruébala hoy mismo.
 				</p>
 				<div>
 					<a href="/#reservas" class="btn-primary">
-						Quiero probarla
-					</a>
+						<span class="cycle-text" data-words='["Quiero", "Probarla"]'>Quiero</span>
+	</a>
 				</div>
 			</div>
 
@@ -129,7 +129,7 @@ const ingredients = [
 			¿La has probado ya?
 		</p>
 		<p class="text-sm text-secondary/70 leading-snug">
-			Pídela en el local o llámanos y te la tenemos lista.
+			¡No dudes en hacerlo! Llámanos y pruébala hoy mismo.
 		</p>
 		<div>
 			<a href="/#reservas" class="btn-primary">
@@ -205,7 +205,41 @@ const ingredients = [
 	}
 </script>
 
+<script>
+	// Alterna el texto de los botones .cycle-text con fade + translate + blur,
+	// replicando la animación del componente CycleStatusButton sin React ni framer-motion.
+	document.querySelectorAll<HTMLElement>('.cycle-text').forEach((el) => {
+		const raw = el.getAttribute('data-words');
+		if (!raw) return;
+		let words: string[] = [];
+		try { words = JSON.parse(raw); } catch { return; }
+		if (words.length < 2) return;
+
+		let i = 0;
+		el.textContent = words[0];
+
+		const visible = { opacity: 1, transform: 'translateY(0)', filter: 'blur(0px)' };
+		const goneUp = { opacity: 0, transform: 'translateY(-10px)', filter: 'blur(10px)' };
+		const comeFromBelow = { opacity: 0, transform: 'translateY(10px)', filter: 'blur(10px)' };
+		const opts: KeyframeAnimationOptions = { duration: 300, easing: 'ease', fill: 'forwards' };
+
+		setInterval(() => {
+			el.animate([visible, goneUp], opts).finished.then(() => {
+				i = (i + 1) % words.length;
+				el.textContent = words[i];
+				el.animate([comeFromBelow, visible], opts);
+			});
+		}, 2000);
+	});
+</script>
+
 <style>
+	.cycle-text {
+		display: inline-block;
+		min-width: 4.5rem;
+		text-align: center;
+	}
+
 	#burger-video {
 		-webkit-mask-image: linear-gradient(
 			to right,
