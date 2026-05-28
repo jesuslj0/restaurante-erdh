@@ -37,9 +37,9 @@ const { eyebrow, title, description, kpis = [] } = Astro.props
 
 		<!-- KPIs -->
 		{kpis.length > 0 && (
-			<ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+			<ul class="kpi-grid grid grid-cols-1 gap-4 sm:grid-cols-2">
 				{kpis.map((kpi: Kpi) => (
-					<li class="flex items-start gap-4 bg-primary/5 border border-primary/10 rounded-2xl px-6 py-5">
+					<li class="tilt-card flex items-start gap-4 bg-primary/5 border border-primary/10 rounded-2xl px-6 py-5">
 						<span class="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
 							<Icon name={kpi.icon} class="size-5" />
 						</span>
@@ -58,3 +58,58 @@ const { eyebrow, title, description, kpis = [] } = Astro.props
 
 	</div>
 </section>
+
+<style>
+	/* Tilt 3D hover en los KPIs. Para revertir: quita la clase `tilt-card`
+	   de los <li> (línea ~42) y/o `kpi-grid` del <ul>. */
+	.kpi-grid {
+		perspective: 1000px;
+	}
+	.tilt-card {
+		transform-style: preserve-3d;
+		will-change: transform;
+	}
+	@media (hover: none) {
+		/* Sin efecto en dispositivos táctiles (no hay cursor) */
+		.tilt-card { transform: none !important; }
+	}
+</style>
+
+<script>
+	// Port vanilla del TiltCard de framer-motion: tracking del cursor,
+	// rotación 3D con inercia (lerp) en requestAnimationFrame.
+	const TILT_DEG = 14; // rango máx. de rotación en grados (sutil)
+	const LERP = 0.12;   // suavizado tipo spring
+
+	document.querySelectorAll<HTMLElement>('.tilt-card').forEach((card) => {
+		let raf: number | null = null;
+		let targetX = 0, targetY = 0;
+		let currentX = 0, currentY = 0;
+
+		const tick = () => {
+			currentX += (targetX - currentX) * LERP;
+			currentY += (targetY - currentY) * LERP;
+			card.style.transform = `rotateX(${currentX.toFixed(2)}deg) rotateY(${currentY.toFixed(2)}deg)`;
+			if (Math.abs(targetX - currentX) > 0.02 || Math.abs(targetY - currentY) > 0.02) {
+				raf = requestAnimationFrame(tick);
+			} else {
+				raf = null;
+			}
+		};
+
+		card.addEventListener('mousemove', (e: MouseEvent) => {
+			const rect = card.getBoundingClientRect();
+			const px = (e.clientX - rect.left) / rect.width - 0.5;
+			const py = (e.clientY - rect.top) / rect.height - 0.5;
+			targetY = px * TILT_DEG;
+			targetX = -py * TILT_DEG;
+			if (raf === null) raf = requestAnimationFrame(tick);
+		});
+
+		card.addEventListener('mouseleave', () => {
+			targetX = 0;
+			targetY = 0;
+			if (raf === null) raf = requestAnimationFrame(tick);
+		});
+	});
+</script>
