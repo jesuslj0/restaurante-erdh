@@ -155,21 +155,17 @@ const ingredients = [
 		let seeking = false;
 
 		// applySeek aplica el último progress pedido (0→1) traduciéndolo a
-		// currentTime, y encola el siguiente seek con rVFC cuando el frame
-		// se pinta. Crítico: si el video aún no tiene duration válida,
-		// salimos con seeking=false y SIN encolar rVFC — rVFC solo dispara
-		// cuando un frame se pinta, y sin seek no se pinta nada, lo que
-		// dejaría el bucle atascado para siempre. Así el próximo onUpdate
-		// reintenta limpio en cuanto la metadata esté disponible.
+		// currentTime. Si el video aún no tiene duration, no hace nada: el
+		// progress se sigue acumulando y el primer seek válido caerá en el
+		// frame correcto sin huecos. Usa rVFC para encolar el siguiente seek
+		// solo cuando el frame anterior está realmente pintado.
 		const applySeek = () => {
 			if (queuedProgress === null) { seeking = false; return; }
-			if (!isFinite(video.duration) || video.duration <= 0) {
-				seeking = false;
-				return;
-			}
 			const p = queuedProgress;
 			queuedProgress = null;
-			video.currentTime = p * video.duration;
+			if (isFinite(video.duration) && video.duration > 0) {
+				video.currentTime = p * video.duration;
+			}
 			if ("requestVideoFrameCallback" in video) {
 				(video as any).requestVideoFrameCallback(applySeek);
 			} else {
@@ -200,19 +196,11 @@ const ingredients = [
 			},
 		});
 
-		// En cuanto haya metadata, aplicamos el progress actual con un seek
-		// directo. NO usamos play().then(pause): play() devuelve una promesa
-		// que resuelve cuando el video empieza a reproducirse, y durante esa
-		// ventana (decenas a cientos de ms en producción) el video avanza
-		// frames sin control, compitiendo con el scrub. Un seek directo
-		// despierta el decoder igual y pinta el primer frame en la posición
-		// correcta del scroll, permitiendo que el bucle rVFC arranque limpio
-		// en el próximo onUpdate.
+		// Despierta el decoder en cuanto haya metadata para que el primer
+		// currentTime aplique sin lag. Solo tiene sentido aquí (no antes).
 		const prepareVideo = () => {
 			video.pause();
-			if (isFinite(video.duration) && video.duration > 0) {
-				video.currentTime = state.progress * video.duration;
-			}
+			video.play().then(() => video.pause()).catch(() => {});
 		};
 		if (video.readyState >= 1) prepareVideo();
 		else video.addEventListener("loadedmetadata", prepareVideo, { once: true });
