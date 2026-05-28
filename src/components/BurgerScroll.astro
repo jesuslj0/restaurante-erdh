@@ -15,10 +15,10 @@ const ingredients = [
 ];
 ---
 
-<section id="burger-del-mes" class="relative h-[250vh] lg:h-[300vh] bg-bg">
-	<div class="sticky top-0 h-screen overflow-hidden flex flex-col lg:grid lg:grid-cols-[1fr_auto_1fr]">
+<section id="burger-scroll" class="relative h-[300vh] bg-bg">
+	<div class="sticky top-0 h-screen overflow-hidden grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr]">
 
-		<!-- ── COLUMNA IZQUIERDA: concepto (solo desktop) ── -->
+		<!-- ── COLUMNA IZQUIERDA: concepto ── -->
 		<div class="hidden lg:flex flex-col justify-center gap-6 px-12 xl:px-16">
 			<span class="text-xs font-semibold uppercase tracking-widest text-accent">
 				Burguer del mes
@@ -34,20 +34,20 @@ const ingredients = [
 			</p>
 		</div>
 
-		<!-- ── COLUMNA CENTRAL: título móvil + vídeo ── -->
-		<div class="flex flex-col items-center justify-start lg:justify-center h-full">
+		<!-- ── COLUMNA CENTRAL: vídeo ── -->
+		<div class="flex items-center justify-center h-full">
 
-			<!-- Título solo en móvil -->
-			<div class="lg:hidden w-full pt-24 pb-3 px-6 text-center flex flex-col gap-1 shrink-0">
+			<!-- Título visible solo en móvil -->
+			<div class="lg:hidden absolute top-6 left-0 right-0 z-10 px-6 text-center flex flex-col gap-1">
 				<span class="text-xs font-semibold uppercase tracking-widest text-accent">
 					Burguer del mes
 				</span>
-				<h2 class="text-3xl font-bold text-primary font-display mb-10">La Manchega</h2>
+				<h2 class="text-3xl font-bold text-primary">La Manchega</h2>
 			</div>
 
 			<video
 				id="burger-video"
-				class="h-auto max-h-[68vh] lg:max-h-[92vh] w-auto"
+				class="h-auto max-h-[78vh] w-auto lg:max-h-[92vh]"
 				muted
 				playsinline
 				preload="auto"
@@ -56,7 +56,7 @@ const ingredients = [
 			</video>
 		</div>
 
-		<!-- ── COLUMNA DERECHA: ingredientes + CTA (solo desktop) ── -->
+		<!-- ── COLUMNA DERECHA: ingredientes + CTA ── -->
 		<div class="hidden lg:flex flex-col justify-center gap-8 px-12 xl:px-16">
 
 			<div class="flex flex-col gap-3">
@@ -85,7 +85,7 @@ const ingredients = [
 					Pídela en el local o llámanos y te la tenemos lista.
 				</p>
 				<div>
-					<a href="/#reservas" class="btn-primary">
+					<a href="#reservas" class="btn-primary">
 						Quiero probarla
 					</a>
 				</div>
@@ -96,57 +96,13 @@ const ingredients = [
 	</div>
 </section>
 
-<!-- ── MÓVIL ONLY: descripción + ingredientes + CTA ── -->
-<div class="lg:hidden bg-bg px-6 py-12 flex flex-col gap-10">
-
-	<p class="text-secondary leading-relaxed">
-		Este verano, los campos de La Mancha llegan a tu mesa en una sola mordida.
-		Hemos seleccionado a mano cada ingrediente para crear una burguer que huele
-		a tierra, sabe a tradición y te deja sin palabras: jugosa por dentro,
-		dorada por fuera, con ese carácter artesano que solo encontrarás aquí.
-	</p>
-
-	<div class="flex flex-col gap-3">
-		<span class="text-xs font-semibold uppercase tracking-widest text-secondary/60">
-			Ingredientes
-		</span>
-		<ul class="flex flex-col gap-2.5">
-			{ingredients.map((item) => (
-				<li class="flex items-center gap-3">
-					<span class="flex size-6 shrink-0 items-center justify-center rounded-md bg-accent/15 text-accent">
-						<svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-							<polyline points="20 6 9 17 4 12"/>
-						</svg>
-					</span>
-					<span class="text-sm text-secondary leading-snug">{item}</span>
-				</li>
-			))}
-		</ul>
-	</div>
-
-	<div class="flex flex-col gap-3 pt-6 border-t border-primary/10">
-		<p class="text-lg font-bold text-primary">
-			¿La has probado ya?
-		</p>
-		<p class="text-sm text-secondary/70 leading-snug">
-			Pídela en el local o llámanos y te la tenemos lista.
-		</p>
-		<div>
-			<a href="/#reservas" class="btn-primary">
-				Quiero probarla
-			</a>
-		</div>
-	</div>
-
-</div>
-
 <script>
 	import { gsap } from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
-	const section = document.getElementById("burger-del-mes");
+	const section = document.getElementById("burger-scroll");
 	const video = document.getElementById("burger-video") as HTMLVideoElement | null;
 
 	if (section && video) {
@@ -198,6 +154,9 @@ const ingredients = [
 </script>
 
 <style>
+	/* Fundido lateral: un único linear-gradient en el compositor de GPU.
+	   Solo afecta a los bordes izquierdo y derecho (los únicos que pueden
+	   mostrar corte). Top/bottom ya tienen fondo #171717 y no necesitan fade. */
 	#burger-video {
 		-webkit-mask-image: linear-gradient(
 			to right,
