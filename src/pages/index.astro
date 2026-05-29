@@ -6,7 +6,8 @@ import BurgerScroll from '../components/BurgerScroll.astro';
 import Footer from '../components/Footer.astro';
 import About from '../components/About.astro';
 import Reservations from '../components/Reservations.astro';
-import { headerElements, footerElements, footerSocial } from '../data/nav';
+import Reviews from '../components/Reviews.astro';
+import { headerElements, footerSocial } from '../data/nav';
 ---
 
 <Layout restaurantName="El Rincón de Héctor">
@@ -29,7 +30,7 @@ import { headerElements, footerElements, footerSocial } from '../data/nav';
 	<About slot="about"
 		eyebrow="Nuestra casa"
 		title="Un rincón con sabor a hogar"
-		description="El Rincón de Héctor nació del deseo de ofrecer cocina tradicional hecha con producto fresco de temporada y mucho cariño. Ven a desconectar y a disfrutar con los tuyos."
+		description="El Rincón de Héctor nació del deseo de ofrecer cocina tradicional hecha con producto fresco de temporada y mucho cariño. Ven a disfrutar y a compartir momentos con los tuyos."
 		kpis={[
 			{
 				icon: 'lucide:map-pin',
@@ -51,6 +52,71 @@ import { headerElements, footerElements, footerSocial } from '../data/nav';
 				label: 'Para llevar',
 				value: 'Gran variedad de platos para compartir en casa',
 			}
+		]}
+	/>
+	<Reviews slot="reviews"
+		eyebrow="Reseñas y comentarios"
+		title="Opiniones de nuestros clientes"
+		subtitle="Más de 8 años entre los fogones con la misma ilusión de siempre. Esto es lo que dicen quienes ya han pasado por nuestra mesa."
+		averageRating={4.3}
+		totalReviews={306}
+		reviews={[
+			{
+				name: 'Mari Carmen P.',
+				rating: 4,
+				text: 'Muy recomendado, hay gran variedad y está todo excelente. Los menús son muy innovadores y sobre todo a buen precio. Todos los productos de gran calidad y muy bien tratados en cocina.',
+				date: 'Abr 2024',
+				platform: 'google',
+			},
+			{
+				name: 'Lola M.',
+				rating: 5,
+				text: 'Una vez mas espectacular. Comida deliciosa y un trato muy agradable. Visita obligatoria cada vez que nos pilla de camino',
+				date: 'Mar 2023',
+				platform: 'google',
+			},
+			{
+				name: 'Anais N.',
+				rating: 5,
+				text: 'Magnífico restaurante. Comida de muy buena calidad y el personal muy atento. Los menús del día están muy bien relación calidad precio. Somos clientes habituales y siempre volvemos! Muy recomendable para celebraciones y reservas grandes . La terraza interior preciosa!',
+				date: 'Feb 2024',
+				platform: 'google',
+			},
+			{
+				name: 'Luis C.',
+				rating: 4,
+				text: 'Todo muy bueno y nada caro. Las camareras atentísimas. Un gusto!',
+				date: 'Ene 2025',
+				platform: 'google',
+			},
+			{
+				name: 'Cristina R.',
+				rating: 5,
+				text: 'Fuimos a cenar toda la familia. El servicio muy atento y la cena riquísima, pedimos croquetas que estaban deliciosas unas de jamón y otras de gambas, las recomiendo 100%, también el solomillo y por supuesto las pizzas. Volveremos.',
+				date: 'Dic 2024',
+				platform: 'google',
+			},
+			{
+				name: 'Marcos R.',
+				rating: 5,
+				text: 'Se come genial aquí, recomiendo encarecidamente reservar previamente por que suele estar muy lleno, sobre todo en fines de semana, pero cada fin de semana tienes para elegir un menú diferente y está todo riquísimo.',
+				date: 'Nov 2024',
+				platform: 'google',
+			},
+			{
+				name: 'David C.',
+				rating: 5,
+				text: 'Un buen sitio para comer de forma tranquila y pausada. Y sin prisas, cada plato muy bueno y un descubrimiento. Quedan pendientes las pizzas.',
+				date: 'Oct 2025',
+				platform: 'google',
+			},
+			{
+				name: 'David L.',
+				rating: 4,
+				text: 'Buena opción para comer en El Bonillo. Las hamburguesas son muy buenas y las raciones son generosas. Lo recomiendo a todo el que pase por la zona.',
+				date: 'Ene 2026',
+				platform: 'google',
+			},
 		]}
 	/>
 	<Reservations slot="reservations"

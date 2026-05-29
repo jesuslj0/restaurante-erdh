@@ -10,7 +10,7 @@ const ingredients = [
 	"Queso semicurado artesano fundido",
 	"Lomo de orza con sabor de antaño",
 	"Picadillo de chorizo en la base",
-	"Alioli casero hecho en casa",
+	"Alioli tradicional hecho en casa",
 	"Pan rústico de miga prieta",
 ];
 ---
@@ -23,10 +23,10 @@ const ingredients = [
 			<span class="text-xs font-semibold uppercase tracking-widest text-accent">
 				Burguer del mes
 			</span>
-			<h2 class="text-4xl xl:text-5xl font-bold text-primary leading-tight">
+			<h2 class="text-4xl xl:text-5xl text-primary font-bold font-display leading-tight">
 				La Manchega
 			</h2>
-			<p class="text-secondary leading-relaxed max-w-sm">
+			<p class="text-text-accent leading-relaxed max-w-sm">
 				Este verano, los campos de La Mancha llegan a tu mesa en una sola mordida.
 				Hemos seleccionado a mano cada ingrediente para crear una burguer que huele
 				a tierra, sabe a tradición y te deja sin palabras: jugosa por dentro,
@@ -66,7 +66,7 @@ const ingredients = [
 				<ul class="flex flex-col gap-2.5">
 					{ingredients.map((item) => (
 						<li class="flex items-center gap-3">
-							<span class="flex size-6 shrink-0 items-center justify-center rounded-md bg-accent/15 text-accent">
+							<span class="flex size-6 shrink-0 items-center justify-center rounded-md bg-accent-muted text-accent">
 								<svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
 									<polyline points="20 6 9 17 4 12"/>
 								</svg>
@@ -99,7 +99,7 @@ const ingredients = [
 <!-- ── MÓVIL ONLY: descripción + ingredientes + CTA ── -->
 <div class="lg:hidden bg-bg px-6 py-12 flex flex-col gap-10">
 
-	<p class="text-secondary leading-relaxed">
+	<p class="text-orange-200 leading-relaxed">
 		Este verano, los campos de La Mancha llegan a tu mesa en una sola mordida.
 		Hemos seleccionado a mano cada ingrediente para crear una burguer que huele
 		a tierra, sabe a tradición y te deja sin palabras: jugosa por dentro,

@@ -15,10 +15,13 @@ type Props = {
 const { elements } = Astro.props
 ---
 
-<header class="w-full bg-bg/30 backdrop-blur-sm fixed top-0 z-[100]">
+<header class="w-full bg-bg/30 backdrop-blur-sm fixed top-0 z-100">
 	<div id="header-inner" class="flex items-center justify-between py-4">
 
+
 		<span class="text-lg font-semibold font-display text-secondary md:hidden">RDH</span>
+		<!-- Logo desktop -->
+		<span class="hidden md:block text-lg font-semibold font-display text-secondary">RDH</span>
 
 		<!-- Botón hamburguesa (solo móvil) -->
 		<button
@@ -37,7 +40,7 @@ const { elements } = Astro.props
 				<li>
 					<a
 						href={element.link}
-						class="text-secondary text-sm inline-flex gap-2 items-center hover:text-primary transition-colors"
+						class="text-secondary text-sm inline-flex gap-2 items-center hover:text-accent-light transition-colors"
 					>
 						<Icon name={element.icon} class="size-4" />
 						{element.name}
@@ -46,14 +49,12 @@ const { elements } = Astro.props
 			))}
 		</ul>
 
-		<!-- Logo desktop -->
-		<span class="hidden md:block text-lg font-semibold font-display text-secondary">RDH</span>
 	</div>
 </header>
 
 <nav
 	id="nav-menu"
-	class="flex fixed inset-0 z-[110] flex-col bg-black gap-8 md:hidden translate-x-full transition-transform duration-300 ease-in-out pointer-events-none"
+	class="flex fixed inset-0 z-110 flex-col bg-black gap-8 md:hidden translate-x-full transition-transform duration-300 ease-in-out pointer-events-none"
 	aria-hidden="true"
 >
 	<!-- Cabecera del panel -->

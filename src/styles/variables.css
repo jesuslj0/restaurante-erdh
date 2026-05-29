@@ -2,7 +2,14 @@
   --color-primary: #ffffff;
   --color-secondary: #d4d4d4;
   --color-bg: #171717;
-  --color-accent: #d98e43;
+  
+  --color-accent: #c97a2b;
+  --color-accent-light: #dd9348;
+  --color-accent-soft: #f0b06b;
+  --color-accent-dark: #9b5c1d;
+  --color-accent-muted: #4a2e16;
+  
+  --color-text-accent: #ffd7ad;
 
   --font-body: 'Jost', sans-serif;
   --font-display: 'Cormorant Garamond', serif;

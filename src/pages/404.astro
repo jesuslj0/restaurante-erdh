@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { Icon } from 'astro-icon/components';
+import { headerElements, footerSocial } from '../data/nav';
+---
+
+<Layout restaurantName="El Rincón de Héctor" pageTitle="Página no encontrada — El Rincón de Héctor">
+  <Header slot="header" elements={headerElements} />
+
+  <section class="min-h-[80vh] bg-bg flex items-center justify-center px-6 py-24">
+    <div class="max-w-lg w-full text-center flex flex-col items-center gap-8">
+
+      <div class="relative select-none">
+        <span class="text-[10rem] leading-none font-bold text-accent/10 tracking-tighter">404</span>
+        <Icon
+          name="lucide:utensils-crossed"
+          class="absolute inset-0 m-auto size-20 text-accent/40"
+        />
+      </div>
+
+      <div class="flex flex-col items-center gap-3">
+        <p class="text-xs font-medium tracking-widest uppercase text-accent">Página no encontrada</p>
+        <h1 class="text-3xl md:text-4xl font-semibold text-primary leading-tight">
+          Parece que este plato<br />no está en la carta
+        </h1>
+        <p class="text-secondary/70 text-base max-w-sm">
+          La página que buscas no existe o ha sido movida. Pero la cocina sigue abierta — vuelve al inicio o echa un vistazo a nuestra carta.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-3 justify-center">
+        <a href="/" class="btn-primary">
+          <Icon name="lucide:home" class="size-4" />
+          Volver al inicio
+        </a>
+        <a href="/carta" class="btn-secondary">
+          <Icon name="lucide:book-open" class="size-4" />
+          Ver la carta
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <Footer slot="footer" socialElements={footerSocial} restaurantName="El Rincón de Héctor" />
+</Layout>
