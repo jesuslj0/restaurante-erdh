@@ -290,19 +290,15 @@ const ingredients = [
 	}
 
 	#burger-video {
-		-webkit-mask-image: linear-gradient(
-			to right,
-			transparent 0%,
-			black 14%,
-			black 86%,
-			transparent 100%
-		);
-		mask-image: linear-gradient(
-			to right,
-			transparent 0%,
-			black 14%,
-			black 86%,
-			transparent 100%
-		);
+		/* Dos degradados: uno horizontal (lados) y otro vertical (arriba/abajo).
+		   Se combinan con mask-composite: intersect → el vídeo solo es opaco donde
+		   ambos lo son, así se funden los cuatro bordes. El degradado vertical es
+		   más agresivo arriba (12%) que abajo (92%) porque el borde superior canta más. */
+		--fade-x: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
+		--fade-y: linear-gradient(to bottom, transparent 0%, black 12%, black 92%, transparent 100%);
+		-webkit-mask-image: var(--fade-x), var(--fade-y);
+		mask-image: var(--fade-x), var(--fade-y);
+		-webkit-mask-composite: source-in;
+		mask-composite: intersect;
 	}
 </style>
