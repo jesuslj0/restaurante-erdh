@@ -149,15 +149,19 @@ const ingredients = [
 	const section = document.getElementById("burger-del-mes");
 	const video = document.getElementById("burger-video") as HTMLVideoElement | null;
 
-	// En táctil el scrub por currentTime es inviable: iOS no repinta el frame de
+	// El scrub por currentTime es inviable en móvil: iOS no repinta el frame de
 	// un vídeo pausado al hacer seek, rVFC no dispara sin reproducción y play()
 	// sin gesto lo bloquea la política de autoplay. Además el sticky+250vh con
 	// seek síncrono deja el scroll atascado al recargar a media página (la barra
 	// de URL redimensiona 100vh). Solución: en móvil no scrubeamos; reproducimos
 	// el vídeo en bucle al entrar en viewport, sin sticky ni altura gigante.
-	const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+	//
+	// Detectamos por ancho (= breakpoint lg de Tailwind, 1024px) en vez de por
+	// tipo táctil: así el comportamiento del vídeo coincide SIEMPRE con el layout
+	// que se ve en pantalla (3 columnas con scrub ≥1024 / apilado con bucle <1024).
+	const isMobile = window.matchMedia("(max-width: 1023px)").matches;
 
-	if (section && video && isTouch) {
+	if (section && video && isMobile) {
 		video.loop = true;
 		video.muted = true;
 		const io = new IntersectionObserver(
