@@ -196,17 +196,36 @@ const ingredients = [
 			},
 		});
 
-		// Despierta el decoder en cuanto haya metadata para que el primer
-		// currentTime aplique sin lag. Solo tiene sentido aquí (no antes).
-		const prepareVideo = () => {
-			video.pause();
-			video.play().then(() => video.pause()).catch(() => {});
+		// FIX primera visita (vídeo sin caché): si la metadata llega tarde, la
+		// cadena de applySeek muere porque rVFC solo dispara al pintar un frame
+		// y, con el vídeo pausado y currentTime sin tocar, ese frame no llega.
+		// initVideo hace un seek al progreso actual del scroll en cuanto hay
+		// metadata: eso fuerza el pintado de un frame → revive la cadena rVFC.
+		const seekToProgress = () => {
+			if (isFinite(video.duration) && video.duration > 0) {
+				video.currentTime = state.progress * video.duration;
+			}
 		};
-		if (video.readyState >= 1) prepareVideo();
-		else video.addEventListener("loadedmetadata", prepareVideo, { once: true });
+		const initVideo = () => {
+			seekToProgress();
+			// Despierta el decoder y reposiciona tras el play/pause.
+			video.play().then(() => {
+				video.pause();
+				seekToProgress();
+			}).catch(() => {});
+		};
+		if (video.readyState >= 1) initVideo();
+		else video.addEventListener("loadedmetadata", initVideo, { once: true });
 
-		// Sincroniza posiciones con Lenis tras crear el trigger.
+		// Sincroniza posiciones tras crear el trigger. Dos disparos: el rAF
+		// cubre el caso Lenis-temprano; el load cubre el vídeo-tarde. Guardamos
+		// el load por si ya disparó antes de registrar el listener.
 		requestAnimationFrame(() => ScrollTrigger.refresh());
+		if (document.readyState === "complete") {
+			ScrollTrigger.refresh();
+		} else {
+			window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
+		}
 	}
 </script>
 
