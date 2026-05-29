@@ -15,8 +15,8 @@ const ingredients = [
 ];
 ---
 
-<section id="burger-del-mes" class="relative h-[250vh] lg:h-[300vh] bg-bg">
-	<div class="sticky top-0 h-screen overflow-hidden flex flex-col lg:grid lg:grid-cols-[1fr_auto_1fr]">
+<section id="burger-del-mes" class="relative lg:h-[300vh] bg-bg">
+	<div class="lg:sticky lg:top-0 lg:h-screen overflow-hidden flex flex-col lg:grid lg:grid-cols-[1fr_auto_1fr]">
 
 		<!-- ── COLUMNA IZQUIERDA: concepto (solo desktop) ── -->
 		<div class="hidden lg:flex flex-col items-end text-right justify-center gap-6 px-12 xl:px-16">
@@ -149,7 +149,28 @@ const ingredients = [
 	const section = document.getElementById("burger-del-mes");
 	const video = document.getElementById("burger-video") as HTMLVideoElement | null;
 
-	if (section && video) {
+	// En táctil el scrub por currentTime es inviable: iOS no repinta el frame de
+	// un vídeo pausado al hacer seek, rVFC no dispara sin reproducción y play()
+	// sin gesto lo bloquea la política de autoplay. Además el sticky+250vh con
+	// seek síncrono deja el scroll atascado al recargar a media página (la barra
+	// de URL redimensiona 100vh). Solución: en móvil no scrubeamos; reproducimos
+	// el vídeo en bucle al entrar en viewport, sin sticky ni altura gigante.
+	const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
+	if (section && video && isTouch) {
+		video.loop = true;
+		video.muted = true;
+		const io = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) video.play().catch(() => {});
+					else video.pause();
+				}
+			},
+			{ threshold: 0.25 },
+		);
+		io.observe(video);
+	} else if (section && video) {
 		const state = { progress: 0 };
 		let queuedProgress: number | null = null;
 		let seeking = false;
