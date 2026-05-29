@@ -18,14 +18,17 @@ type Props = {
 const { title, subtitle, cta, secondaryCta } = Astro.props
 ---
 
-<section class="hero-section bg-stone-200 min-h-[80vh] h-screen flex items-center justify-center px-6 py-20">
+<section class="hero-section bg-stone-200 min-h-[100dvh] flex items-center justify-center px-6 py-20">
 	<div class="background-overlay"></div>
 	<div class="text-center max-w-2xl mx-auto flex flex-col items-center gap-6 z-10">
-		<h1 class="text-5xl font-display font-bold tracking-tight text-primary sm:text-7xl">
+		<span class="eyebrow-badge">
+			Cocina tradicional · El Bonillo
+		</span>
+		<h1 class="text-5xl font-display font-bold tracking-tight text-primary sm:text-7xl hero-title">
 			{title}
 		</h1>
 		{subtitle && (
-			<p class="text-lg text-accent max-w-prose">
+			<p class="text-lg text-accent max-w-prose hero-subtitle">
 				{subtitle}
 			</p>
 		)}
@@ -46,14 +49,17 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 			</div>
 		)}
 	</div>
+	<div class="scroll-indicator" aria-hidden="true">
+		<Icon name="lucide:chevron-down" class="size-5 text-primary/60" />
+	</div>
 </section>
 
 
 <style>
 	.hero-section {
-		background-image: url('../assets/img/puerta-ia.png');
+		background-image: url('/imgs/Dark_editorial_food_photography._A_202605290947.jpeg');
 		background-size: cover;
-		background-position: 50% 40%;
+		background-position: 50% 55%;
 		background-repeat: no-repeat;
 		position: relative;
 	}
@@ -61,9 +67,9 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 	.background-overlay {
 		background: linear-gradient(
 			to bottom,
-			rgba(0, 0, 0, 0.55) 0%,
-			rgba(0, 0, 0, 0.60) 55%,
-			rgba(23, 23, 23, 0.92) 88%,
+			rgba(0, 0, 0, 0.70) 0%,
+			rgba(0, 0, 0, 0.20) 45%,
+			rgba(23, 23, 23, 0.80) 82%,
 			var(--color-bg) 100%
 		);
 		height: 100%;
@@ -71,5 +77,55 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 		position: absolute;
 		top: 0;
 		pointer-events: none;
+	}
+
+	.eyebrow-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 500;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+		border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+		background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+		padding: 0.35rem 0.85rem;
+		border-radius: 9999px;
+		text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
+	}
+
+	.hero-title {
+		text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85);
+	}
+
+	.hero-subtitle {
+		text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
+	}
+
+	.hero-section::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 80px;
+		background: linear-gradient(to bottom, transparent, var(--color-bg));
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.scroll-indicator {
+		position: absolute;
+		bottom: 2rem;
+		left: 50%;
+		transform: translateX(-50%);
+		animation: scroll-bounce 2s ease-in-out infinite;
+		z-index: 2;
+	}
+
+	@keyframes scroll-bounce {
+		0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
+		50%       { transform: translateX(-50%) translateY(6px); opacity: 1; }
 	}
 </style>
