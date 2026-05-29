@@ -69,18 +69,20 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 			display: flex;
 			flex-direction: column;
 			justify-content: start;
-			background-position: center 80%;
+			background-image: none;
+			background-color: black;
 		}
 
 		.hero-section::before {
 			content: '';
 			position: absolute;
-			inset: 0;
-
+			top: 160px;
+			left: 0;
+			right: 0;
+			bottom: 0;
 			background-image: url("/imgs/Dark_editorial_food_photography._A_202605290947.jpeg");
 			background-position: center;
 			background-size: cover;
-			transform: translateY(180px);
 		}
 
 		.hero-content {
