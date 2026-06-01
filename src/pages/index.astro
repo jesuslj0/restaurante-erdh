@@ -10,7 +10,13 @@ import Reviews from '../components/Reviews.astro';
 import { headerElements, footerSocial } from '../data/nav';
 ---
 
-<Layout restaurantName="El Rincón de Héctor">
+<Layout
+	restaurantName="El Rincón de Héctor"
+	seo={{
+		title: 'El Rincón de Héctor | Restaurante en El Bonillo, Albacete',
+		description: 'Restaurante en El Bonillo (Albacete). Tapas, pizzas artesanas de horno de leña, hamburguesas y menús de fin de semana. Cocina tradicional con producto fresco. Reservas: 967 37 05 82.',
+	}}
+>
 	<Header slot="header" elements={headerElements}/>
 	<Hero slot="hero"
 		title="El Rincón de Héctor"

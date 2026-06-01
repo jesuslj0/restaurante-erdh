@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Icon } from 'astro-icon/components';
-import { headerElements, footerElements, footerSocial } from '../data/nav';
+import { headerElements, footerSocial } from '../data/nav';
 
 interface Dish {
   name: string;
@@ -231,7 +231,14 @@ const refrescos: Drink[] = [
 ];
 ---
 
-<Layout restaurantName="El Rincón de Héctor" pageTitle="La Carta — El Rincón de Héctor">
+<Layout
+  restaurantName="El Rincón de Héctor"
+  seo={{
+    title: 'Carta | El Rincón de Héctor — Tapas, Pizzas y Hamburguesas en El Bonillo',
+    description: 'Descubre nuestra carta: tapas frías y calientes, pizzas artesanas de masa madre, hamburguesas especiales, bodega y menús de fin de semana. Restaurante en El Bonillo, Albacete.',
+    type: 'menu',
+  }}
+>
   <Header slot="header" elements={headerElements} />
 
   <Fragment>
