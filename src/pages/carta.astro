@@ -669,6 +669,10 @@ const refrescos: Drink[] = [
     line-height: 1.4;
   }
 
+  .dish-list .dish-row:nth-child(even) .dish-name {
+    color: color-mix(in srgb, var(--color-text-accent) 55%, var(--color-primary));
+  }
+
   .dish-desc {
     font-size: 0.8rem;
     color: var(--color-secondary);
@@ -824,6 +828,10 @@ const refrescos: Drink[] = [
     color: var(--color-primary);
     margin: 0;
     line-height: 1.35;
+  }
+
+  .wine-grid .wine-card:nth-child(even) .wine-name {
+    color: color-mix(in srgb, var(--color-text-accent) 55%, var(--color-primary));
   }
 
   .wine-region {

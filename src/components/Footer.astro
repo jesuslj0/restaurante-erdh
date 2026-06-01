@@ -23,17 +23,17 @@ const { socialElements, restaurantName, year = new Date().getFullYear() } = Astr
 		<!-- Izquierda: marca -->
 		<div class="flex flex-col items-center gap-1 lg:items-start">
 			<span class="text-2xl font-display font-semibold text-primary tracking-wide">{restaurantName}</span>
-			<p class="text-xs text-secondary/50 tracking-widest uppercase">Cocina de siempre, con alma propia</p>
+			<p class="text-xs text-accent/55 tracking-widest uppercase">Cocina de siempre, con alma propia</p>
 		</div>
 
 		<!-- Derecha: redes -->
 		<div class="flex flex-col items-center gap-3 lg:items-end">
-			<p class="text-xs font-semibold uppercase tracking-widest text-secondary/40">Síguenos</p>
+			<p class="text-xs font-semibold uppercase tracking-widest text-accent/45">Síguenos</p>
 			<ul class="flex gap-5">
 				{socialElements.map((social: SocialLink) => (
 					<li>
 						<a href={social.link} target="_blank" rel="noopener noreferrer" aria-label={social.name}
-							class="flex items-center gap-1.5 text-sm hover:text-primary transition-colors">
+							class="flex items-center gap-1.5 text-sm hover:text-accent transition-colors">
 							<Icon name={social.icon} class="size-4" />
 							@{social.username}
 						</a>
