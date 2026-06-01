@@ -22,7 +22,6 @@ interface WineCard {
 
 interface Beer {
   name: string;
-  description: string;
   price: string;
 }
 
@@ -70,7 +69,7 @@ const tapasCalientes: Dish[] = [
   { name: 'Rabo de cerdo frito', description: 'Rabo de cerdo a la plancha con salsa de la casa', price: '8,80 €', badge: 'popular' },
   { name: 'Landres de cerdo', description: 'Landres fritas con ajos', price: '10,80 €' },
   { name: 'Pollo frito', description: 'Pollo frito rebozado con salsa de tomate', price: '10,00 €' },
-  { name: 'Patatas americanas', description: 'Patatas fritas con salsa ranchera, bacon y queso.', price: '10,00 €', badge: 'popular' },
+  { name: 'Patatas americanas', description: 'Patatas fritas con salsa ranchera, bacon y queso.', price: '7,00 €', badge: 'popular' },
   { name: 'Patatas bravas', description: 'Patatas fritas con salsa brava casera', price: '5,90 €' },
   { name: 'Nachos mexicanos', description: 'Nachos con queso, jalapeño, pico de gallo y carne picada', price: '8,10 €', badge: 'popular' },
   { name: 'Queso frito', description: 'Queso frito rebozado con mermelada de frambuesas', price: '8,50 €'},
@@ -83,8 +82,11 @@ const tapasCalientes: Dish[] = [
   { name: 'Bacalao al ajo confitado', description: 'Bacalao al ajo confitado', price: '8,50 €', badge: 'popular' },
   { name: 'Chipirones a la plancha', description: 'Chipirones a la plancha', price: '15,00 €' },
   { name: 'Sepia a la plancha', description: 'Sepia a la plancha', price: '15,00 €' },
+  { name: 'Almejas al vapor', description: 'Almejas al vapor', price: '12,00 €' },
+  { name: 'Gyozas de panceta ibérica', description: 'Gyozas crujientes de panceta ibérica (unidad)', price: '1,20 €', badge: 'new' },
+  { name: 'Ensalada italiana', description: 'Ensalada italiana con pasta rellena crujiente', price: '12,80 €' },
   { name: 'Gambón al ajillo o rebozado', description: 'Gambón al ajillo o rebozado a elegir.', price: '10,50 €' },
-  { name: 'Brocheta de marisco o carne', description: 'Brocheta de marisco o carne a elegir.', price: '10,00 €', badge: 'popular' },
+  { name: 'Brocheta de marisco o carne', description: 'Brocheta de marisco o carne a elegir.', price: '19,00 €', badge: 'popular' },
   { name: 'Pincho de pulpo con patata', description: 'Pincho de pulpo a la gallega con patata y pimentos', price: '5,50 €' },
   { name: 'Cigalitas salteadas', description: 'Cigalitas salteadas con salsa de la casa', price: '12,50 €' },
   { name: 'Almejas a la marinera', description: 'Almejas a la marinera', price: '12,00 €' },
@@ -127,7 +129,7 @@ const hamburguesas: Dish[] = [
 
 const bocadillos: Dish[] = [
   { name: 'Tosta de lomo gratinada', description: 'Lomo de cerdo a la plancha con queso gratinado', price: '4,80 €' },
-  { name: 'Tosta vegetal', description: 'Lechuga, atún, cebolla, tomate', price: '4,80 €'},
+  { name: 'Tosta vegetal', description: 'Lechuga, atún, tomate, salmón', price: '4,80 €'},
 ];
 
 const weekendMenus: WeekendMenu[] = [
@@ -135,99 +137,85 @@ const weekendMenus: WeekendMenu[] = [
     name: 'Menú Fin de Semana',
     courses: [
       {
-        label: '3 Entrantes a elegir',
+        label: '3 Entrantes',
         options: [
-          'Elige entre nuestra variedad de platos y tapas',
+          'Tres platos elegidos por la casa',
         ],
       },
       {
         label: 'Segundo (a elegir)',
         options: [
-          'Secreto ibérico a la brasa con patatas a lo pobre',
-          'Merluza en salsa verde con almejas y espárragos',
-          'Arroz caldoso de mariscos con alioli de azafrán',
+          'Carne',
+          'Pescado',
+          'Arroz',
         ],
       },
     ],
     price: '22,50 €',
-    note: 'Incluye pan artesano, postre del día o café y bebida (agua, vino de la casa o refresco)',
+    note: 'Incluye pan, postre del día o café y bebida.',
   },
-//   {
-//     name: 'Menú B · De la casa',
-//     courses: [
-//       {
-//         label: 'Primero (a elegir)',
-//         options: [
-//           'Gazpacho andaluz con guarnición de pepino y cebolla',
-//           'Revuelto de setas silvestres y trufa con pan de cristal',
-//           'Tabla de jamón serrano y queso manchego curado',
-//         ],
-//       },
-//       {
-//         label: 'Segundo (a elegir)',
-//         options: [
-//           'Solomillo de ternera con patatas asadas al tomillo',
-//           'Lubina a la sal con limón, aceite de oliva y patatas vapor',
-//           'Cocido manchego de temporada con sus vuelcos',
-//         ],
-//       },
-//     ],
-//     price: '22,00 €',
-//     note: 'Incluye pan artesano, postre casero y bebida (agua, vino reserva o refresco)',
-//   },
 ];
 
 const vinosBlancos: WineCard[] = [
   { name: 'La Doncella de las Viñas', region: 'La Mancha', grapes: 'Chardonnay', copa: '3,50 €', botella: '12,50 €' },
   { name: 'Pato Mareao', region: 'Rias Baixas', grapes: 'Albariño', copa: '3,00 €', botella: '18,50 €' },
-  { name: 'Finca Elez', region: 'La Mancha', grapes: 'Chardonnay', copa: '2,00 €', botella: '17,80 €' },
-  { name: 'El Beso', region: 'La Mancha', grapes: 'Chardonnay', copa: '2,00 €', botella: '18,00 €' },
-  { name: 'Carrascas Viognier', region: 'La Mancha', grapes: 'Viognier', copa: '2,00 €', botella: '15,80 €' },
-  { name: 'Palomo Cojo Rueda', region: 'La Mancha', grapes: 'Verdejo', copa: '2,00 €', botella: '16,50 €' },
-  { name: 'Vino La Nación', region: 'La Mancha', grapes: 'Cencibel (Tempranillo) y Garnacha Fina', copa: '2,00 €', botella: '15,00 €' },
-  { name: '912 Altitud Rueda', region: 'Rivera del Duero', grapes: 'Verdejo', copa: '2,00 €', botella: '12,00 €' },
-  { name: 'Añil Fresh', region: 'La Mancha', grapes: 'Macabeo y Chardonnay', copa: '2,00 €', botella: '12,50 €' },
+  { name: 'Finca Elez', region: 'Pago Finca Elez', grapes: 'Chardonnay', copa: '2,50 €', botella: '17,80 €' },
+  { name: 'El Beso', region: 'La Mancha', grapes: 'Chardonnay', copa: '3,00 €', botella: '18,00 €' },
+  { name: 'Carrascas Viognier', region: 'El Bonillo (La Mancha)', grapes: 'Viognier', copa: '2,50 €', botella: '15,80 €' },
+  { name: 'Palomo Cojo Rueda', region: 'Rueda', grapes: 'Verdejo', copa: '2,50 €', botella: '16,50 €' },
+  { name: 'Vino La Nación', region: 'La Mancha', grapes: 'Cencibel (Tempranillo) y Garnacha Fina', copa: '2,50 €', botella: '15,00 €' },
+  { name: '912 Altitud Rueda', region: 'Rueda', grapes: 'Verdejo', copa: '2,00 €', botella: '12,00 €' },
+  { name: 'Agraces', region: 'La Mancha', grapes: 'Verdejo', copa: '2,00 €', botella: '12,50 €' },
+  { name: 'Pazo de Oiras', region: 'Galicia', grapes: 'Godello', copa: '3,50 €', botella: '24.50 €' }
 ];
 
 const vinosTintosElBonillo: WineCard[] = [
-  { name: 'La Doncella de las Viñas', botella: '13,50 €' },
-  { name: 'El Beso de las Uvas', region: 'Vino de Autor', botella: '19,80 €' },
-  { name: 'Exp Guijoso Maceración Carbónica', botella: '14,50 €' },
-  { name: 'La Sabina Merlot Crianza', botella: '15,20 €' },
-  { name: 'La Sabina Syrah', botella: '15,20 €' },
-  { name: 'La Sabina Cabernet', botella: '15,20 €' },
-  { name: 'Laguna Blanca', botella: '10,80 €' },
-  { name: 'Carrascas Syrah-Tempranillo', botella: '15,50 €' },
-  { name: 'Pago Finca Elez', botella: '19,80 €' },
-  { name: 'La Nación', botella: '15,00 €' },
+  { name: 'La Doncella de las Viñas', region: 'Pago Guijoso', grapes: 'Tempranillo y Syrah', botella: '13,50 €' },
+  { name: 'El Beso de las Uvas', region: 'Pago Guijoso', grapes: 'Tempranillo y Merlot', botella: '19,80 €' },
+  { name: 'Exp Guijoso Maceración Carbónica', region: 'Pago Guijoso', grapes: 'Tempranillo', botella: '14,50 €' },
+  { name: 'La Sabina Merlot Crianza', region: 'Pago Guijoso', grapes: 'Merlot', botella: '15,20 €' },
+  { name: 'La Sabina Syrah', region: 'Pago Guijoso', grapes: 'Syrah', botella: '15,20 €' },
+  { name: 'La Sabina Cabernet', region: 'Pago Guijoso', grapes: 'Cabernet Sauvignon', botella: '15,20 €' },
+  { name: 'Laguna Blanca', region: 'Pago Guijoso', grapes: 'Tempranillo', botella: '10,80 €' },
+  { name: 'Carrascas Syrah-Tempranillo', region: 'Carrascas', grapes: 'Tempranillo y Syrah', botella: '15,80 €' }, 
+  { name: 'Carrascas Tempranillo', region: 'Carrascas', grapes: 'Tempranillo', botella: '15,50 €' },
+  { name: 'Pago Finca Elez', region: 'Finca Elez', grapes: 'Tempranillo y Syrah/Merlot', botella: '19,80 €' },
+  { name: 'La Nación', region: 'Vino de autor', grapes: 'Tempranillo y Garnacha Fina', botella: '15,00 €' }
 ];
 
-const vinosTintosRibera: WineCard[] = [
-  { name: '912 de Altitud', botella: '14,50 €' },
-  { name: 'Viejo Mundo', botella: '13,50 €' },
-  { name: '912 Altitud 2', botella: '48,50 €' },
-  { name: 'Vilano 57', botella: '22,80 €' },
+const vinosTintosRiberaRioja: WineCard[] = [
+  { name: '912 de Altitud', region: 'Ribera del Duero', grapes: 'Tempranillo', botella: '14,50 €' },
+  { name: '912 Altitud al Cuadrado', region: 'Ribera del Duero', grapes: 'Tempranillo', botella: '48,50 €' },
+  { name: 'Vilano 57', region: 'Ribera del Duero', grapes: 'Tempranillo, Cabernet Sauvignon y Merlot', botella: '22,80 €' },
+  { name: 'Paco García Rioja', region: 'Rioja', grapes: 'Tempranillo y Garnacha', botella: '15,50 €' },
 ];
 
 const vinosRosadosEspumosos: WineCard[] = [
-  { name: 'La Ravera Rosado', region: 'La Mancha', grapes: 'Garnacha', copa: '2,00 €', botella: '16,50 €' },
-  { name: 'Cava Rose Brut', region: 'Cava D.O.', copa: '3,00 €', botella: '18,50 €' },
+  { name: 'La Rabera Rosado', region: 'La Recueja (Albacete)', grapes: 'Garnacha', botella: '16,50 €' },
+  { name: 'Cava Rose Brut', region: 'Cava D.O.', botella: '18,50 €' },
+  { name: 'Abadía Mediterànea Muscat', region: 'Cataluña', grapes: 'Muscat Blanc', botella: '12,50 €' },
 ];
 
 const cervezas: Beer[] = [
-  { name: 'Cerveza de barril', description: 'Caña o jarra de cerveza lager nacional', price: '2,20 €' },
-  { name: 'Mahou Cinco Estrellas', description: 'Botellín 330 ml', price: '2,50 €' },
-  { name: 'Estrella Damm', description: 'Botellín 330 ml', price: '2,50 €' },
-  { name: 'Moritz sin gluten', description: 'Botellín 330 ml, apta para celíacos', price: '2,80 €' },
+  { name: 'Mahou Clásica', price: '2,20 €' }, 
+  { name: 'Alhambra', price: '2,20 €' },
+  { name: 'Amsteĺ', price: '2,20 €' },
+  { name: 'Heineken', price: '2,20 €'},
+  { name: 'Alzazar', price: '2,20 €'},
+  { name: 'Alhambra - Reserva', price: '2,70 €'},
+  { name: 'Maset - Cerveza de Abadía', price: '2,70 €'},
+  { name: 'El Águila Sin Filtrar', price: '2,20 €'},
+  { name: "El Águila Sin Filtrar 0'0 (sin gluten)", price: '2,20 €'},
+  { name: "Cruzcampo (sin gluten)", price: '2,20 €'},
+  { name: "Mahou 0'0 Tostada", price: '2.70 €'}
 ];
 
 const refrescos: Drink[] = [
-  { name: 'Agua mineral (50 cl)', price: '1,50 €' },
-  { name: 'Agua con gas (50 cl)', price: '1,80 €' },
-  { name: 'Coca-Cola / Zero / Sin azúcar', price: '2,50 €' },
-  { name: 'Fanta naranja / limón', price: '2,50 €' },
-  { name: 'Zumo de naranja natural', price: '3,50 €' },
-  { name: 'Nestea melocotón', price: '2,50 €' },
+  { name: 'Agua mineral (50 cl)', price: '1,10 €' },
+  { name: 'Zumo', price: '1,80 €' },
+  { name: 'Agua Gourmet', price: '1,80 €' },
+  { name: 'Refresco', price: '2,00 €' },
+  { name: 'Agua con gas', price: '2,00 €' },
 ];
 ---
 
@@ -287,7 +275,6 @@ const refrescos: Drink[] = [
                         {dish.badge === 'popular' && <span class="badge badge-popular">Popular</span>}
                         {dish.badge === 'new' && <span class="badge badge-new">Nuevo</span>}
                         </div>
-                        <p class="dish-desc">{dish.description}</p>
                     </div>
                     <span class="dish-price">{dish.price}</span>
                     </div>
@@ -305,7 +292,6 @@ const refrescos: Drink[] = [
                       {dish.badge === 'popular' && <span class="badge badge-popular">Popular</span>}
                       {dish.badge === 'new' && <span class="badge badge-new">Nuevo</span>}
                     </div>
-                    <p class="dish-desc">{dish.description}</p>
                   </div>
                   <span class="dish-price">{dish.price}</span>
                 </div>
@@ -319,11 +305,10 @@ const refrescos: Drink[] = [
         <section id="pizzas" class="tab-section hidden" role="tabpanel">
           <div class="chef-note mb-10">
             <p>
-             Todas nuestras pizzas se elaboran con masa madre de fermentación lenta (72 h)
-              y se hornean en horno de leña a 450 °C.
+             Todas nuestras pizzas se elaboran con masa madre fresca y se hornean en horno de piedra a 300°C.
             </p>
             <p>
-              Precio único: <strong>12,00 €</strong>. 
+              Precio único: <strong>12,00 €</strong>. Precio para llevar: <strong>10,00 €</strong>
             </p>
           </div>
 
@@ -430,7 +415,6 @@ const refrescos: Drink[] = [
                     {wine.region && <p class="wine-region">{wine.region}{wine.grapes ? ` · ${wine.grapes}` : ''}</p>}
                   </div>
                   <div class="wine-prices">
-                    {wine.copa && <span>Copa <strong>{wine.copa}</strong></span>}
                     <span>Botella <strong>{wine.botella}</strong></span>
                   </div>
                 </div>
@@ -448,7 +432,6 @@ const refrescos: Drink[] = [
                     {wine.region && <p class="wine-region">{wine.region}{wine.grapes ? ` · ${wine.grapes}` : ''}</p>}
                   </div>
                   <div class="wine-prices">
-                    {wine.copa && <span>Copa <strong>{wine.copa}</strong></span>}
                     <span>Botella <strong>{wine.botella}</strong></span>
                   </div>
                 </div>
@@ -457,16 +440,15 @@ const refrescos: Drink[] = [
           </div>
 
           <div class="mb-12">
-            <p class="category-label">Vinos tintos · D.O. Ribera del Duero</p>
+            <p class="category-label">Vinos tintos · D.O. Ribera del Duero y D.0. Rioja</p>
             <div class="wine-grid">
-              {vinosTintosRibera.map(wine => (
+              {vinosTintosRiberaRioja.map(wine => (
                 <div class="wine-card">
                   <div>
                     <p class="wine-name">{wine.name}</p>
                     {wine.region && <p class="wine-region">{wine.region}{wine.grapes ? ` · ${wine.grapes}` : ''}</p>}
                   </div>
                   <div class="wine-prices">
-                    {wine.copa && <span>Copa <strong>{wine.copa}</strong></span>}
                     <span>Botella <strong>{wine.botella}</strong></span>
                   </div>
                 </div>
@@ -484,7 +466,6 @@ const refrescos: Drink[] = [
                     {wine.region && <p class="wine-region">{wine.region}{wine.grapes ? ` · ${wine.grapes}` : ''}</p>}
                   </div>
                   <div class="wine-prices">
-                    {wine.copa && <span>Copa <strong>{wine.copa}</strong></span>}
                     <span>Botella <strong>{wine.botella}</strong></span>
                   </div>
                 </div>
@@ -499,7 +480,6 @@ const refrescos: Drink[] = [
                 <div class="dish-row">
                   <div class="dish-info">
                     <span class="dish-name">{beer.name}</span>
-                    <p class="dish-desc">{beer.description}</p>
                   </div>
                   <span class="dish-price">{beer.price}</span>
                 </div>
@@ -798,7 +778,7 @@ const refrescos: Drink[] = [
 
   .menu-price {
     font-family: var(--font-display);
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--color-accent);
     margin: 0;
