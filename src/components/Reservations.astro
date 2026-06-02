@@ -7,7 +7,7 @@ type Props = {
 	description?: string
 	phone: string
 	whatsapp: string
-	callSchedule: string
+	callSchedule: string | string[]
 	address: string
 	city: string
 	mapsUrl: string
@@ -67,9 +67,15 @@ const {
 					>
 						{phone}
 					</a>
-					<span class="text-xs text-secondary/60 flex items-center gap-1.5">
-						<Icon name="lucide:clock" class="size-3.5 shrink-0" />
-						{callSchedule}
+					<span class="text-xs text-secondary/60 flex items-start gap-1.5">
+						<Icon name="lucide:clock" class="size-3.5 shrink-0 mt-0.5" />
+						{Array.isArray(callSchedule) ? (
+							<span class="flex flex-col gap-0.5">
+								{callSchedule.map((line: string) => <span>{line}</span>)}
+							</span>
+						) : (
+							<span>{callSchedule}</span>
+						)}
 					</span>
 				</div>
 

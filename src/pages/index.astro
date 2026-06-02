@@ -41,12 +41,15 @@ import { headerElements, footerSocial } from '../data/nav';
 			{
 				icon: 'lucide:map-pin',
 				label: 'Ubicación',
-				value: 'Calle Calderas, 4 - El Bonillo (AB)',
+				value: 'Calle Calderas, 4 · 02610 El Bonillo (Albacete)',
 			},
 			{
 				icon: 'lucide:clock',
 				label: 'Horario',
-				value: 'Vie 20h–23h · Sab-Dom 12h–16h y 20h-23h',
+				value: [
+					'Viernes · 20:00 – 23:00 h',
+					'Sáb y Dom · 12:00 – 16:00 / 20:00 – 23:00 h',
+				],
 			},
 			{
 				icon: 'lucide:pizza',
@@ -131,9 +134,12 @@ import { headerElements, footerSocial } from '../data/nav';
 		description="Puedes llamarnos o escribirnos por WhatsApp y te confirmamos disponibilidad enseguida. También puedes pasarte directamente por el local."
 		phone="967 37 05 82"
 		whatsapp="+34619574682"
-		callSchedule="Vie 20h–23h · Sab-Dom 12h–16h y 20h-23h"
+		callSchedule={[
+			'Viernes · 20:00 – 23:00 h',
+			'Sáb y Dom · 12:00 – 16:00 / 20:00 – 23:00 h',
+		]}
 		address="Calle Calderas, 4"
-		city="El Bonillo (Albacete)"
+		city="02610 El Bonillo (Albacete)"
 		mapsUrl="https://maps.app.goo.gl/FhWj4s6dDa92pkKx5"
 	/>
 	<Footer slot="footer"
