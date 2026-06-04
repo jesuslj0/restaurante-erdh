@@ -230,8 +230,11 @@ const refrescos: Drink[] = [
   <Header slot="header" elements={headerElements} />
 
   <Fragment>
+      <!-- Imagen de fondo con overlay degradado -->
+      <div class="page-bg" aria-hidden="true"></div>
+
       <!-- Encabezado de página -->
-      <section class="pt-32 pb-10 px-6">
+      <section class="relative z-10 pt-32 pb-10 px-6 page-header">
         <div class="max-w-4xl mx-auto">
           <p class="eyebrow">El Rincón de Héctor</p>
           <h1 class="page-title">La Carta</h1>
@@ -240,7 +243,7 @@ const refrescos: Drink[] = [
       </section>
 
       <!-- Navegación por pestañas -->
-      <div class="sticky top-16 z-40 px-6 tab-nav-bar">
+      <div class="sticky z-40 px-6 tab-nav-bar">
         <div class="max-w-4xl mx-auto overflow-x-auto">
           <nav class="flex whitespace-nowrap" id="tab-nav" role="tablist">
             {tabs.map((tab, i) => (
@@ -260,7 +263,7 @@ const refrescos: Drink[] = [
       </div>
 
       <!-- Contenido de las pestañas -->
-      <div class="max-w-4xl mx-auto px-6 py-12">
+      <div class="relative z-10 max-w-4xl mx-auto px-6 py-12">
 
         <!-- TAPAS -->
         <section id="tapas" class="tab-section" role="tabpanel">
@@ -533,6 +536,35 @@ const refrescos: Drink[] = [
     flex-grow: 1;
   }
 
+  /* ── Imagen de fondo con overlay degradado ── */
+  .page-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image: url('/imgs/b&w-mantel.jpeg');
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+  }
+
+  .page-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      var(--color-bg) 0%,
+      color-mix(in srgb, var(--color-bg) 78%, transparent) 22%,
+      color-mix(in srgb, var(--color-bg) 78%, transparent) 78%,
+      var(--color-bg) 100%
+    );
+  }
+
+  /* El encabezado tapa la imagen con el color de fondo */
+  .page-header {
+    background-color: var(--color-bg);
+  }
+
   /* ── Tipografía ── */
   .eyebrow {
     font-size: 0.7rem;
@@ -560,7 +592,11 @@ const refrescos: Drink[] = [
 
   /* ── Barra de pestañas ── */
   .tab-nav-bar {
-    background-color: var(--color-bg);
+    /* Se pega justo debajo del header principal (altura ≈ 3.75rem) */
+    top: calc(3.75rem + env(safe-area-inset-top));
+    background-color: color-mix(in srgb, var(--color-bg) 30%, transparent);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     border-bottom: 0.5px solid var(--color-border);
   }
 
@@ -725,7 +761,7 @@ const refrescos: Drink[] = [
 
   /* ── Menús de fin de semana ── */
   .menu-card {
-    background-color: color-mix(in srgb, var(--color-primary) 4%, transparent);
+    background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
     border: 0.5px solid var(--color-border);
     border-radius: 6px;
     padding: 1.5rem;
@@ -801,6 +837,7 @@ const refrescos: Drink[] = [
   }
 
   .wine-card {
+    background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
     border: 0.5px solid var(--color-border);
     border-radius: 4px;
     padding: 1rem;
