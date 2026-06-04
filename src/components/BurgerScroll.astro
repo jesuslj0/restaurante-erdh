@@ -3,19 +3,20 @@ interface Props {
 	videoSrc?: string;
 }
 
-const { videoSrc = "/videos/burguer171717-scrub.mp4" } = Astro.props;
+const { videoSrc = "/videos/videofinal-scrub.mp4" } = Astro.props;
 
 const ingredients = [
-	"Disco de ternera manchega a la parrilla",
-	"Queso semicurado artesano fundido",
-	"Lomo de orza con sabor de antaño",
-	"Picadillo de chorizo en la base",
-	"Alioli tradicional hecho en casa",
-	"Pan rústico de miga prieta",
+	"Pan brioche (base)",
+	"Salsa burguer en la base",
+	"Doble disco de carne smash al estilo cachopo, rebozado y crujiente",
+	"Mozzarella con un toque de pesto italiano entre los discos",
+	"Mermelada de salsa barbacoa con bacon",
+	"Pan brioche (top)",
+	"Parmesano recién espolvoreado por encima",
 ];
 ---
 
-<section id="burger-del-mes" class="relative lg:h-[300vh] bg-bg">
+<section id="burguer-del-verano" class="relative lg:h-[300vh] bg-bg">
 	<div class="lg:sticky lg:top-0 lg:h-screen overflow-hidden flex flex-col lg:grid lg:grid-cols-[1fr_auto_1fr]">
 
 		<!-- ── COLUMNA IZQUIERDA: concepto (solo desktop) ── -->
@@ -24,13 +25,15 @@ const ingredients = [
 				Burguer del mes
 			</span>
 			<h2 class="text-4xl xl:text-5xl text-primary font-bold font-display leading-tight">
-				La Manchega
+				Cachopoburguer
 			</h2>
 			<p class="text-text-accent leading-relaxed max-w-sm">
-				Este verano, los campos de La Mancha llegan a tu mesa en una sola mordida.
-				Hemos seleccionado a mano cada ingrediente para crear una burguer que huele
-				a tierra, sabe a tradición y te deja sin palabras: jugosa por dentro,
-				dorada por fuera, con ese carácter artesano que solo encontrarás aquí.
+				Lo mejor del cachopo asturiano, ahora en formato burguer. Dos discos de carne
+				smash rebozados hasta quedar dorados y crujientes, con mozzarella fundida y un
+				toque de pesto italiano derritiéndose entre ellos. La coronamos con mermelada
+				de salsa barbacoa y bacon, la abrazamos con pan brioche tierno y la rematamos
+				con parmesano recién espolvoreado. Crujiente por fuera, jugosa por dentro: el
+				capricho del verano que no vas a querer soltar.
 			</p>
 		</div>
 
@@ -40,9 +43,9 @@ const ingredients = [
 			<!-- Título solo en móvil -->
 			<div class="lg:hidden w-full pt-24 pb-3 px-6 text-center flex flex-col gap-1 shrink-0">
 				<span class="text-xs font-semibold uppercase tracking-widest text-accent">
-					Burguer del mes
+					Burguer del Verano
 				</span>
-				<h2 class="text-3xl font-bold text-primary font-display mb-10">La Manchega</h2>
+				<h2 class="text-3xl font-bold text-primary font-display mb-10">Cachopoburguer</h2>
 			</div>
 
 			<video
@@ -146,7 +149,7 @@ const ingredients = [
 
 	gsap.registerPlugin(ScrollTrigger);
 
-	const section = document.getElementById("burger-del-mes");
+	const section = document.getElementById("burguer-del-verano");
 	const video = document.getElementById("burger-video") as HTMLVideoElement | null;
 
 	// El scrub por currentTime es inviable en móvil: iOS no repinta el frame de

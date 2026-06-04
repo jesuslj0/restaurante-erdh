@@ -1,7 +1,7 @@
 export const headerElements = [
   { link: '/', name: 'Inicio', icon: 'lucide:home' },
   { link: '/carta', name: 'Carta', icon: 'lucide:book-open' },
-  { link: '/#burger-del-mes', name: 'Burger del Mes', icon: 'lucide:hamburger' },
+  { link: '/#burguer-del-verano', name: 'Burguer del Verano', icon: 'lucide:hamburger' },
   { link: '/#nosotros', name: 'Nuestra Casa', icon: 'lucide:smile-plus' },
   { link: '/#reservas', name: 'Reservas', icon: 'lucide:calendar' },
 ];
