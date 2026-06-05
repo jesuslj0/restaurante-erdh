@@ -262,6 +262,12 @@ const refrescos: Drink[] = [
         </div>
       </div>
 
+      <!-- Pista de swipe (solo móvil, se desvanece) -->
+      <div class="swipe-hint" id="swipe-hint" aria-hidden="true">
+        <Icon name="lucide:chevrons-left-right" class="swipe-hint-icon" />
+        <span>Desliza para cambiar de sección</span>
+      </div>
+
       <!-- Contenido de las pestañas -->
       <div class="relative z-10 max-w-4xl mx-auto px-6 py-12">
 
@@ -633,6 +639,48 @@ const refrescos: Drink[] = [
     border-bottom-color: var(--color-accent);
   }
 
+  /* ── Pista de swipe (solo móvil) ── */
+  .swipe-hint {
+    display: none;
+  }
+
+  @media (max-width: 1023px) {
+    .swipe-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1rem 0;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--color-secondary);
+      opacity: 0.55;
+      transition: opacity 0.6s ease;
+    }
+
+    .swipe-hint.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  .swipe-hint-icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    color: var(--color-accent);
+    animation: swipe-nudge 1.8s ease-in-out infinite;
+  }
+
+  @keyframes swipe-nudge {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .swipe-hint-icon { animation: none; }
+  }
+
   /* ── Secciones con animación ── */
   @keyframes fadeInUp {
     from {
@@ -881,18 +929,41 @@ const refrescos: Drink[] = [
 </style>
 
 <script>
-  const tabBtns = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const tabBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.tab-btn'));
   const tabSections = document.querySelectorAll<HTMLElement>('.tab-section');
+  const tabIds = tabBtns.map(btn => btn.dataset.tab).filter((id): id is string => !!id);
+  let activeIndex = 0;
+
+  const swipeHint = document.getElementById('swipe-hint');
+  let hintDismissed = false;
+  function dismissHint(): void {
+    if (hintDismissed || !swipeHint) return;
+    hintDismissed = true;
+    swipeHint.classList.add('is-hidden');
+  }
+  // Se desvanece sola tras unos segundos si no interactúan
+  if (swipeHint) setTimeout(dismissHint, 5000);
 
   function activateTab(tabId: string): void {
+    const idx = tabIds.indexOf(tabId);
+    if (idx === -1) return;
+    activeIndex = idx;
+
     tabBtns.forEach(btn => {
       const isActive = btn.dataset.tab === tabId;
       btn.classList.toggle('tab-active', isActive);
       btn.setAttribute('aria-selected', String(isActive));
+      // Desplaza el tab activo a la vista dentro de la barra deslizable
+      if (isActive) btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     });
     tabSections.forEach(section => {
       section.classList.toggle('hidden', section.id !== tabId);
     });
+  }
+
+  function goToTab(index: number): void {
+    const clamped = Math.max(0, Math.min(tabIds.length - 1, index));
+    if (clamped !== activeIndex) activateTab(tabIds[clamped]);
   }
 
   tabBtns.forEach(btn => {
@@ -901,4 +972,31 @@ const refrescos: Drink[] = [
       if (tabId) activateTab(tabId);
     });
   });
+
+  // ── Swipe horizontal para cambiar de pestaña (móvil) ──
+  const swipeArea = document.querySelector<HTMLElement>('.tab-section')?.parentElement;
+  if (swipeArea) {
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+    const THRESHOLD = 50; // px mínimos para considerar swipe
+
+    swipeArea.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) { tracking = false; return; }
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      tracking = true;
+    }, { passive: true });
+
+    swipeArea.addEventListener('touchend', (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      // Solo si el gesto es predominantemente horizontal
+      if (Math.abs(dx) < THRESHOLD || Math.abs(dx) < Math.abs(dy)) return;
+      dismissHint();
+      goToTab(dx < 0 ? activeIndex + 1 : activeIndex - 1);
+    }, { passive: true });
+  }
 </script>

@@ -1,9 +1,11 @@
 ---
+import { Icon } from 'astro-icon/components'
+
 interface Props {
 	videoSrc?: string;
 }
 
-const { videoSrc = "/videos/videofinal-scrub.mp4" } = Astro.props;
+const { videoSrc = "/videos/video-burguer-mejorado-scrub.mp4" } = Astro.props;
 
 const ingredients = [
 	"Pan brioche (base)",
@@ -21,18 +23,17 @@ const ingredients = [
 
 		<!-- ── COLUMNA IZQUIERDA: concepto (solo desktop) ── -->
 		<div class="hidden lg:flex flex-col items-end text-right justify-center gap-6 px-12 xl:px-16">
-			<span class="text-xs font-semibold uppercase tracking-widest text-accent">
-				Burguer del Verano
+			<span class="text-xs inline-flex gap-1.5 items-center font-semibold uppercase tracking-widest text-accent">
+				Burguer del Verano <Icon name="lucide:sun" class="size-5" />
 			</span>
 			<h2 class="text-4xl xl:text-5xl text-primary font-bold font-display leading-tight">
 				Cachopoburguer
 			</h2>
 			<p class="text-text-accent leading-relaxed max-w-sm">
 				Lo mejor del cachopo asturiano, ahora en formato burguer. Dos discos de carne
-				smash rebozados hasta quedar dorados y crujientes, con mozzarella fundida y un
-				toque de pesto italiano derritiéndose entre ellos. La coronamos con mermelada
+				smash rebozados hasta quedar dorados y crujientes, con mozzarella al pesto derritiéndose entre ellos. La coronamos con mermelada
 				de salsa barbacoa y bacon, la abrazamos con pan brioche tierno y la rematamos
-				con parmesano recién espolvoreado y nuestra salsa especial burguer. Crujiente
+				con parmesano recién espolvoreado. Crujiente
 				por fuera, jugosa por dentro: el capricho del verano que no vas a querer soltar.
 			</p>
 		</div>
@@ -295,10 +296,6 @@ const ingredients = [
 	}
 
 	#burger-video {
-		/* Dos degradados: uno horizontal (lados) y otro vertical (arriba/abajo).
-		   Se combinan con mask-composite: intersect → el vídeo solo es opaco donde
-		   ambos lo son, así se funden los cuatro bordes. El degradado vertical es
-		   más agresivo arriba (12%) que abajo (92%) porque el borde superior canta más. */
 		--fade-x: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
 		--fade-y: linear-gradient(to bottom, transparent 0%, black 12%, black 92%, transparent 100%);
 		-webkit-mask-image: var(--fade-x), var(--fade-y);
