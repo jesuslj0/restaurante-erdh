@@ -244,7 +244,7 @@ const refrescos: Drink[] = [
 
       <!-- Navegación por pestañas -->
       <div class="sticky z-40 px-6 tab-nav-bar">
-        <div class="max-w-4xl mx-auto overflow-x-auto">
+        <div class="max-w-4xl mx-auto overflow-x-auto tab-nav-scroll">
           <nav class="flex whitespace-nowrap" id="tab-nav" role="tablist">
             {tabs.map((tab, i) => (
               <button
@@ -604,6 +604,15 @@ const refrescos: Drink[] = [
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     border-bottom: 0.5px solid var(--color-border);
+  }
+
+  /* Oculta la barra de desplazamiento de los tabs sin perder el scroll */
+  .tab-nav-scroll {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  .tab-nav-scroll::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
   }
 
   .tab-btn {
