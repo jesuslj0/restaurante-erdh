@@ -155,4 +155,8 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 		0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
 		50%       { transform: translateX(-50%) translateY(6px); opacity: 1; }
 	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.scroll-indicator { animation: none; }
+	}
 </style>

@@ -117,6 +117,7 @@ const angleStep = 360 / count
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
+    touch-action: pan-y;
   }
 
   .g-wrapper.is-dragging {
@@ -145,6 +146,7 @@ const angleStep = 360 / count
     width: 0;
     height: 0;
     transform-style: preserve-3d;
+    will-change: transform;
     --g-radius: 620px;
   }
 
@@ -303,38 +305,39 @@ const angleStep = 360 / count
   window.addEventListener('mousemove',  e => moveDrag(e.clientX))
   window.addEventListener('mouseup',    () => endDrag())
 
-  /* ── Touch — solo intercepta si el gesto es predominantemente horizontal ── */
+  /* ── Touch ──
+     touch-action: pan-y en el wrapper le dice al navegador que el scroll
+     vertical es suyo y el horizontal es nuestro. Así no hay conflicto:
+     el navegador no intenta hacer scroll cuando detectamos gesto lateral.
+     Ya no necesitamos preventDefault ni detección de dirección. ── */
   let touchStartX = 0
-  let touchStartY = 0
-  let isHoriz: boolean | null = null
+  let touchDragStarted = false
 
   wrapper.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX
-    touchStartY = e.touches[0].clientY
-    isHoriz = null
+    touchDragStarted = false
+    lastX = touchStartX
+    velocity = 0
   }, { passive: true })
 
   wrapper.addEventListener('touchmove', e => {
     const dx = e.touches[0].clientX - touchStartX
-    const dy = e.touches[0].clientY - touchStartY
 
-    // Determina dirección en el primer movimiento significativo
-    if (isHoriz === null && (Math.abs(dx) > 4 || Math.abs(dy) > 4)) {
-      isHoriz = Math.abs(dx) > Math.abs(dy)
+    // Activa el drag solo cuando hay movimiento horizontal claro (8 px)
+    if (!touchDragStarted && Math.abs(dx) > 8) {
+      touchDragStarted = true
+      isDragging = true
+      wrapper.classList.add('is-dragging')
+      dismissHint()
     }
 
-    if (isHoriz === true) {
-      e.preventDefault() // bloquea scroll solo si el gesto es horizontal
-      if (!isDragging) startDrag(touchStartX)
-      moveDrag(e.touches[0].clientX)
-    }
-    // Si isHoriz === false: scroll vertical libre, no se toca nada
-  }, { passive: false })
+    if (touchDragStarted) moveDrag(e.touches[0].clientX)
+  }, { passive: true })
 
   wrapper.addEventListener('touchend', () => {
-    if (isDragging) endDrag()
-    isHoriz = null
-  })
+    if (touchDragStarted) endDrag()
+    touchDragStarted = false
+  }, { passive: true })
 
   requestAnimationFrame(animate)
 </script>

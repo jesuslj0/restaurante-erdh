@@ -1,9 +1,17 @@
 @layer components {
     .btn-primary {
-        @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-colors cursor-pointer bg-accent/50 text-primary hover:text-bg hover:bg-accent;
+        @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-colors duration-200 cursor-pointer bg-accent/50 text-primary hover:text-bg hover:bg-accent;
+    }
+
+    .btn-primary:focus-visible {
+        @apply outline outline-2 outline-accent outline-offset-2;
     }
 
     .btn-secondary {
-        @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-colors cursor-pointer bg-primary/30 text-primary hover:bg-primary hover:text-bg;
+        @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-colors duration-200 cursor-pointer bg-primary/30 text-primary hover:bg-primary hover:text-bg;
+    }
+
+    .btn-secondary:focus-visible {
+        @apply outline outline-2 outline-primary outline-offset-2;
     }
 }
