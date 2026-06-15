@@ -6,6 +6,7 @@ import BurgerScroll from '../components/BurgerScroll.astro';
 import Footer from '../components/Footer.astro';
 import About from '../components/About.astro';
 import Reservations from '../components/Reservations.astro';
+import Gallery from '../components/Gallery.astro';
 import Reviews from '../components/Reviews.astro';
 import { headerElements, footerSocial } from '../data/nav';
 ---
@@ -63,6 +64,7 @@ import { headerElements, footerSocial } from '../data/nav';
 			}
 		]}
 	/>
+	<Gallery slot="gallery" />
 	<Reviews slot="reviews"
 		eyebrow="Reseñas y comentarios"
 		title="Opiniones de nuestros clientes"

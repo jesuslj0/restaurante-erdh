@@ -3,6 +3,7 @@ export const headerElements = [
   { link: '/carta', name: 'Carta', icon: 'lucide:book-open' },
   { link: '/#burguer-del-verano', name: 'Burguer del Verano', icon: 'lucide:hamburger' },
   { link: '/#nosotros', name: 'Nuestra Casa', icon: 'lucide:smile-plus' },
+  { link: '/#galeria', name: 'Galería', icon: 'lucide:images' },
   { link: '/#reservas', name: 'Reservas', icon: 'lucide:calendar' },
 ];
 

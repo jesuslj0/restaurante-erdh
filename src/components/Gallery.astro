@@ -1,0 +1,340 @@
+---
+import { Icon } from 'astro-icon/components'
+
+interface GalleryImage {
+  file: string
+  label: string
+}
+
+const rawImages: GalleryImage[] = [
+  { file: 'WhatsApp Image 2026-06-15 at 3.00.28 PM (4).jpeg', label: 'Pizza artesana' },
+  { file: 'WhatsApp Image 2026-06-15 at 3.00.28 PM.jpeg',     label: 'Hamburguesa Black' },
+  { file: 'WhatsApp Image 2026-06-15 at 3.00.22 PM.jpeg',     label: 'Solomillo a la plancha' },
+  { file: 'WhatsApp Image 2026-06-15 at 3.00.28 PM (3).jpeg', label: 'Pulpo con patata' },
+  { file: 'WhatsApp Image 2026-06-15 at 3.00.28 PM (5).jpeg', label: 'Hamburguesa Chicken' },
+  { file: 'WhatsApp Image 2026-06-15 at 3.00.26 PM.jpeg',     label: 'Plato del menú' },
+  { file: 'WhatsApp Image 2026-06-15 at 3.00.28 PM (2).jpeg', label: 'Ensalada italiana' },
+  { file: 'WhatsApp Image 2026-06-15 at 3.00.28 PM (1).jpeg', label: 'Hamburguesa especial' },
+  { file: 'WhatsApp Image 2026-06-15 at 3.00.29 PM.jpeg',     label: 'Ensalada con burrata' },
+  { file: 'WhatsApp Image 2026-06-15 at 3.00.28 PM (6).jpeg', label: 'Gyozas crujientes' },
+  { file: 'WhatsApp Image 2026-06-15 at 3.01.01 PM.jpeg',     label: 'Helados artesanos' },
+]
+
+const images = rawImages.map(img => ({
+  ...img,
+  url: `/galery/${encodeURIComponent(img.file)}`,
+}))
+
+const count   = images.length
+const angleStep = 360 / count
+---
+
+<section id="galeria" class="g-section" aria-label="Galería de platos">
+
+  <div class="g-header">
+    <p class="g-eyebrow">Galería</p>
+    <h2 class="g-title">Nuestros platos</h2>
+  </div>
+
+  <div id="g-wrapper" class="g-wrapper" aria-hidden="true">
+    <div class="g-stage">
+      <div id="g-rotor" class="g-rotor">
+        {images.map((img, i) => (
+          <div
+            class="g-item"
+            data-angle={i * angleStep}
+            style={`transform: rotateY(${i * angleStep}deg) translateZ(var(--g-radius));`}
+          >
+            <div class="g-card">
+              <img
+                src={img.url}
+                alt={img.label}
+                class="g-img"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <p class="g-hint" id="g-hint" aria-hidden="true">
+    <Icon name="lucide:move-horizontal" class="g-hint-icon" />
+    Arrastra para girar
+  </p>
+
+</section>
+
+<style>
+  /* ── Sección normal: ocupa 100vh, scroll la ignora como cualquier otra ── */
+  .g-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 7rem 0 5rem;
+    background-color: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .g-header {
+    text-align: center;
+    z-index: 10;
+    margin-bottom: 3rem;
+    pointer-events: none;
+  }
+
+  .g-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .g-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  /* ── Wrapper del escenario 3D — cursor grab indica que es interactivo ── */
+  .g-wrapper {
+    width: 100%;
+    height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 2000px;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .g-wrapper.is-dragging {
+    cursor: grabbing;
+  }
+
+  @media (max-width: 1024px) {
+    .g-wrapper { height: 300px; perspective: 1500px; }
+  }
+
+  @media (max-width: 640px) {
+    .g-wrapper { height: 230px; perspective: 1100px; }
+  }
+
+  .g-stage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+  }
+
+  .g-rotor {
+    position: relative;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    --g-radius: 620px;
+  }
+
+  @media (max-width: 1024px) { .g-rotor { --g-radius: 420px; } }
+  @media (max-width: 640px)  { .g-rotor { --g-radius: 318px; } }
+
+  .g-item {
+    position: absolute;
+    width: 250px;
+    height: 320px;
+    left: -125px;
+    top: -160px;
+    will-change: opacity, transform;
+  }
+
+  @media (max-width: 1024px) {
+    .g-item { width: 195px; height: 255px; left: -97px; top: -127px; }
+  }
+
+  @media (max-width: 640px) {
+    .g-item { width: 120px; height: 155px; left: -60px; top: -77px; }
+  }
+
+  .g-card {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .g-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    draggable: false;
+  }
+
+  /* ── Hint de arrastre ── */
+  .g-hint {
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    opacity: 0.45;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+  }
+
+  .g-hint.is-hidden {
+    opacity: 0;
+  }
+
+  .g-hint-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    color: var(--color-accent);
+    animation: hint-nudge 2s ease-in-out infinite;
+  }
+
+  @keyframes hint-nudge {
+    0%, 100% { transform: translateX(0); }
+    30%       { transform: translateX(-4px); }
+    70%       { transform: translateX(4px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .g-hint-icon { animation: none; }
+  }
+</style>
+
+<script>
+  const wrapper = document.getElementById('g-wrapper')  as HTMLElement
+  const rotor   = document.getElementById('g-rotor')    as HTMLElement
+  const hint    = document.getElementById('g-hint')     as HTMLElement
+  const items   = Array.from(document.querySelectorAll<HTMLElement>('.g-item'))
+  const angles  = items.map(el => parseFloat(el.dataset.angle ?? '0'))
+
+  /* ── Estado ── */
+  let rotation = 0
+  let velocity = 0       // momentum tras soltar el drag (deg/frame)
+  let isDragging = false
+  let lastX = 0
+  let time  = 0
+
+  const DRAG_SENS = 0.28    // deg por pixel de arrastre
+  const FRICTION  = 0.88    // rozamiento tras soltar (0 = freno total, 1 = sin freno)
+  const BASE_SPD  = 0.0084  // velocidad base de auto-rotación (deg/frame)
+  const WAVE_AMP  = 0.0042  // amplitud de la variación sinusoidal
+
+  /* ── Opacidades: frontal = 1, trasero = 0.2 ── */
+  function updateOpacities() {
+    const rot = rotation % 360
+    for (let i = 0; i < items.length; i++) {
+      const rel  = ((angles[i] + rot) % 360 + 360) % 360
+      const norm = rel > 180 ? 360 - rel : rel
+      items[i].style.opacity = String(Math.max(0.2, 1 - norm / 180))
+    }
+  }
+
+  /* ── Bucle de animación ── */
+  function animate() {
+    time++
+
+    if (isDragging) {
+      // Mientras arrastra: velocity se actualiza en los handlers
+    } else {
+      // Momentum con fricción
+      velocity *= FRICTION
+      // Auto-rotación base + variación sinusoidal para sensación dinámica
+      const autoSpeed = BASE_SPD + Math.sin(time * 0.012) * WAVE_AMP
+      rotation += velocity + autoSpeed
+    }
+
+    rotor.style.transform = `rotateY(${rotation}deg)`
+    updateOpacities()
+    requestAnimationFrame(animate)
+  }
+
+  /* ── Helpers para activar/desactivar drag ── */
+  function dismissHint() {
+    if (!hint.classList.contains('is-hidden')) hint.classList.add('is-hidden')
+  }
+
+  function startDrag(x: number) {
+    isDragging = true
+    lastX = x
+    velocity = 0
+    wrapper.classList.add('is-dragging')
+    dismissHint()
+  }
+
+  function moveDrag(x: number) {
+    if (!isDragging) return
+    const delta = x - lastX
+    velocity = delta * DRAG_SENS  // guarda velocidad para momentum
+    rotation += delta * DRAG_SENS
+    lastX = x
+  }
+
+  function endDrag() {
+    isDragging = false
+    wrapper.classList.remove('is-dragging')
+    // velocity se mantiene → se decae con FRICTION en animate()
+  }
+
+  /* ── Mouse ── */
+  wrapper.addEventListener('mousedown', e => startDrag(e.clientX))
+  window.addEventListener('mousemove',  e => moveDrag(e.clientX))
+  window.addEventListener('mouseup',    () => endDrag())
+
+  /* ── Touch — solo intercepta si el gesto es predominantemente horizontal ── */
+  let touchStartX = 0
+  let touchStartY = 0
+  let isHoriz: boolean | null = null
+
+  wrapper.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX
+    touchStartY = e.touches[0].clientY
+    isHoriz = null
+  }, { passive: true })
+
+  wrapper.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - touchStartX
+    const dy = e.touches[0].clientY - touchStartY
+
+    // Determina dirección en el primer movimiento significativo
+    if (isHoriz === null && (Math.abs(dx) > 4 || Math.abs(dy) > 4)) {
+      isHoriz = Math.abs(dx) > Math.abs(dy)
+    }
+
+    if (isHoriz === true) {
+      e.preventDefault() // bloquea scroll solo si el gesto es horizontal
+      if (!isDragging) startDrag(touchStartX)
+      moveDrag(e.touches[0].clientX)
+    }
+    // Si isHoriz === false: scroll vertical libre, no se toca nada
+  }, { passive: false })
+
+  wrapper.addEventListener('touchend', () => {
+    if (isDragging) endDrag()
+    isHoriz = null
+  })
+
+  requestAnimationFrame(animate)
+</script>
