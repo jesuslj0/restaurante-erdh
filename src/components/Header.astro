@@ -31,7 +31,7 @@ const { elements } = Astro.props
 			aria-controls="nav-menu"
 			class="md:hidden text-secondary p-2 cursor-pointer"
 		>
-			<Icon name="lucide:menu" class="size-6" />
+			<Icon name="lucide:menu" class="size-5" />
 		</button>
 
 		<!-- Links de navegación en desktop -->
@@ -95,6 +95,16 @@ const { elements } = Astro.props
 	#header-inner {
 		padding-left: max(1.75rem, env(safe-area-inset-left));
 		padding-right: max(1.75rem, env(safe-area-inset-right));
+	}
+
+	/* Navbar cerrado más compacto en móvil */
+	@media (max-width: 768px) {
+		#header-inner {
+			padding-top: 0.5rem;
+			padding-bottom: 0.5rem;
+			padding-left: max(1rem, env(safe-area-inset-left));
+			padding-right: max(1rem, env(safe-area-inset-right));
+		}
 	}
 
 	#nav-menu {

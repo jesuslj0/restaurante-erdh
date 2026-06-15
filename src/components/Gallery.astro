@@ -34,6 +34,7 @@ const angleStep = 360 / count
   <div class="g-header">
     <p class="g-eyebrow">Galería</p>
     <h2 class="g-title">Nuestros platos</h2>
+    <p class="g-subtitle">Echa un vistazo a esta selección de platos de la casa</p>
   </div>
 
   <div id="g-wrapper" class="g-wrapper" aria-hidden="true">
@@ -83,8 +84,9 @@ const angleStep = 360 / count
 
   .g-header {
     text-align: center;
-    z-index: 10;
-    margin-bottom: 3rem;
+    position: relative;
+    z-index: 20;
+    margin-bottom: 7.5rem;
     pointer-events: none;
   }
 
@@ -106,6 +108,12 @@ const angleStep = 360 / count
     line-height: 1.1;
   }
 
+  .g-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-accent);
+    margin: 0.75rem 0 0;
+  }
+
   /* ── Wrapper del escenario 3D — cursor grab indica que es interactivo ── */
   .g-wrapper {
     width: 100%;
@@ -114,6 +122,8 @@ const angleStep = 360 / count
     align-items: center;
     justify-content: center;
     perspective: 2000px;
+    position: relative;
+    z-index: 1;
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
@@ -130,6 +140,7 @@ const angleStep = 360 / count
 
   @media (max-width: 640px) {
     .g-wrapper { height: 230px; perspective: 1100px; }
+    .g-header { margin-bottom: 5rem }
   }
 
   .g-stage {
@@ -230,7 +241,11 @@ const angleStep = 360 / count
   const rotor   = document.getElementById('g-rotor')    as HTMLElement
   const hint    = document.getElementById('g-hint')     as HTMLElement
   const items   = Array.from(document.querySelectorAll<HTMLElement>('.g-item'))
+  const cards   = items.map(el => el.querySelector<HTMLElement>('.g-card')!)
   const angles  = items.map(el => parseFloat(el.dataset.angle ?? '0'))
+
+  // Cuánto crece la tarjeta frontal (1 = igual, 1.15 = +15%)
+  const FRONT_SCALE = 1.25
 
   /* ── Estado ── */
   let rotation = 0
@@ -239,9 +254,9 @@ const angleStep = 360 / count
   let lastX = 0
   let time  = 0
 
-  const DRAG_SENS = 0.28    // deg por pixel de arrastre
+  const DRAG_SENS = 0.15    // deg por pixel de arrastre
   const FRICTION  = 0.88    // rozamiento tras soltar (0 = freno total, 1 = sin freno)
-  const BASE_SPD  = 0.0084  // velocidad base de auto-rotación (deg/frame)
+  const BASE_SPD  = -0.015  // velocidad base de auto-rotación (deg/frame)
   const WAVE_AMP  = 0.0042  // amplitud de la variación sinusoidal
 
   /* ── Opacidades: frontal = 1, trasero = 0.2 ── */
@@ -250,7 +265,10 @@ const angleStep = 360 / count
     for (let i = 0; i < items.length; i++) {
       const rel  = ((angles[i] + rot) % 360 + 360) % 360
       const norm = rel > 180 ? 360 - rel : rel
-      items[i].style.opacity = String(Math.max(0.2, 1 - norm / 180))
+      const front = 1 - norm / 180            // 1 = frontal, 0 = trasera
+      items[i].style.opacity = String(Math.max(0.2, front))
+      // Solo crece la frontal; las demás mantienen su tamaño y posición
+      cards[i].style.transform = `scale(${1 + (FRONT_SCALE - 1) * front})`
     }
   }
 

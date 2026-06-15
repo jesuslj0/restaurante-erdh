@@ -33,17 +33,17 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 			</p>
 		)}
 		{(cta || secondaryCta) && (
-			<div class="flex flex-wrap gap-3 justify-center md:justify-start mt-2">
+			<div class="flex flex-nowrap gap-3 justify-center md:justify-start mt-2">
 				{cta && (
 					<a href={cta.link}
 						class="btn-primary">
-						{cta.label} <Icon name={cta.icon} />
+						{cta.label} <Icon name={cta.icon} class="hero-btn-icon" />
 					</a>
 				)}
 				{secondaryCta && (
 					<a href={secondaryCta.link}
 						class="btn-secondary">
-						{secondaryCta.label} <Icon name={secondaryCta.icon} />
+						{secondaryCta.label} <Icon name={secondaryCta.icon} class="hero-btn-icon" />
 					</a>
 				)}
 			</div>
@@ -87,6 +87,23 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 
 		.hero-content {
 			margin-top: 4rem;
+			position: relative;
+			padding: 1.75rem 1.5rem;
+		}
+
+		/* Scrim local: base oscura difuminada tras el texto para asegurar contraste */
+		.hero-content::before {
+			content: '';
+			position: absolute;
+			inset: -1rem -1.5rem;
+			z-index: -1;
+			background: radial-gradient(
+				120% 100% at 50% 45%,
+				rgba(0, 0, 0, 0.50) 0%,
+				rgba(0, 0, 0, 0.35) 45%,
+				transparent 80%
+			);
+			pointer-events: none;
 		}
 	}
 
@@ -120,6 +137,13 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 		padding: 0.35rem 0.85rem;
 		border-radius: 9999px;
 		text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
+	}
+
+	@media (max-width: 768px) {
+		.hero-btn-icon {
+			width: 1.25rem;
+			height: 1.25rem;
+		}
 	}
 
 	.hero-title {

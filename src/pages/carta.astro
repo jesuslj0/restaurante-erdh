@@ -557,8 +557,8 @@ const refrescos: Drink[] = [
     background: linear-gradient(
       to bottom,
       var(--color-bg) 0%,
-      color-mix(in srgb, var(--color-bg) 78%, transparent) 22%,
-      color-mix(in srgb, var(--color-bg) 78%, transparent) 78%,
+      color-mix(in srgb, var(--color-bg) 80%, transparent) 22%,
+      color-mix(in srgb, var(--color-bg) 80%, transparent) 78%,
       var(--color-bg) 100%
     );
   }
@@ -601,6 +601,13 @@ const refrescos: Drink[] = [
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     border-bottom: 0.5px solid var(--color-border);
+  }
+
+  /* En móvil el header es más compacto: pega los tabs a su nuevo alto */
+  @media (max-width: 768px) {
+    .tab-nav-bar {
+      top: calc(2.95rem + env(safe-area-inset-top));
+    }
   }
 
   /* Oculta la barra de desplazamiento de los tabs sin perder el scroll */
