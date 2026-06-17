@@ -37,6 +37,8 @@ interface MenuCourse {
 
 interface WeekendMenu {
   name: string;
+  icon?: string;
+  tagline?: string;
   courses: MenuCourse[];
   price: string;
   note: string;
@@ -134,6 +136,7 @@ const bocadillos: Dish[] = [
 const weekendMenus: WeekendMenu[] = [
   {
     name: 'Menú Fin de Semana',
+    icon: 'lucide:utensils',
     courses: [
       {
         label: '3 Entrantes',
@@ -152,6 +155,38 @@ const weekendMenus: WeekendMenu[] = [
     ],
     price: '22,50 €',
     note: 'Incluye pan, postre del día o café y bebida.',
+  },
+  {
+    name: 'Menú Especial',
+    icon: 'lucide:party-popper',
+    tagline: 'Feria de Tradiciones y Artesanía 2026',
+    courses: [
+      {
+        label: 'Entrantes',
+        options: [
+          'Tapa Manchega «Ganadora 1ª Ruta de la Tapa a la mejor tapa tradicional»',
+          'Asadillo con ventresca de atún',
+          'Surtido de buñuelos de marisco con pisto manchego',
+        ],
+      },
+      {
+        label: 'Segundo (a elegir)',
+        options: [
+          'Paletilla de cordero lechal al horno',
+          'Solomillo de cerdo en salsa a la pimienta',
+          'Merluza con almejas',
+        ],
+      },
+      {
+        label: 'Postre',
+        options: [
+          'Postre a elegir',
+          'Café',
+        ],
+      },
+    ],
+    price: '32,00 €',
+    note: 'Incluye bebida (cerveza, agua, refrescos o vino · 1 consumición por cubierto). IVA incluido.',
   },
 ];
 
@@ -271,7 +306,7 @@ const refrescos: Drink[] = [
         <!-- TAPAS -->
         <section id="tapas" class="tab-section" role="tabpanel">
           <div class="mb-12">
-                <p class="category-label">Calientes</p>
+                <p class="category-label"><Icon name="lucide:flame" class="category-icon" />Calientes</p>
                 <div class="dish-list">
                 {tapasCalientes.map(dish => (
                     <div class="dish-row">
@@ -288,7 +323,7 @@ const refrescos: Drink[] = [
                 </div>
           </div>
           <div>
-            <p class="category-label">Frías</p>
+            <p class="category-label"><Icon name="lucide:snowflake" class="category-icon" />Frías</p>
             <div class="dish-list">
               {tapasFrias.map(dish => (
                 <div class="dish-row">
@@ -338,7 +373,7 @@ const refrescos: Drink[] = [
         <!-- HAMBURGUESAS & BOCADILLOS -->
         <section id="hamburguesas" class="tab-section hidden" role="tabpanel">
           <div class="mb-12">
-            <p class="category-label">Hamburguesas</p>
+            <p class="category-label"><Icon name="lucide:hamburger" class="category-icon" />Hamburguesas</p>
             <div class="dish-list">
               {hamburguesas.map(dish => (
                 <div class="dish-row">
@@ -357,7 +392,7 @@ const refrescos: Drink[] = [
           </div>
 
           <div>
-            <p class="category-label">Tostas</p>
+            <p class="category-label"><Icon name="lucide:sandwich" class="category-icon" />Tostas</p>
             <div class="dish-list">
               {bocadillos.map(dish => (
                 <div class="dish-row">
@@ -384,7 +419,8 @@ const refrescos: Drink[] = [
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             {weekendMenus.map(menu => (
               <div class="menu-card">
-                <h3 class="menu-card-title">{menu.name}</h3>
+                <h3 class="menu-card-title">{menu.icon && <Icon name={menu.icon} class="menu-card-icon" />}{menu.name}</h3>
+                {menu.tagline && <p class="menu-card-tagline">{menu.tagline}</p>}
                 <div class="flex-1">
                   {menu.courses.map(course => (
                     <div class="mb-5">
@@ -412,7 +448,7 @@ const refrescos: Drink[] = [
         <!-- BODEGA -->
         <section id="bodega" class="tab-section hidden" role="tabpanel">
           <div class="mb-12">
-            <p class="category-label">Vinos blancos</p>
+            <p class="category-label"><Icon name="lucide:wine" class="category-icon" />Vinos blancos</p>
             <div class="wine-grid">
               {vinosBlancos.map(wine => (
                 <div class="wine-card">
@@ -429,7 +465,7 @@ const refrescos: Drink[] = [
           </div>
 
           <div class="mb-8">
-            <p class="category-label">Vinos tintos · El Bonillo</p>
+            <p class="category-label"><Icon name="lucide:wine" class="category-icon" />Vinos tintos · El Bonillo</p>
             <div class="wine-grid">
               {vinosTintosElBonillo.map(wine => (
                 <div class="wine-card">
@@ -446,7 +482,7 @@ const refrescos: Drink[] = [
           </div>
 
           <div class="mb-12">
-            <p class="category-label">Vinos tintos · D.O. Ribera del Duero y D.0. Rioja</p>
+            <p class="category-label"><Icon name="lucide:wine" class="category-icon" />Vinos tintos · D.O. Ribera del Duero y D.0. Rioja</p>
             <div class="wine-grid">
               {vinosTintosRiberaRioja.map(wine => (
                 <div class="wine-card">
@@ -463,7 +499,7 @@ const refrescos: Drink[] = [
           </div>
 
           <div class="mb-12">
-            <p class="category-label">Rosados y espumosos</p>
+            <p class="category-label"><Icon name="lucide:wine" class="category-icon" />Rosados y espumosos</p>
             <div class="wine-grid">
               {vinosRosadosEspumosos.map(wine => (
                 <div class="wine-card">
@@ -480,7 +516,7 @@ const refrescos: Drink[] = [
           </div>
 
           <div class="mb-12">
-            <p class="category-label">Cervezas</p>
+            <p class="category-label"><Icon name="lucide:beer" class="category-icon" />Cervezas</p>
             <div class="dish-list">
               {cervezas.map(beer => (
                 <div class="dish-row">
@@ -494,7 +530,7 @@ const refrescos: Drink[] = [
           </div>
 
           <div>
-            <p class="category-label">Refrescos y agua</p>
+            <p class="category-label"><Icon name="lucide:cup-soda" class="category-icon" />Refrescos y agua</p>
             <div class="dish-list">
               {refrescos.map(drink => (
                 <div class="dish-row">
@@ -716,6 +752,9 @@ const refrescos: Drink[] = [
 
   /* ── Etiquetas de categoría ── */
   .category-label {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.15em;
@@ -724,6 +763,12 @@ const refrescos: Drink[] = [
     margin: 0 0 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .category-icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    flex-shrink: 0;
   }
 
   /* ── Filas de platos ── */
@@ -831,10 +876,33 @@ const refrescos: Drink[] = [
   }
 
   .menu-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-family: var(--font-display);
     font-size: 1.15rem;
     font-weight: 600;
     color: var(--color-primary);
+    margin: 0 0 1.25rem;
+  }
+
+  .menu-card-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    flex-shrink: 0;
+    color: var(--color-accent);
+  }
+
+  .menu-card-title:has(+ .menu-card-tagline) {
+    margin-bottom: 0.35rem;
+  }
+
+  .menu-card-tagline {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
     margin: 0 0 1.25rem;
   }
 
