@@ -156,38 +156,43 @@ const weekendMenus: WeekendMenu[] = [
     price: '22,50 €',
     note: 'Incluye pan, postre del día o café y bebida.',
   },
-  {
-    name: 'Menú Especial',
-    icon: 'lucide:party-popper',
-    tagline: 'Feria de Tradiciones y Artesanía 2026',
-    courses: [
-      {
-        label: 'Entrantes',
-        options: [
-          'Tapa Manchega «Ganadora 1ª Ruta de la Tapa a la mejor tapa tradicional»',
-          'Asadillo con ventresca de atún',
-          'Surtido de buñuelos de marisco con pisto manchego',
-        ],
-      },
-      {
-        label: 'Segundo (a elegir)',
-        options: [
-          'Paletilla de cordero lechal al horno',
-          'Solomillo de cerdo en salsa a la pimienta',
-          'Merluza con almejas',
-        ],
-      },
-      {
-        label: 'Postre',
-        options: [
-          'Postre a elegir',
-          'Café',
-        ],
-      },
-    ],
-    price: '32,00 €',
-    note: 'Incluye bebida (cerveza, agua, refrescos o vino · 1 consumición por cubierto). IVA incluido.',
-  },
+  /*
+   * ─── MENÚ ESPECIAL DE EVENTO (DESACTIVADO) ───────────────────────────────
+   * Reactivar descomentando este objeto cuando haya otra festividad similar.
+   * Basta con actualizar `tagline`, los platos y el precio.
+   */
+  // {
+  //   name: 'Menú Especial',
+  //   icon: 'lucide:party-popper',
+  //   tagline: 'Feria de Tradiciones y Artesanía 2026',
+  //   courses: [
+  //     {
+  //       label: 'Entrantes',
+  //       options: [
+  //         'Tapa Manchega «Ganadora 1ª Ruta de la Tapa a la mejor tapa tradicional»',
+  //         'Asadillo con ventresca de atún',
+  //         'Surtido de buñuelos de marisco con pisto manchego',
+  //       ],
+  //     },
+  //     {
+  //       label: 'Segundo (a elegir)',
+  //       options: [
+  //         'Paletilla de cordero lechal al horno',
+  //         'Solomillo de cerdo en salsa a la pimienta',
+  //         'Merluza con almejas',
+  //       ],
+  //     },
+  //     {
+  //       label: 'Postre',
+  //       options: [
+  //         'Postre a elegir',
+  //         'Café',
+  //       ],
+  //     },
+  //   ],
+  //   price: '32,00 €',
+  //   note: 'Incluye bebida (cerveza, agua, refrescos o vino · 1 consumición por cubierto). IVA incluido.',
+  // },
 ];
 
 const vinosBlancos: WineCard[] = [
