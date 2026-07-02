@@ -39,6 +39,7 @@ interface WeekendMenu {
   name: string;
   icon?: string;
   tagline?: string;
+  theme?: 'festival';
   courses: MenuCourse[];
   price: string;
   note: string;
@@ -155,6 +156,42 @@ const weekendMenus: WeekendMenu[] = [
     ],
     price: '22,50 €',
     note: 'Incluye pan, postre del día o café y bebida.',
+  },
+  {
+    name: 'Menú Especial Alterna Festival',
+    icon: 'lucide:music',
+    tagline: '3 y 4 de julio 2026 · El Bonillo',
+    theme: 'festival',
+    courses: [
+      {
+        label: 'Para compartir',
+        options: [
+          'Gambitas cocidas al centro',
+        ],
+      },
+      {
+        label: 'Primer plato (a elegir)',
+        options: [
+          'Salmorejo cordobés',
+          'Lasaña boloñesa',
+        ],
+      },
+      {
+        label: 'Segundo plato (a elegir)',
+        options: [
+          'Costillas barbacoa',
+          'Bacalao al ajo confitado',
+        ],
+      },
+      {
+        label: 'Postre',
+        options: [
+          'Postre o café',
+        ],
+      },
+    ],
+    price: '20,00 €',
+    note: 'Incluye 1 consumición por menú. IVA incluido.',
   },
   /*
    * ─── MENÚ ESPECIAL DE EVENTO (DESACTIVADO) ───────────────────────────────
@@ -423,7 +460,20 @@ const refrescos: Drink[] = [
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             {weekendMenus.map(menu => (
-              <div class="menu-card">
+              <div class:list={['menu-card', menu.theme === 'festival' ? 'menu-card--festival' : '']}>
+                {menu.theme === 'festival' && (
+                  <svg class="menu-card-windmill" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                    <path d="M42 54h16l-3 46H45z" fill="currentColor" />
+                    <path d="M39 54q11-11 22 0z" fill="currentColor" />
+                    <g stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                      <path d="M50 50 24 24" />
+                      <path d="M50 50 76 24" />
+                      <path d="M50 50 24 76" />
+                      <path d="M50 50 76 76" />
+                    </g>
+                    <circle cx="50" cy="50" r="4" fill="currentColor" />
+                  </svg>
+                )}
                 <h3 class="menu-card-title">{menu.icon && <Icon name={menu.icon} class="menu-card-icon" />}{menu.name}</h3>
                 {menu.tagline && <p class="menu-card-tagline">{menu.tagline}</p>}
                 <div class="flex-1">
@@ -961,6 +1011,67 @@ const refrescos: Drink[] = [
     font-weight: 400;
     color: var(--color-secondary);
     opacity: 0.7;
+  }
+
+  /* ── Variante festival (Alterna Festival) ── */
+  .menu-card--festival {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(255, 255, 255, 0.18);
+    background: linear-gradient(
+      160deg,
+      #1f3a6d 0%,
+      #33306e 42%,
+      #6e2544 80%,
+      #8a2b3f 100%
+    );
+  }
+
+  /* Molino decorativo de fondo */
+  .menu-card-windmill {
+    position: absolute;
+    right: -1.75rem;
+    bottom: -1.75rem;
+    width: 12rem;
+    height: 12rem;
+    color: #ffffff;
+    opacity: 0.07;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* El contenido queda por encima del molino */
+  .menu-card--festival > *:not(.menu-card-windmill) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .menu-card--festival .menu-card-icon,
+  .menu-card--festival .menu-card-tagline {
+    color: #ff5b6a;
+  }
+
+  .menu-card--festival .category-label {
+    color: #9fc0ff;
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .menu-card--festival .menu-option {
+    color: var(--color-primary);
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .menu-card--festival .menu-option::before {
+    color: #ff5b6a;
+    opacity: 0.9;
+  }
+
+  .menu-card--festival .menu-card-footer {
+    border-top-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .menu-card--festival .menu-price {
+    color: #ffffff;
   }
 
   /* ── Cuadrícula de vinos ── */
