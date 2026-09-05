@@ -1,4 +1,51 @@
 User-agent: *
 Allow: /
 
+# ─────────────────────────────────────────────────────────────
+#  Rastreadores de IA: bienvenidos.
+#  Queremos que ChatGPT, Claude, Perplexity y la IA de Google
+#  citen la web y manden visitas.
+#
+#  OJO al declararlos: un grupo propio SUSTITUYE al de `*` para
+#  ese agente. Por eso cada bloque repite los Disallow; sin
+#  repetirlos, estos bots serían los únicos con acceso a lo que
+#  está cerrado para el resto.
+#
+#  ⚠️ EN ESTE DOMINIO ESTO NO BASTA. Cloudflare inyecta su propio
+#  bloque "Managed robots.txt" ANTES que este archivo, y ahí tiene
+#  a ClaudeBot, GPTBot, Google-Extended y otros con Disallow: /.
+#  Manda lo suyo. Hay que desactivarlo en el panel de Cloudflare:
+#  el dominio → AI Crawl Control / Bots → Manage robots.txt.
+# ─────────────────────────────────────────────────────────────
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://elrincondehector.com/sitemap-index.xml
