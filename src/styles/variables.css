@@ -11,6 +11,9 @@
   
   --color-text-accent: #ffd7ad;
 
+  --color-amber: var(--color-amber-300); 
+
   --font-body: 'Jost', sans-serif;
   --font-display: 'Cormorant Garamond', serif;
+
 }

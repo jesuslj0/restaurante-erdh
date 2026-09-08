@@ -673,9 +673,19 @@ const refrescos: Drink[] = [
   }
 
   /* ── Imagen de fondo con overlay degradado ── */
+  /*
+   * Altura fija (lvh) en vez de `inset: 0`: un elemento fijo se dimensiona con
+   * el viewport, que en movil crece y encoge al ocultarse la barra de URL. Con
+   * `inset: 0` eso reescalaba la imagen (`cover`) durante el scroll; `100lvh`
+   * es constante y siempre cubre la pantalla.
+   */
   .page-bg {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh; /* fallback */
+    height: 100lvh;
     z-index: 0;
     background-image: url('/imgs/b&w-mantel.jpeg');
     background-size: cover;

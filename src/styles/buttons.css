@@ -1,6 +1,18 @@
 @layer components {
+    /*
+     * Pildoras translucidas: fondo semitransparente + blur y borde para que se
+     * lean como cristal sobre la imagen de fondo, en vez de como un hueco
+     * transparente. Al pasar el raton se elevan; al pulsar se hunden
+     * (desplazamiento, escala menor y sombra interior) con una transicion mas
+     * rapida para que el gesto se sienta inmediato.
+     */
     .btn-primary {
-        @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-colors duration-200 cursor-pointer bg-accent/50 text-primary hover:text-bg hover:bg-accent;
+        @apply inline-flex items-center gap-1.5 whitespace-nowrap text-sm font-normal px-5 py-2.5 rounded-full cursor-pointer select-none touch-manipulation
+               border border-accent/40 bg-accent/40 text-primary backdrop-blur-md shadow-lg shadow-black/30
+               transition duration-200 ease-out
+               hover:-translate-y-0.5 hover:bg-accent/80 hover:border-accent hover:text-bg hover:shadow-xl hover:shadow-black/40
+               active:translate-y-px active:scale-[0.97] active:bg-accent active:text-bg active:shadow-[inset_0_2px_6px_rgba(0,0,0,0.45)] active:duration-75
+               motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:translate-y-0 motion-reduce:active:scale-100;
     }
 
     .btn-primary:focus-visible {
@@ -8,7 +20,12 @@
     }
 
     .btn-secondary {
-        @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-colors duration-200 cursor-pointer bg-primary/30 text-primary hover:bg-primary hover:text-bg;
+        @apply inline-flex items-center gap-1.5 whitespace-nowrap text-sm font-normal px-5 py-2.5 rounded-full cursor-pointer select-none touch-manipulation
+               border border-primary/30 bg-primary/20 text-primary backdrop-blur-md shadow-lg shadow-black/30
+               transition duration-200 ease-out
+               hover:-translate-y-0.5 hover:bg-primary/90 hover:border-primary hover:text-bg hover:shadow-xl hover:shadow-black/40
+               active:translate-y-px active:scale-[0.97] active:bg-primary active:text-bg active:shadow-[inset_0_2px_6px_rgba(0,0,0,0.45)] active:duration-75
+               motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:translate-y-0 motion-reduce:active:scale-100;
     }
 
     .btn-secondary:focus-visible {

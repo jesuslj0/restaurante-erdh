@@ -9,23 +9,34 @@ interface Cta {
 }
 
 type Props = {
+	eyebrowIcon?: string;
 	title: string
 	subtitle?: string
 	cta?: Cta
 	secondaryCta?: Cta
 }
 
-const { title, subtitle, cta, secondaryCta } = Astro.props
+const { eyebrowIcon, title, subtitle, cta, secondaryCta } = Astro.props
+
+// En movil el titulo se compone como un logo: palabras clave en versales y
+// palabras de union pequenas y translucidas. En desktop los spans quedan en
+// linea y se lee como una frase normal.
+const titleWords = title.split(' ')
 ---
 
-<section class="hero-section bg-stone-200 min-h-dvh flex items-center justify-center md:justify-start px-6 md:px-16 lg:px-24 py-20">
+<section class="hero-section bg-bg min-h-dvh flex items-center justify-center md:justify-start px-6 md:px-16 lg:px-24 py-20">
+	<div class="hero-bg" aria-hidden="true"></div>
 	<div class="background-overlay"></div>
 	<div class="hero-content text-center md:text-left max-w-2xl mx-auto md:mx-0 flex flex-col items-center md:items-start gap-6 z-10">
 		<span class="eyebrow-badge">
-			Cocina tradicional · El Bonillo
+			<Icon class="eyebrow-icon" name={eyebrowIcon}></Icon>Cocina tradicional · El Bonillo
 		</span>
 		<h1 class="text-5xl font-display font-bold tracking-tight text-primary sm:text-7xl hero-title">
-			{title}
+			<span class="title-row">
+				<span class="title-minor">{titleWords[0]}</span> <span class="title-key">{titleWords[1]}</span>
+			</span>
+			<span class="title-minor">{titleWords[2]}</span>
+			<span class="title-key title-key--xl">{titleWords[3]}</span>
 		</h1>
 		{subtitle && (
 			<p class="text-lg text-text-accent max-w-xl hero-subtitle">
@@ -33,7 +44,7 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 			</p>
 		)}
 		{(cta || secondaryCta) && (
-			<div class="flex flex-nowrap gap-3 justify-center md:justify-start mt-2">
+			<div class="flex flex-wrap gap-3 justify-center md:justify-start mt-2">
 				{cta && (
 					<a href={cta.link}
 						class="btn-primary">
@@ -57,11 +68,56 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 
 <style>
 	.hero-section {
+		position: relative;
+		overflow: hidden;
+	}
+
+	/*
+	 * La capa de fondo se separa de la seccion y usa una altura fija (lvh) en
+	 * lugar de heredar la altura dinamica (dvh) del hero: asi, cuando la barra
+	 * de URL del navegador movil se contrae o se expande al hacer scroll, el
+	 * contenedor de la imagen no cambia de tamano y `cover` no la reescala.
+	 */
+	.hero-bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 100vh; /* fallback */
+		height: 100lvh;
 		background-image: url('/imgs/nuevoherohector1.jpeg');
 		background-size: cover;
 		background-position: 50% 55%;
 		background-repeat: no-repeat;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	/*
+	 * Scrim local: base oscura difuminada tras el texto para asegurar
+	 * contraste sobre la foto. La elipse tiene radios del 50% centrados al
+	 * 50%, asi que el degradado alcanza alfa 0 justo en los bordes del
+	 * pseudo-elemento: fuera de esa elipse ya no queda color que recortar y
+	 * desaparece el corte duro que se veia por debajo de los botones.
+	 */
+	.hero-content {
 		position: relative;
+		--hero-scrim: 0.42;
+	}
+
+	.hero-content::before {
+		content: '';
+		position: absolute;
+		inset: -3rem -3.5rem;
+		z-index: -1;
+		background: radial-gradient(
+			ellipse 50% 50% at 50% 50%,
+			rgb(0 0 0 / var(--hero-scrim)) 0%,
+			rgb(0 0 0 / calc(var(--hero-scrim) * 0.78)) 45%,
+			rgb(0 0 0 / calc(var(--hero-scrim) * 0.34)) 75%,
+			rgb(0 0 0 / 0) 100%
+		);
+		pointer-events: none;
 	}
 
 	@media (max-width: 768px) {
@@ -69,41 +125,71 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 			display: flex;
 			flex-direction: column;
 			justify-content: start;
-			background-image: none;
-			background-color: black;
 		}
 
-		.hero-section::before {
-			content: '';
-			position: absolute;
+		.hero-bg {
 			top: 160px;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background-image: url("/imgs/nuevoherohector1.jpeg");
+			height: calc(100vh - 160px); /* fallback */
+			height: calc(100lvh - 160px);
 			background-position: center;
-			background-size: cover;
 		}
 
 		.hero-content {
-			margin-top: 4rem;
-			position: relative;
+			margin-top: 2.8rem;
 			padding: 1.75rem 1.5rem;
+			--hero-scrim: 0.55;
 		}
 
-		/* Scrim local: base oscura difuminada tras el texto para asegurar contraste */
 		.hero-content::before {
-			content: '';
-			position: absolute;
-			inset: -1rem -1.5rem;
-			z-index: -1;
-			background: radial-gradient(
-				120% 100% at 50% 45%,
-				rgba(0, 0, 0, 0.50) 0%,
-				rgba(0, 0, 0, 0.35) 45%,
-				transparent 80%
-			);
-			pointer-events: none;
+			inset: -2rem -2.5rem;
+		}
+
+		/*
+		 * Titulo tipo logo: las palabras clave en versales apiladas y las de
+		 * union pequenas, ligeras y translucidas para que no compitan.
+		 * `line-height: 1` hace que cada linea mida lo que su propio tamano,
+		 * en vez de heredar el del h1.
+		 */
+		.hero-title {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.15rem;
+			margin-bottom: 4rem;
+			width: 100%;
+			line-height: 1;
+		}
+
+		/* Flex con gap propio: el espacio en blanco del HTML heredaria el
+		   font-size del h1 (48px, o 72px desde el breakpoint sm) y abriria un
+		   hueco desproporcionado entre las dos palabras. */
+		.title-row {
+			display: flex;
+			align-items: baseline;
+			justify-content: center;
+			gap: 0.4rem;
+		}
+
+		/* Las versales necesitan aire, no el tracking-tight heredado */
+		.title-key {
+			font-size: 2.5rem;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+		}
+
+		.title-key--xl {
+			font-size: 3rem;
+		}
+
+		.title-minor {
+			font-size: 1.15rem;
+			/* 600 es el peso semibold de la cursiva de Cormorant que carga el
+			   Layout; un 500 caeria de vuelta a la 400 por falta de archivo */
+			font-weight: 600;
+			font-style: italic;
+			letter-spacing: 0.06em;
+			text-transform: lowercase;
+			opacity: 0.55;
 		}
 	}
 
@@ -126,24 +212,29 @@ const { title, subtitle, cta, secondaryCta } = Astro.props
 	.eyebrow-badge {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.65rem;
+		gap: 0.4rem;
+		font-size: 0.6rem;
 		font-weight: 500;
-		letter-spacing: 0.12em;
+		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--color-accent);
 		border: 1px solid color-mix(in srgb, var(--color-accent-soft) 35%, transparent);
 		background: color-mix(in srgb, var(--color-accent) 8%, transparent);
-		padding: 0.35rem 0.85rem;
+		padding: 0.25rem 0.7rem;
 		border-radius: 9999px;
 		text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
 	}
 
-	@media (max-width: 768px) {
-		.hero-btn-icon {
-			width: 1.25rem;
-			height: 1.25rem;
-		}
+	.eyebrow-icon {
+		color: var(--color-amber);
+		font-size: 1.3em;
+	}
+
+	/* Icono proporcionado al texto del boton (14px) e igual en todos los anchos */
+	.hero-btn-icon {
+		width: 1rem;
+		height: 1rem;
+		flex-shrink: 0;
 	}
 
 	.hero-title {
