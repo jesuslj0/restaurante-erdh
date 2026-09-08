@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Icon } from 'astro-icon/components';
-import { headerElements, footerSocial } from '../data/nav';
+import { headerElements, footerSocial, contactPhone } from '../data/nav';
 ---
 
 <Layout
@@ -14,7 +14,7 @@ import { headerElements, footerSocial } from '../data/nav';
     noindex: true,
   }}
 >
-  <Header slot="header" elements={headerElements} />
+  <Header slot="header" elements={headerElements} phone={contactPhone} socialElements={footerSocial} />
 
   <section class="min-h-[80vh] bg-bg flex items-center justify-center px-6 py-24">
     <div class="max-w-lg w-full text-center flex flex-col items-center gap-8">

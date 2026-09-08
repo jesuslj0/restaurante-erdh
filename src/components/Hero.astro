@@ -24,7 +24,7 @@ const { eyebrowIcon, title, subtitle, cta, secondaryCta } = Astro.props
 const titleWords = title.split(' ')
 ---
 
-<section class="hero-section bg-bg min-h-dvh flex items-center justify-center md:justify-start px-6 md:px-16 lg:px-24 py-20">
+<section class="hero-section min-h-svh flex items-center justify-center md:justify-start px-6 md:px-16 lg:px-24 py-20">
 	<div class="hero-bg" aria-hidden="true"></div>
 	<div class="background-overlay"></div>
 	<div class="hero-content text-center md:text-left max-w-2xl mx-auto md:mx-0 flex flex-col items-center md:items-start gap-6 z-10">
@@ -67,16 +67,26 @@ const titleWords = title.split(' ')
 
 
 <style>
+	/*
+	 * #020808 es el color medido del borde superior de la foto: un negro con
+	 * tinte cian, no negro puro. Con --color-bg (#171717) la franja de color
+	 * plano se veia como una banda mas clara, y con #000 el salto seguia siendo
+	 * de 8 niveles en verde y azul. Abajo el degradado empalma con --color-bg
+	 * para enlazar con el resto de la pagina.
+	 */
 	.hero-section {
 		position: relative;
 		overflow: hidden;
+		background-color: #020808;
 	}
 
 	/*
 	 * La capa de fondo se separa de la seccion y usa una altura fija (lvh) en
-	 * lugar de heredar la altura dinamica (dvh) del hero: asi, cuando la barra
-	 * de URL del navegador movil se contrae o se expande al hacer scroll, el
-	 * contenedor de la imagen no cambia de tamano y `cover` no la reescala.
+	 * lugar de una dinamica: asi, cuando la barra de URL del navegador movil se
+	 * contrae o se expande al hacer scroll, el contenedor de la imagen no
+	 * cambia de tamano y `cover` no la reescala. La seccion, por su parte, usa
+	 * min-h-svh (tambien constante) para que el recorte no revele mas foto al
+	 * retraerse la barra.
 	 */
 	.hero-bg {
 		position: absolute;
@@ -132,6 +142,14 @@ const titleWords = title.split(' ')
 			height: calc(100vh - 160px); /* fallback */
 			height: calc(100lvh - 160px);
 			background-position: center;
+			/*
+			 * La foto arranca a media pantalla, asi que su primer pixel choca
+			 * con el color plano del contenedor. El borde superior no es
+			 * uniforme (va de rgb(0,4,5) a rgb(5,12,13)), asi que ningun color
+			 * plano lo iguala en todo el ancho: este fundido lo disuelve.
+			 */
+			-webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 48px);
+			mask-image: linear-gradient(to bottom, transparent 0, #000 48px);
 		}
 
 		.hero-content {

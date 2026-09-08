@@ -8,11 +8,21 @@ interface Link {
 	icon: string
 }
 
-type Props = {
-	elements: Link[],
+interface Social {
+	link: string
+	name: string
+	icon: string
+	username: string
+	color?: string
 }
 
-const { elements } = Astro.props
+type Props = {
+	elements: Link[],
+	phone?: string,
+	socialElements?: Social[],
+}
+
+const { elements, phone, socialElements = [] } = Astro.props
 ---
 
 <header class="w-full bg-bg/30 backdrop-blur-sm fixed top-0 z-100">
@@ -59,7 +69,7 @@ const { elements } = Astro.props
 >
 	<!-- Cabecera del panel -->
 	<div id="nav-header" class="flex items-center justify-between">
-		<span class="text-base font-display text-primary">El Rincón de Héctor</span>
+		<span class="text-xl font-display text-primary">El Rincón de Héctor</span>
 		<button
 			id="menu-close"
 			aria-label="Cerrar menú"
@@ -69,24 +79,118 @@ const { elements } = Astro.props
 		</button>
 	</div>
 
-	<hr class="border-secondary/20" />
+	<hr class="border-accent/25 -mt-4" />
 
 	<ul class="flex flex-col gap-6">
 		{elements.map((element: Link) => (
 			<li>
 				<a
 					href={element.link}
-					class="text-primary text-lg inline-flex gap-3 items-center hover:text-secondary transition-colors"
+					class="text-primary text-lg inline-flex gap-3 items-center hover:text-accent-light transition-colors"
 				>
-					<Icon name={element.icon} class="size-5" />
+					<Icon name={element.icon} class="size-5 text-accent" />
 					{element.name}
 				</a>
 			</li>
 		))}
 	</ul>
+
+	{(phone || socialElements.length > 0) && (
+		<div class="mt-auto flex flex-col gap-5">
+			{phone && (
+				<a href={`tel:${phone.replace(/\s/g, '')}`} class="btn-primary w-full justify-center">
+					<Icon name="lucide:phone" class="size-4" />
+					Llamar {phone}
+				</a>
+			)}
+
+			{phone && socialElements.length > 0 && <hr class="border-accent/25" />}
+
+			{socialElements.length > 0 && (
+				<div class="social-row flex gap-3">
+					{socialElements.map((social: Social) => (
+						<a
+							href={social.link}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="social-badge"
+							style={`--brand: ${social.color ?? 'var(--color-accent)'}`}
+						>
+							<Icon name={social.icon} class="social-badge-icon" />
+							<span class="social-badge-user">@{social.username}</span>
+						</a>
+					))}
+				</div>
+			)}
+		</div>
+	)}
 </nav>
 
 <style>
+	/*
+	 * Badge de red social a ancho completo. El color de marca llega como
+	 * variable en un `style` inline porque es un dato de cada red y Tailwind no
+	 * puede generar una clase por color en tiempo de ejecucion; a partir de ahi
+	 * el resto se deriva con color-mix.
+	 */
+	.social-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		/* Mitad del ancho cada una: reparten el hueco a partes iguales y el
+		   `min-width: 0` deja que el nombre se recorte en vez de desbordar */
+		flex: 1 1 0;
+		min-width: 0;
+		padding: 0.6rem 0.5rem;
+		border-radius: 9999px;
+		font-size: 0.7rem;
+		color: var(--color-primary);
+		border: 1px solid color-mix(in srgb, var(--brand) 45%, transparent);
+		background: color-mix(in srgb, var(--brand) 14%, transparent);
+		transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+	}
+
+	.social-badge svg {
+		color: var(--brand);
+		transition: color 0.2s ease;
+	}
+
+	.social-badge-icon {
+		width: 1rem;
+		height: 1rem;
+		flex-shrink: 0;
+	}
+
+	.social-badge-user {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	/* Por debajo de 360px el nombre de Instagram no cabe a media anchura y se
+	   recortaria, asi que ahi las redes se apilan a ancho completo */
+	@media (max-width: 359px) {
+		.social-row {
+			flex-direction: column;
+		}
+	}
+
+	.social-badge:hover,
+	.social-badge:hover svg {
+		color: var(--color-primary);
+	}
+
+	.social-badge:hover {
+		background: var(--brand);
+		border-color: var(--brand);
+	}
+
+	.social-badge:focus-visible {
+		outline: 2px solid var(--brand);
+		outline-offset: 2px;
+	}
+
 	header {
 		/* Empuja el contenido bajo la status bar en pantallas edge-to-edge */
 		padding-top: env(safe-area-inset-top);

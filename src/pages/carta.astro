@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Icon } from 'astro-icon/components';
-import { headerElements, footerSocial } from '../data/nav';
+import { headerElements, footerSocial, contactPhone } from '../data/nav';
 
 interface Dish {
   name: string;
@@ -343,7 +343,7 @@ const refrescos: Drink[] = [
     type: 'menu',
   }}
 >
-  <Header slot="header" elements={headerElements} />
+  <Header slot="header" elements={headerElements} phone={contactPhone} socialElements={footerSocial} />
 
   <Fragment>
       <!-- Imagen de fondo con overlay degradado -->
