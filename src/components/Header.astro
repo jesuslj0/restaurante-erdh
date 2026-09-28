@@ -29,9 +29,14 @@ const { elements, phone, socialElements = [] } = Astro.props
 	<div id="header-inner" class="flex items-center justify-between py-4">
 
 
-		<span class="text-lg font-semibold font-display text-secondary md:hidden">RDH</span>
-		<!-- Logo desktop -->
-		<span class="hidden md:block text-lg font-semibold font-display text-secondary">RDH</span>
+		<!-- Logo: vuelve al hero. En la home sube con scroll suave; en el
+		     resto de páginas el href lleva a la home, que abre en el hero. -->
+		<a
+			href="/"
+			data-to-hero
+			aria-label="El Rincón de Héctor — volver al inicio"
+			class="text-lg font-semibold font-display text-secondary hover:text-accent-light transition-colors"
+		>RDH</a>
 
 		<!-- Botón hamburguesa (solo móvil) -->
 		<button
@@ -221,6 +226,21 @@ const { elements, phone, socialElements = [] } = Astro.props
 </style>
 
 <script>
+	import { lenis } from '../scripts/lenis.js'
+
+	// RDH → hero. En la home se intercepta para subir con Lenis (un salto
+	// nativo a "/" recargaría la página); fuera de ella manda el href.
+	document.querySelectorAll<HTMLAnchorElement>('[data-to-hero]').forEach(link => {
+		link.addEventListener('click', (e: MouseEvent) => {
+			if (window.location.pathname !== '/') return
+			e.preventDefault()
+			const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+			lenis.scrollTo(0, { immediate: reduce })
+			// Limpia el #reservas, #galeria… que hubiera dejado otro enlace.
+			if (window.location.hash) history.replaceState(null, '', '/')
+		})
+	})
+
 	const openBtn  = document.getElementById('menu-open')!
 	const closeBtn = document.getElementById('menu-close')!
 	const nav      = document.getElementById('nav-menu')!
