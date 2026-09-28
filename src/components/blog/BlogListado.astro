@@ -1,0 +1,112 @@
+---
+// ============================================================
+//  LISTADO DEL BLOG — destacada, rejilla y paginación
+// ------------------------------------------------------------
+//  Lo comparten /blog y /blog/pagina/<n>. La destacada va en
+//  TODAS las páginas (es la cabecera del índice) y por eso quien
+//  llama pasa la lista YA sin ella: no puede salir dos veces.
+// ============================================================
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import PostCard from './PostCard.astro';
+import { fechaCorta, urlPagina, type Pagina } from '../../lib/blog';
+import type { Post } from '../../lib/blog-posts';
+
+interface Props {
+  pagina: Pagina<Post>;
+  destacado?: Post;
+}
+
+const { pagina, destacado } = Astro.props;
+const { items, actual, total } = pagina;
+const numeros = Array.from({ length: total }, (_, i) => i + 1);
+---
+
+{
+  destacado && (
+    <a
+      href={`/blog/${destacado.id}`}
+      class="group grid overflow-hidden rounded-md border border-primary/10 bg-bg/90 transition duration-300 hover:-translate-y-1 hover:border-accent/40 md:grid-cols-[1.25fr_0.75fr]"
+    >
+      <div class="aspect-[16/10] overflow-hidden bg-accent-muted/40 md:aspect-auto md:min-h-[340px]">
+        <Image
+          src={destacado.data.imagen}
+          alt={destacado.data.imagen_alt}
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 768px) 100vw, 60vw"
+          loading="eager"
+          fetchpriority="high"
+          class="size-full object-cover transition duration-1000 group-hover:scale-105"
+        />
+      </div>
+      <div class="flex flex-col justify-center gap-3 p-6 md:p-9">
+        <div class="flex flex-wrap items-center gap-2.5 text-xs text-secondary/70">
+          <span class="blog-cat">{destacado.data.categoria}</span>
+          <span>{fechaCorta(destacado.data.fecha)} · {destacado.lectura} min</span>
+        </div>
+        <h2 class="font-display text-3xl leading-tight font-bold text-primary md:text-4xl">{destacado.data.titulo}</h2>
+        <p class="text-sm leading-relaxed text-secondary/85">{destacado.data.descripcion}</p>
+        <span class="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+          Leer la entrada
+          <Icon name="lucide:arrow-right" class="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+        </span>
+      </div>
+    </a>
+  )
+}
+
+{
+  items.length > 0 && (
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map((p) => (
+        <PostCard post={p} />
+      ))}
+    </div>
+  )
+}
+
+{
+  /* Con una sola página no se pinta nada: controles que no llevan a
+     ningún sitio son ruido. Son <a> de verdad: los sigue el rastreador. */
+  total > 1 && (
+    <nav class="blog-pag mt-12" aria-label="Páginas del blog">
+      {actual > 1 ? (
+        <a class="pag-flecha" href={urlPagina(actual - 1)} rel="prev">
+          <Icon name="lucide:chevron-left" class="size-4" />
+          <span>Anterior</span>
+        </a>
+      ) : (
+        <span class="pag-flecha es-inerte" aria-hidden="true">
+          <Icon name="lucide:chevron-left" class="size-4" />
+          <span>Anterior</span>
+        </span>
+      )}
+
+      <ol class="pag-nums">
+        {numeros.map((n) =>
+          n === actual ? (
+            <li>
+              <span class="pag-num es-actual" aria-current="page">{n}</span>
+            </li>
+          ) : (
+            <li>
+              <a class="pag-num" href={urlPagina(n)} aria-label={`Página ${n}`}>{n}</a>
+            </li>
+          )
+        )}
+      </ol>
+
+      {actual < total ? (
+        <a class="pag-flecha" href={urlPagina(actual + 1)} rel="next">
+          <span>Siguiente</span>
+          <Icon name="lucide:chevron-right" class="size-4" />
+        </a>
+      ) : (
+        <span class="pag-flecha es-inerte" aria-hidden="true">
+          <span>Siguiente</span>
+          <Icon name="lucide:chevron-right" class="size-4" />
+        </span>
+      )}
+    </nav>
+  )
+}

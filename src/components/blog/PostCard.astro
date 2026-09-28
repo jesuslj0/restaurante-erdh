@@ -1,0 +1,44 @@
+---
+// Tarjeta de una entrada. La usan el índice y el "Sigue leyendo".
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import { fechaCorta } from '../../lib/blog';
+import type { Post } from '../../lib/blog-posts';
+
+interface Props {
+  post: Post;
+  /** Nivel del título: h2 en el índice, h3 dentro de un artículo. */
+  as?: 'h2' | 'h3';
+}
+
+const { post, as: Titulo = 'h2' } = Astro.props;
+const url = `/blog/${post.id}`;
+---
+
+<article class="post-card group flex flex-col overflow-hidden rounded-md border border-primary/10 bg-bg/90 transition duration-300 hover:-translate-y-1.5 hover:border-accent/40">
+  {/* Foto y "Leer" van fuera del orden de tabulación: son tres caminos a la
+      misma entrada y el que cuenta, el que dice a dónde va, es el título. */}
+  <a href={url} class="block aspect-[16/10] overflow-hidden bg-accent-muted/40" tabindex="-1" aria-hidden="true">
+    <Image
+      src={post.data.imagen}
+      alt=""
+      widths={[400, 640, 900]}
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      class="size-full object-cover transition duration-700 group-hover:scale-105"
+    />
+  </a>
+  <div class="flex flex-1 flex-col gap-2.5 p-5">
+    <div class="flex flex-wrap items-center gap-2.5 text-xs text-secondary/70">
+      <span class="blog-cat">{post.data.categoria}</span>
+      <span>{fechaCorta(post.data.fecha)} · {post.lectura} min</span>
+    </div>
+    <Titulo class="font-display text-2xl leading-tight font-semibold text-primary">
+      <a href={url} class="transition-colors hover:text-accent-light">{post.data.titulo}</a>
+    </Titulo>
+    <p class="flex-1 text-sm leading-relaxed text-secondary/85">{post.data.descripcion}</p>
+    <a href={url} class="mt-1 inline-flex items-center gap-1.5 self-start text-sm font-medium text-accent" tabindex="-1" aria-hidden="true">
+      Leer
+      <Icon name="lucide:arrow-right" class="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+    </a>
+  </div>
+</article>

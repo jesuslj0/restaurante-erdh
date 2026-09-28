@@ -1,0 +1,82 @@
+---
+// ============================================================
+//  /blog — el índice
+// ------------------------------------------------------------
+//  Solo se llega desde el footer (y desde Google): a propósito no
+//  está en el navbar. Quien entra al blog viene de una búsqueda,
+//  y al que ya está en la web lo que le interesa es la carta.
+// ============================================================
+import '../../styles/blog.css';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import BlogListado from '../../components/blog/BlogListado.astro';
+import { headerElements, footerSocial, contactPhone } from '../../data/nav';
+import { paginar, fechaISO } from '../../lib/blog';
+import { publicados, destacada } from '../../lib/blog-posts';
+
+const posts = await publicados();
+const destacado = destacada(posts);
+const resto = posts.filter((p) => p.id !== destacado?.id);
+const pagina = paginar(resto, 1)!;
+
+const site = (Astro.site ?? Astro.url).origin;
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${site}/` },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${site}/blog/` },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'El blog de El Rincón de Héctor',
+    description: 'Pizzas, hamburguesas, cenas y comida para llevar en El Bonillo (Albacete).',
+    url: `${site}/blog/`,
+    blogPost: posts.map((p) => ({
+      '@type': 'BlogPosting',
+      headline: p.data.titulo,
+      url: `${site}/blog/${p.id}/`,
+      datePublished: fechaISO(p.data.fecha),
+    })),
+  },
+];
+---
+
+<Layout
+  restaurantName="El Rincón de Héctor"
+  seo={{
+    title: 'Blog: pizzas, burgers y cenas en El Bonillo | El Rincón de Héctor',
+    description: 'Pizzas de horno de piedra, hamburguesas especiales, cenas de fin de semana y comida para llevar en El Bonillo (Albacete). Todo lo que conviene saber antes de venir.',
+  }}
+>
+  <Header slot="header" elements={headerElements} phone={contactPhone} socialElements={footerSocial} />
+
+  <header class="blog-head px-6 pt-32 pb-14">
+    <div class="mx-auto max-w-6xl">
+      <nav class="blog-migas mb-6" aria-label="Migas de pan">
+        <a href="/">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Blog</span>
+      </nav>
+      <p class="mb-3 text-xs font-medium tracking-[0.18em] text-accent uppercase">El blog del Rincón</p>
+      <h1 class="font-display text-4xl leading-tight font-bold text-primary md:text-6xl">
+        Pizzas, burgers y cenas <em>en El Bonillo</em>
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-secondary">
+        Lo que nos preguntáis por teléfono cada fin de semana: qué pizza pedir, cómo encargar para llevar,
+        qué hay en el menú del finde y dónde cenar después de un día por Campo de Montiel.
+      </p>
+    </div>
+  </header>
+
+  <div class="mx-auto max-w-6xl px-6 py-14">
+    <BlogListado pagina={pagina} destacado={destacado} />
+  </div>
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schemas)} />
+
+  <Footer slot="footer" socialElements={footerSocial} restaurantName="El Rincón de Héctor" />
+</Layout>

@@ -1,0 +1,58 @@
+---
+// ============================================================
+//  /blog/pagina/<n> — de la 2 en adelante
+// ------------------------------------------------------------
+//  La 1 no se genera: es /blog. Tener las dos sería el mismo
+//  listado en dos URLs peleándose por la misma búsqueda.
+// ============================================================
+import '../../../styles/blog.css';
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import BlogListado from '../../../components/blog/BlogListado.astro';
+import { headerElements, footerSocial, contactPhone } from '../../../data/nav';
+import { paginar, POR_PAGINA } from '../../../lib/blog';
+import { publicados, destacada } from '../../../lib/blog-posts';
+
+export async function getStaticPaths() {
+  const posts = await publicados();
+  const resto = posts.filter((p) => p.id !== destacada(posts)?.id);
+  const total = Math.max(1, Math.ceil(resto.length / POR_PAGINA));
+  return Array.from({ length: total - 1 }, (_, i) => ({ params: { n: String(i + 2) } }));
+}
+
+const n = Number(Astro.params.n);
+const posts = await publicados();
+const destacado = destacada(posts);
+const pagina = paginar(posts.filter((p) => p.id !== destacado?.id), n)!;
+---
+
+<Layout
+  restaurantName="El Rincón de Héctor"
+  seo={{
+    title: `Blog · página ${n} | El Rincón de Héctor`,
+    description: `Página ${n} del blog de El Rincón de Héctor: pizzas, hamburguesas, cenas y comida para llevar en El Bonillo (Albacete).`,
+  }}
+>
+  <Header slot="header" elements={headerElements} phone={contactPhone} socialElements={footerSocial} />
+
+  <header class="blog-head px-6 pt-32 pb-14">
+    <div class="mx-auto max-w-6xl">
+      <nav class="blog-migas mb-6" aria-label="Migas de pan">
+        <a href="/">Inicio</a><span aria-hidden="true">/</span>
+        <a href="/blog">Blog</a><span aria-hidden="true">/</span>
+        <span aria-current="page">Página {n}</span>
+      </nav>
+      <p class="mb-3 text-xs font-medium tracking-[0.18em] text-accent uppercase">El blog del Rincón · página {n}</p>
+      <h1 class="font-display text-4xl leading-tight font-bold text-primary md:text-6xl">
+        Pizzas, burgers y cenas <em>en El Bonillo</em>
+      </h1>
+    </div>
+  </header>
+
+  <div class="mx-auto max-w-6xl px-6 py-14">
+    <BlogListado pagina={pagina} destacado={destacado} />
+  </div>
+
+  <Footer slot="footer" socialElements={footerSocial} restaurantName="El Rincón de Héctor" />
+</Layout>
