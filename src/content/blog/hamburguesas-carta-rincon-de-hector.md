@@ -7,7 +7,7 @@ imagen_alt: "Hamburguesa en pan brioche coronada con una pieza de carne glaseada
 fecha: 2026-09-06
 ---
 
-**En la carta del Rincón de Héctor hay cinco hamburguesas fijas, de 7,50 € a 15,50 €.** La que da nombre a la casa lleva carne de vaca madurada, virutas de torreznos y queso de cabra. Además, cada mes sacamos una [hamburguesa especial](/blog/hamburguesas-especiales-el-bonillo) que va cambiando.
+**En la carta del Rincón de Héctor hay cinco hamburguesas fijas, de 8,20 € a 15,50 €.** La que da nombre a la casa lleva carne de vaca madurada, virutas de torreznos y queso de cabra. Además, cada mes sacamos una [hamburguesa especial](/blog/hamburguesas-especiales-el-bonillo) que va cambiando.
 
 Estas son las que están siempre, para que sepas cuál pedir.
 
@@ -31,11 +31,11 @@ Smash quiere decir que la carne se aplasta en la plancha muy caliente: queda fin
 
 La ensalada césar convertida en hamburguesa. Otra de las populares, y buena opción si no te apetece ternera.
 
-## Chicken · 7,50 €
+## Chicken · 8,20 €
 
 **Pechuga de pollo empanada, salsa especial, lechuga y tomate natural.**
 
-La más sencilla y la más económica. Una buena opción para los más pequeños de la mesa.
+La más sencilla de la carta. Una buena opción para los más pequeños de la mesa.
 
 ## Cachopoburguer · 15,50 €
 

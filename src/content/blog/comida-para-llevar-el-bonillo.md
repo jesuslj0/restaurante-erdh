@@ -26,7 +26,7 @@ Son horas orientativas: dependen del trabajo que haya en cocina cada noche. Lo m
 - **Pizzas:** las 23, a 10 € para llevar. Todo sobre ellas en [pizza para llevar en El Bonillo](/blog/pizza-para-llevar-el-bonillo).
 - **Hamburguesas:** las de carta y la [especial del mes](/blog/hamburguesas-especiales-el-bonillo).
 - **Tapas y raciones:** croquetas caseras, solomillo a la pimienta, secreto en salsa española, lomo de orza con alioli, patatas americanas, nachos…
-- **Ensaladas:** césar, de queso de cabra o la italiana con pasta rellena crujiente.
+- **Ensaladas:** césar o de queso de cabra.
 - **Tostas:** de lomo gratinada o vegetal.
 
 ## ¿Cómo evito esperar?

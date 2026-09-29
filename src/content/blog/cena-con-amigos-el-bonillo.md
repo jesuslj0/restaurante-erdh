@@ -22,7 +22,7 @@ Así lo solemos organizar con los grupos que vienen.
 La fórmula que mejor funciona en grupo:
 
 1. **Para empezar:** un par de raciones al centro. Nachos mexicanos, patatas americanas, croquetas caseras o gyozas de panceta ibérica.
-2. **Algo fresco:** una ensalada para compartir. La italiana, con pasta rellena crujiente, o la de queso de cabra.
+2. **Algo fresco:** una ensalada para compartir, como la de queso de cabra.
 3. **El plato fuerte:** pizzas para compartir, o una hamburguesa por cabeza para quien prefiera la suya.
 
 Tenemos la cuenta hecha en [pizza o hamburguesa para un grupo](/blog/pizza-o-hamburguesa-grupo).

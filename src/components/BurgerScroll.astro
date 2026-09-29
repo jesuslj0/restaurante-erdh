@@ -5,36 +5,33 @@ interface Props {
 	videoSrc?: string;
 }
 
-const { videoSrc = "/videos/video-burguer-mejorado-scrub.mp4" } = Astro.props;
+const { videoSrc = "/videos/burguer-halloween-scrub.mp4" } = Astro.props;
 
 const ingredients = [
-	"Pan brioche (base)",
-	"Salsa burguer en la base",
-	"Doble disco de carne smash al estilo cachopo, rebozado y crujiente",
-	"Mozzarella con un toque de pesto italiano entre los discos",
-	"Mermelada de salsa barbacoa con bacon",
-	"Pan brioche (top)",
-	"Parmesano recién espolvoreado por encima",
+	"Pan negro con galleta Lotus",
+	"200 gr de carne de ternera",
+	"Salsa especial burger",
+	"Queso cheddar ahumado",
+	"Costillas de cerdo deshuesadas en salsa barbacoa",
 ];
+
+const description =
+	"Llega Halloween y nuestra burguer se viste de negro. Pan negro coronado con galleta Lotus, 200 gr de carne de ternera con nuestra salsa especial burger y cheddar ahumado fundido, y encima costillas de cerdo deshuesadas bañadas en salsa barbacoa. Dulce, ahumada y muy jugosa: un susto que gusto.";
 ---
 
-<section id="burguer-del-verano" class="relative lg:h-[300vh] bg-bg">
+<section id="burguer-del-mes" class="relative lg:h-[500vh] bg-bg">
 	<div class="lg:sticky lg:top-0 lg:h-screen overflow-hidden flex flex-col lg:grid lg:grid-cols-[1fr_auto_1fr]">
 
 		<!-- ── COLUMNA IZQUIERDA: concepto (solo desktop) ── -->
 		<div class="hidden lg:flex flex-col items-end text-right justify-center gap-6 px-12 xl:px-16">
 			<span class="text-xs inline-flex gap-1.5 items-center font-semibold uppercase tracking-widest text-accent">
-				Burguer del Verano <Icon name="lucide:sun" class="size-5" />
+				Burguer del Mes <Icon name="lucide:ghost" class="size-5" />
 			</span>
 			<h2 class="text-4xl xl:text-5xl text-primary font-bold font-display leading-tight">
-				Cachopoburguer
+				Burguer de Halloween
 			</h2>
 			<p class="text-text-accent leading-relaxed max-w-sm">
-				Lo mejor del cachopo asturiano, ahora en formato burguer. Dos discos de carne
-				smash rebozados hasta quedar dorados y crujientes, con mozzarella al pesto derritiéndose entre ellos. La coronamos con mermelada
-				de salsa barbacoa y bacon, la abrazamos con pan brioche tierno y la rematamos
-				con parmesano recién espolvoreado. Crujiente
-				por fuera, jugosa por dentro: el capricho del verano que no vas a querer soltar.
+				{description}
 			</p>
 		</div>
 
@@ -44,9 +41,9 @@ const ingredients = [
 			<!-- Título solo en móvil -->
 			<div class="lg:hidden w-full pt-24 pb-3 px-6 text-center flex flex-col items-center gap-1 shrink-0">
 				<span class="text-xs inline-flex gap-1.5 items-center font-semibold uppercase tracking-widest text-accent">
-					Burguer del Verano <Icon name="lucide:sun" class="size-5" />
+					Burguer del Mes <Icon name="lucide:ghost" class="size-5" />
 				</span>
-				<h2 class="text-3xl font-bold text-primary font-display mb-10">Cachopoburguer</h2>
+				<h2 class="text-3xl font-bold text-primary font-display mb-10">Burguer de Halloween</h2>
 			</div>
 
 			<video
@@ -104,11 +101,7 @@ const ingredients = [
 <div class="lg:hidden bg-bg px-6 py-12 flex flex-col gap-10">
 
 	<p class="text-text-accent leading-relaxed">
-		Lo mejor del cachopo asturiano, ahora en formato burguer. Dos discos de carne
-		smash rebozados hasta quedar dorados y crujientes, con mozzarella al pesto derritiéndose entre ellos. La coronamos con mermelada
-		de salsa barbacoa y bacon, la abrazamos con pan brioche tierno y la rematamos
-		con parmesano recién espolvoreado. Crujiente
-		por fuera, jugosa por dentro: el capricho del verano que no vas a querer soltar.
+		{description}
 	</p>
 
 	<div class="flex flex-col gap-3">
@@ -151,7 +144,7 @@ const ingredients = [
 
 	gsap.registerPlugin(ScrollTrigger);
 
-	const section = document.getElementById("burguer-del-verano");
+	const section = document.getElementById("burguer-del-mes");
 	const video = document.getElementById("burger-video") as HTMLVideoElement | null;
 
 	// El scrub por currentTime es inviable en móvil: iOS no repinta el frame de

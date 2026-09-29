@@ -42,7 +42,7 @@ Si la del mes no te convence, en la carta fija tienes:
 | **Rincón de Héctor** | Vaca madurada, virutas de torreznos, queso de cabra, alioli, tomate natural | 11,50 € |
 | **Smashburger Doble Carne** | Cerdo y ternera, queso, salsa especial, bacon, tomate | 10,20 € |
 | **César 2.0** | Pollo crujiente, pan brioche, bacon, salsa especial, lechuga | 8,20 € |
-| **Chicken** | Pechuga empanada, salsa especial, lechuga, tomate | 7,50 € |
+| **Chicken** | Pechuga empanada, salsa especial, lechuga, tomate | 8,20 € |
 | **Cachopoburguer** | Doble smash estilo cachopo, mozzarella al pesto, parmesano | 15,50 € |
 
 Te las contamos una a una en [las burgers fijas de la carta](/blog/hamburguesas-carta-rincon-de-hector).

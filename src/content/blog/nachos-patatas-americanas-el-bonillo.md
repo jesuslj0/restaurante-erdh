@@ -29,13 +29,13 @@ Las más pedidas para acompañar una hamburguesa o una pizza. Si las pides para 
 
 Las de siempre, con salsa hecha en casa.
 
-## Queso frito · 8,50 €
+## Queso frito · 9,00 €
 
 **Queso rebozado con mermelada de frambuesas.**
 
 El contraste de lo salado con lo dulce.
 
-## Gyozas de panceta ibérica · 1,20 €/ud
+## Gyozas de panceta ibérica · 1,50 €/ud
 
 **Gyozas crujientes rellenas de panceta ibérica.**
 
